@@ -1,13 +1,18 @@
 # Core Infrastructure
-neo4j
-python-dotenv
-pydantic-settings
-email-validator
+neo4j==5.19.0
+python-dotenv==1.0.1
+pydantic-settings==2.2.1
+email-validator==2.1.1
 
 # Web Framework
-fastapi
-uvicorn[standard]
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+passlib==1.7.4
+bcrypt==4.0.1
 
 # Scripting & Seeding
-requests
-rich
+requests==2.31.0
+rich==13.7.1
+
+# Graph Object Mapper
+neomodel==5.3.0

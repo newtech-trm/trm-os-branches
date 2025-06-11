@@ -1,0 +1,462 @@
+2025-06-12 06:12:14,313 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:13:40,913 - uvicorn.access - INFO - 127.0.0.1:65170 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-12 06:14:54,882 - uvicorn.access - INFO - 127.0.0.1:65297 - "GET /api/v1/projects/ HTTP/1.1" 200
+2025-06-12 06:15:17,391 - uvicorn.access - INFO - 127.0.0.1:65329 - "POST /api/v1/tasks/ HTTP/1.1" 201
+2025-06-12 06:15:40,270 - uvicorn.access - INFO - 127.0.0.1:65374 - "GET /api/v1/tasks/?project_id=53c423c1648c4bb5bc4aa08659a9c608 HTTP/1.1" 200
+2025-06-12 06:16:12,979 - uvicorn.access - INFO - 127.0.0.1:65426 - "GET /api/v1/tasks/b5e58f23b7c74715aed026b4f50ce46e HTTP/1.1" 200
+2025-06-12 06:16:31,251 - uvicorn.access - INFO - 127.0.0.1:65456 - "PUT /api/v1/tasks/b5e58f23b7c74715aed026b4f50ce46e HTTP/1.1" 200
+2025-06-12 06:16:46,831 - uvicorn.access - INFO - 127.0.0.1:65479 - "GET /api/v1/tasks/b5e58f23b7c74715aed026b4f50ce46e HTTP/1.1" 200
+2025-06-12 06:17:06,024 - uvicorn.access - INFO - 127.0.0.1:65506 - "DELETE /api/v1/tasks/b5e58f23b7c74715aed026b4f50ce46e HTTP/1.1" 204
+2025-06-12 06:17:29,698 - uvicorn.access - INFO - 127.0.0.1:49156 - "GET /api/v1/tasks/b5e58f23b7c74715aed026b4f50ce46e HTTP/1.1" 404
+2025-06-12 06:18:20,060 - uvicorn.access - INFO - 127.0.0.1:49242 - "GET /api/v1/tasks/b5e58f23b7c74715aed026b4f50ce46e HTTP/1.1" 404
+2025-06-12 06:18:43,878 - uvicorn.access - INFO - 127.0.0.1:49295 - "GET /api/v1/tasks/b5e58f23b7c74715aed026b4f50ce46e HTTP/1.1" 404
+2025-06-12 06:19:07,511 - uvicorn.access - INFO - 127.0.0.1:49330 - "GET /api/v1/tasks/b5e58f23b7c74715aed026b4f50ce46e HTTP/1.1" 404
+2025-06-12 06:19:41,059 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:19:41,166 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:19:41,167 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:19:41,167 - uvicorn.error - INFO - Finished server process [36372]
+2025-06-12 06:19:41,762 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:20:07,819 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:20:07,926 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:20:07,926 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:20:07,927 - uvicorn.error - INFO - Finished server process [11748]
+2025-06-12 06:20:08,613 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:20:36,790 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:20:36,898 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:20:36,899 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:20:36,899 - uvicorn.error - INFO - Finished server process [29832]
+2025-06-12 06:20:37,509 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:20:37,512 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\base_events.py", line 650, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "E:\tech\trm-os-branches\trm_api\main.py", line 13, in lifespan
+    yield
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 743, in lifespan
+    await receive()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-06-12 06:20:38,141 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:21:18,150 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:21:18,259 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:21:18,260 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:21:18,261 - uvicorn.error - INFO - Finished server process [40520]
+2025-06-12 06:21:18,935 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:22:45,632 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:22:45,740 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:22:45,740 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:22:45,740 - uvicorn.error - INFO - Finished server process [18264]
+2025-06-12 06:22:46,362 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:22:55,076 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:22:55,184 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:22:55,185 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:22:55,185 - uvicorn.error - INFO - Finished server process [36348]
+2025-06-12 06:22:55,800 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:24:08,797 - uvicorn.access - INFO - 127.0.0.1:49946 - "GET /api/v1/users/ HTTP/1.1" 200
+2025-06-12 06:24:23,463 - uvicorn.access - INFO - 127.0.0.1:49974 - "GET /api/v1/users/ HTTP/1.1" 200
+2025-06-12 06:26:16,937 - uvicorn.access - INFO - 127.0.0.1:50186 - "POST /api/v1/users/ HTTP/1.1" 201
+2025-06-12 06:27:53,597 - uvicorn.access - INFO - 127.0.0.1:50322 - "POST /api/v1/teams/ HTTP/1.1" 201
+2025-06-12 06:28:11,996 - uvicorn.access - INFO - 127.0.0.1:50351 - "GET /api/v1/teams/ HTTP/1.1" 200
+2025-06-12 06:29:08,994 - uvicorn.access - INFO - 127.0.0.1:50427 - "GET /api/v1/teams/5636a33398654f0489f36ea1a8dc07f3 HTTP/1.1" 200
+2025-06-12 06:29:40,130 - uvicorn.access - INFO - 127.0.0.1:50479 - "GET /api/v1/teams/5636a33398654f0489f36ea1a8dc07f3 HTTP/1.1" 200
+2025-06-12 06:30:06,285 - uvicorn.access - INFO - 127.0.0.1:50518 - "POST /api/v1/teams/5636a33398654f0489f36ea1a8dc07f3/members/e95a29d2a97b4d1b860bde848af1332d HTTP/1.1" 200
+2025-06-12 06:30:29,659 - uvicorn.access - INFO - 127.0.0.1:50563 - "GET /api/v1/teams/5636a33398654f0489f36ea1a8dc07f3/members HTTP/1.1" 200
+2025-06-12 06:30:50,137 - uvicorn.access - INFO - 127.0.0.1:50596 - "PUT /api/v1/teams/5636a33398654f0489f36ea1a8dc07f3 HTTP/1.1" 200
+2025-06-12 06:31:06,642 - uvicorn.access - INFO - 127.0.0.1:50621 - "GET /api/v1/teams/5636a33398654f0489f36ea1a8dc07f3 HTTP/1.1" 200
+2025-06-12 06:31:30,564 - uvicorn.access - INFO - 127.0.0.1:50654 - "DELETE /api/v1/teams/5636a33398654f0489f36ea1a8dc07f3 HTTP/1.1" 204
+2025-06-12 06:31:51,409 - uvicorn.access - INFO - 127.0.0.1:50685 - "GET /api/v1/teams/5636a33398654f0489f36ea1a8dc07f3 HTTP/1.1" 404
+2025-06-12 06:32:45,809 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:32:45,919 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:32:45,920 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:32:45,920 - uvicorn.error - INFO - Finished server process [1900]
+2025-06-12 06:32:46,593 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:32:46,595 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\base_events.py", line 650, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "E:\tech\trm-os-branches\trm_api\main.py", line 13, in lifespan
+    yield
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 743, in lifespan
+    await receive()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-06-12 06:32:47,173 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:33:19,620 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:33:19,727 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:33:19,729 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:33:19,729 - uvicorn.error - INFO - Finished server process [27984]
+2025-06-12 06:33:20,331 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:33:34,048 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:33:34,157 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:33:34,157 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:33:34,157 - uvicorn.error - INFO - Finished server process [39128]
+2025-06-12 06:33:34,889 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:34:34,941 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:34:35,049 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:34:35,050 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:34:35,050 - uvicorn.error - INFO - Finished server process [34272]
+2025-06-12 06:34:35,650 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:34:50,564 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:34:50,673 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:34:50,673 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:34:50,674 - uvicorn.error - INFO - Finished server process [37264]
+2025-06-12 06:34:51,320 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:35:20,932 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:35:21,040 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:35:21,041 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:35:21,041 - uvicorn.error - INFO - Finished server process [2496]
+2025-06-12 06:35:21,643 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:36:06,023 - uvicorn.error - INFO - Shutting down
+2025-06-12 06:36:06,131 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-12 06:36:06,131 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-12 06:36:06,132 - uvicorn.error - INFO - Finished server process [40184]
+2025-06-12 06:36:06,740 - uvicorn.error - INFO - Application startup complete.
+2025-06-12 06:37:02,975 - uvicorn.access - INFO - 127.0.0.1:51202 - "POST /api/v1/skills/ HTTP/1.1" 500
+2025-06-12 06:37:02,975 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\skill.py", line 15, in create_skill
+    return repository.create_skill(skill_data=skill_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\skill.py", line 20, in create_skill
+    skill = GraphSkill(**skill_data.model_dump()).save()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\core.py", line 1113, in __init__
+    self.__dict__[key] = val.build_manager(self, key)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\relationship_manager.py", line 496, in build_manager
+    self.lookup_node_class()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\relationship_manager.py", line 493, in lookup_node_class
+    self.definition["node_class"] = getattr(sys.modules[module], name)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'trm_api.graph_models.user' has no attribute 'GraphUser'
+2025-06-12 06:37:27,610 - uvicorn.access - INFO - 127.0.0.1:51254 - "GET /api/v1/skills/ HTTP/1.1" 500
+2025-06-12 06:37:27,610 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\skill.py", line 32, in list_skills
+    return repository.list_all_skills()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\skill.py", line 42, in list_all_skills
+    return GraphSkill.nodes.all()
+           ^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\util.py", line 27, in __get__
+    return self.getter(type)
+           ^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\core.py", line 1150, in nodes
+    return NodeSet(cls)
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\match.py", line 891, in __init__
+    install_traversals(self.source_class, self)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\match.py", line 210, in install_traversals
+    rel.lookup_node_class()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\relationship_manager.py", line 493, in lookup_node_class
+    self.definition["node_class"] = getattr(sys.modules[module], name)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'trm_api.graph_models.user' has no attribute 'GraphUser'
+2025-06-12 06:37:54,205 - uvicorn.access - INFO - 127.0.0.1:51293 - "GET /api/v1/skills/ HTTP/1.1" 500
+2025-06-12 06:37:54,206 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\skill.py", line 32, in list_skills
+    return repository.list_all_skills()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\skill.py", line 42, in list_all_skills
+    return GraphSkill.nodes.all()
+           ^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\util.py", line 27, in __get__
+    return self.getter(type)
+           ^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\core.py", line 1150, in nodes
+    return NodeSet(cls)
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\match.py", line 891, in __init__
+    install_traversals(self.source_class, self)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\match.py", line 210, in install_traversals
+    rel.lookup_node_class()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\relationship_manager.py", line 493, in lookup_node_class
+    self.definition["node_class"] = getattr(sys.modules[module], name)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'trm_api.graph_models.user' has no attribute 'GraphUser'
+2025-06-12 06:38:17,420 - uvicorn.access - INFO - 127.0.0.1:51330 - "GET /api/v1/skills/ HTTP/1.1" 500
+2025-06-12 06:38:17,421 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\skill.py", line 32, in list_skills
+    return repository.list_all_skills()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\skill.py", line 42, in list_all_skills
+    return GraphSkill.nodes.all()
+           ^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\util.py", line 27, in __get__
+    return self.getter(type)
+           ^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\core.py", line 1150, in nodes
+    return NodeSet(cls)
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\match.py", line 891, in __init__
+    install_traversals(self.source_class, self)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\match.py", line 210, in install_traversals
+    rel.lookup_node_class()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neomodel\sync_\relationship_manager.py", line 493, in lookup_node_class
+    self.definition["node_class"] = getattr(sys.modules[module], name)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'trm_api.graph_models.user' has no attribute 'GraphUser'

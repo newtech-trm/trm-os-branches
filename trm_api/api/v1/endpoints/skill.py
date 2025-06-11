@@ -1,68 +1,52 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from typing import List, Optional
+from fastapi import APIRouter, HTTPException, status
+from typing import List
 
-from trm_api.models.skill import Skill, SkillCreate, SkillUpdate
-from trm_api.services.skill_service import skill_service, SkillService
+from trm_api.api.v1.models.skill import Skill, SkillCreate, SkillUpdate
+from trm_api.repositories.skill import SkillRepository
 
 router = APIRouter()
+repository = SkillRepository()
 
 @router.post("/", response_model=Skill, status_code=status.HTTP_201_CREATED)
-def create_skill(
-    skill_in: SkillCreate,
-    service: SkillService = Depends(lambda: skill_service)
-):
+def create_skill(skill_in: SkillCreate):
     """
     Create a new skill.
     """
-    return service.create_skill(skill_create=skill_in)
+    return repository.create_skill(skill_data=skill_in)
 
-@router.get("/{skill_id}", response_model=Skill)
-def get_skill(
-    skill_id: str,
-    service: SkillService = Depends(lambda: skill_service)
-):
+@router.get("/{skill_uid}", response_model=Skill)
+def get_skill(skill_uid: str):
     """
-    Get a specific skill by its ID.
+    Get a specific skill by its UID.
     """
-    db_skill = service.get_skill_by_id(skill_id=skill_id)
+    db_skill = repository.get_skill_by_uid(uid=skill_uid)
     if db_skill is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Skill not found")
     return db_skill
 
 @router.get("/", response_model=List[Skill])
-def list_skills(
-    skip: int = 0,
-    limit: int = 100,
-    service: SkillService = Depends(lambda: skill_service)
-):
+def list_skills():
     """
-    Retrieve a list of skills.
+    Retrieve a list of all skills.
     """
-    return service.list_skills(skip=skip, limit=limit)
+    return repository.list_all_skills()
 
-@router.put("/{skill_id}", response_model=Skill)
-def update_skill(
-    skill_id: str,
-    skill_in: SkillUpdate,
-    service: SkillService = Depends(lambda: skill_service)
-):
+@router.put("/{skill_uid}", response_model=Skill)
+def update_skill(skill_uid: str, skill_in: SkillUpdate):
     """
     Update an existing skill.
     """
-    updated_skill = service.update_skill(skill_id=skill_id, skill_update=skill_in)
+    updated_skill = repository.update_skill(uid=skill_uid, skill_data=skill_in)
     if updated_skill is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Skill not found")
     return updated_skill
 
-@router.delete("/{skill_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_skill(
-    skill_id: str,
-    service: SkillService = Depends(lambda: skill_service)
-):
+@router.delete("/{skill_uid}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_skill(skill_uid: str):
     """
     Delete a skill.
     """
-    deleted = service.delete_skill(skill_id=skill_id)
+    deleted = repository.delete_skill(uid=skill_uid)
     if not deleted:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Skill not found")
     return

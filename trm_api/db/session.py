@@ -1,39 +1,26 @@
-from neo4j import GraphDatabase, Driver
+from neomodel import config
 from trm_api.core.config import settings
 
-# Singleton instance for the Neo4j driver
-driver: Driver = None
-
-def get_driver() -> Driver:
+def connect_to_db():
     """
-    Returns the singleton Neo4j driver instance, creating it if necessary.
+    Connects to the Neo4j database using the settings from the .env file.
+    This function configures the neomodel library to use the correct database URL.
     """
-    global driver
-    if driver is None:
-        print("Initializing Neo4j driver...")
-        driver = GraphDatabase.driver(
-            settings.NEO4J_URI,
-            auth=(settings.NEO4J_USER, settings.NEO4J_PASSWORD)
-        )
-        # You can verify connectivity here if needed, but it's often done once at startup
-        # driver.verify_connectivity()
-    return driver
+    # The NEO4J_URI from .env should contain the hostname, e.g., "xxxx.databases.neo4j.io"
+    # We strip any scheme that might be present to avoid creating a malformed URL.
+    host = settings.NEO4J_URI
+    if "://" in host:
+        host = host.split("://")[1]
 
-def close_driver():
+    # The scheme for AuraDB is 'neo4j+s'. We construct the full URL here.
+    connection_url = f"neo4j+s://{settings.NEO4J_USER}:{settings.NEO4J_PASSWORD}@{host}"
+    config.DATABASE_URL = connection_url
+    print(f"Neomodel configured to connect to Neo4j on: {host}")
+
+def close_db_connection():
     """
-    Closes the Neo4j driver connection.
+    In neomodel, connections are managed per-thread and there isn't a global
+    disconnect function. This function is a placeholder for potential future cleanup.
     """
-    global driver
-    if driver is not None:
-        print("Closing Neo4j driver...")
-        driver.close()
-        driver = None
-
-# We can also add event handlers to the main app to manage the driver lifecycle
-# @app.on_event("startup")
-# async def startup_event():
-#     get_driver()
-
-# @app.on_event("shutdown")
-# async def shutdown_event():
-#     close_driver()
+    print("Database connection managed by neomodel's thread-local driver. No explicit close action needed.")
+    pass

@@ -1,10 +1,25 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from trm_api.core.config import settings
+from trm_api.db.session import connect_to_db, close_db_connection
+from trm_api.core.logging_config import setup_logging
 
-# Initialize the FastAPI app
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Actions on startup
+    setup_logging()
+    print("--- Server starting up ---")
+    connect_to_db()
+    yield
+    # Actions on shutdown
+    print("--- Server shutting down ---")
+    close_db_connection()
+
+# Initialize the FastAPI app with the lifespan manager
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    openapi_url=f"{settings.API_V1_STR}/openapi.json"
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    lifespan=lifespan
 )
 
 @app.get("/", tags=["Root"])
