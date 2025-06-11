@@ -1,0 +1,13 @@
+# Core Infrastructure
+neo4j
+python-dotenv
+pydantic-settings
+email-validator
+
+# Web Framework
+fastapi
+uvicorn[standard]
+
+# Scripting & Seeding
+requests
+rich

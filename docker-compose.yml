@@ -1,0 +1,28 @@
+version: '3.8'
+
+# This file is intentionally lean because our core infrastructure
+# (Neo4j, Supabase, RabbitMQ) are managed cloud services.
+# We will add our custom-built FastAPI microservices here as we develop them.
+
+networks:
+  trm_network:
+    driver: bridge
+
+services:
+  # --- Add services like recognition_service, ontology_service, agent_service, etc. here ---
+  # Example for a future service:
+  #
+  # recognition_service:
+  #   build:
+  #     context: ./services/recognition_service
+  #     dockerfile: Dockerfile
+  #   container_name: trm_recognition_service
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "8001:8000" # Expose service on port 8001 locally
+  #   volumes:
+  #     - ./services/recognition_service:/app
+  #   command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+  #   networks:
+  #     - trm_network
