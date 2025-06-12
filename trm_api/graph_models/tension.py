@@ -1,4 +1,5 @@
 from neomodel import StringProperty, RelationshipTo, RelationshipFrom, IntegerProperty
+from trm_api.graph_models.resolves_tension import ResolvesTensionRel
 from .base import BaseNode
 
 class Tension(BaseNode):
@@ -15,14 +16,18 @@ class Tension(BaseNode):
 
     # --- Relationships ---
     # A tension is detected by a user or an agent.
-    detected_by = RelationshipTo('User', 'DETECTED_BY') # Can also be an Agent later
+    detected_by = RelationshipTo('trm_api.graph_models.user.User', 'DETECTED_BY') # Can also be an Agent later
 
     # A tension relates to a specific context, like a project or task.
     # Using a generic relationship for flexibility.
     context = RelationshipTo('BaseNode', 'RELATES_TO')
+    
+    # Projects that resolve this tension
+    # Use ResolvesTensionRel to store relationship properties according to ontology V3.2
+    resolved_by = RelationshipFrom('trm_api.graph_models.project.Project', 'RESOLVES_TENSION', model=ResolvesTensionRel)
 
     # A resolved tension leads to a WIN.
-    resolution = RelationshipTo('WIN', 'LEADS_TO_WIN')
+    resolution = RelationshipTo('trm_api.graph_models.win.WIN', 'LEADS_TO_WIN')
 
     def __str__(self):
         return self.title

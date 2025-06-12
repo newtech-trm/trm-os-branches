@@ -18,13 +18,27 @@ class UserRepository:
         """
         Creates a new User node in the database with a hashed password.
         """
-        # Create a dictionary from the pydantic model
-        user_dict = user_data.model_dump()
-        # Hash the password before saving
-        user_dict["hashed_password"] = self.get_password_hash(user_dict.pop("password"))
-
-        graph_user = GraphUser(**user_dict).save()
-        return graph_user
+        try:
+            # Create a dictionary from the pydantic model
+            user_dict = user_data.model_dump()
+            # Hash the password before saving
+            user_dict["hashed_password"] = self.get_password_hash(user_dict.pop("password"))
+            
+            print(f"DEBUG - Tạo User với dữ liệu: {user_dict}")
+            
+            # Kiểm tra xem Neo4j có kết nối được không
+            from neomodel import db
+            results, meta = db.cypher_query("MATCH (n) RETURN COUNT(n) LIMIT 1")
+            print(f"DEBUG - Kết nối Neo4j OK, số node hiện tại: {results[0][0]}")
+            
+            graph_user = GraphUser(**user_dict).save()
+            print(f"DEBUG - Đã tạo User thành công: {graph_user.username}")
+            return graph_user
+        except Exception as e:
+            import traceback
+            print(f"ERROR - Lỗi khi tạo User: {str(e)}")
+            print(traceback.format_exc())
+            raise
 
     def get_user_by_username(self, username: str) -> Optional[GraphUser]:
         """

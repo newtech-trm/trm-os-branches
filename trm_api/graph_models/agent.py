@@ -1,4 +1,6 @@
 from neomodel import StringProperty, RelationshipTo
+from trm_api.graph_models.has_skill import HasSkillRel
+from trm_api.graph_models.generates_event import GeneratesEventRel
 from .base import BaseNode
 
 class Agent(BaseNode):
@@ -19,6 +21,13 @@ class Agent(BaseNode):
 
     # An agent can be managed by another agent (e.g., AGE).
     managed_by = RelationshipTo('Agent', 'MANAGED_BY')
+    
+    # An agent can have skills (with proficiency levels, etc.)
+    has_skills = RelationshipTo('trm_api.graph_models.skill.GraphSkill', 'HAS_SKILL', model=HasSkillRel)
+    
+    # An agent can generate events
+    # Use GeneratesEventRel to store relationship properties according to ontology V3.2
+    generates_events = RelationshipTo('trm_api.graph_models.event.Event', 'GENERATES_EVENT', model=GeneratesEventRel)
 
     def __str__(self):
         return self.name

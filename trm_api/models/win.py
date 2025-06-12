@@ -1,7 +1,8 @@
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Optional, List
+from pydantic import BaseModel, Field, ConfigDict, field_validator
+from typing import Optional, List, Any, Union
 from datetime import datetime
 import uuid
+import logging
 
 class WinBase(BaseModel):
     summary: str = Field(..., min_length=10, max_length=250, description="A concise summary of the WIN.")
@@ -35,4 +36,36 @@ class WinInDB(WinBase):
     updated_at: Optional[datetime] = Field(alias="updatedAt", default=None)
 
 class Win(WinInDB):
-    pass
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+    
+    @classmethod
+    @field_validator('created_at', 'updated_at', mode='before')
+    def validate_datetime(cls, value: Any) -> Union[datetime, None]:
+        if value is None:
+            return None
+            
+        # Log the type and value for debugging
+        logging.debug(f"Validating datetime field: {value}, type: {type(value)}")
+        
+        # Handle Neo4j DateTime objects
+        if hasattr(value, 'to_native'):
+            logging.debug(f"Converting Neo4j DateTime to native: {value}")
+            return value.to_native()
+            
+        # Already a datetime
+        if isinstance(value, datetime):
+            return value
+            
+        # Try to convert from string representation
+        if isinstance(value, str):
+            try:
+                return datetime.fromisoformat(value)
+            except ValueError:
+                try:
+                    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                except ValueError:
+                    pass
+        
+        # Last resort: return current time and log an error
+        logging.error(f"Could not convert value to datetime: {value}, type: {type(value)}")
+        return datetime.utcnow()

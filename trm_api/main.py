@@ -39,3 +39,21 @@ def health_check():
 # Include the main API router
 from trm_api.api.v1.api import api_router
 app.include_router(api_router, prefix=settings.API_V1_STR)
+
+# Kết thúc khởi động server khi chạy trực tiếp (python -m trm_api.main)
+if __name__ == "__main__":
+    import uvicorn
+    import logging
+    
+    # Cấu hình logging chi tiết hơn
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
+    
+    # Bật logging cho neomodel (xem log truy vấn Neo4j)
+    neomodel_logger = logging.getLogger('neomodel')
+    neomodel_logger.setLevel(logging.DEBUG)
+    
+    print(f"[TRM API] Khởi động server trên cổng 8000 với logging cấp độ DEBUG")
+    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="debug")

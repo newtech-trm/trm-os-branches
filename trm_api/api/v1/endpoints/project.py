@@ -96,6 +96,81 @@ def delete_project(
         )
     return None
 
+# Relationship endpoints for RESOLVES_TENSION
+@router.post("/{project_id}/resolves-tension/{tension_id}", response_model=dict, status_code=status.HTTP_201_CREATED)
+def add_tension_to_resolve(
+    *,
+    project_id: str,
+    tension_id: str,
+    repo: ProjectRepository = Depends(get_project_repo)
+) -> Any:
+    """
+    Establish a RESOLVES_TENSION relationship from a Project to a Tension.
+    This indicates that the Project was created to resolve the specified Tension.
+    """
+    result = repo.add_tension_to_resolve(project_uid=project_id, tension_uid=tension_id)
+    if not result:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Project or Tension not found"
+        )
+    
+    project, tension = result
+    return {
+        "message": f"Project '{project.title}' is now resolving Tension '{tension.title}'",
+        "project_id": project.uid,
+        "tension_id": tension.uid,
+        "relationship": "RESOLVES_TENSION"
+    }
+
+@router.get("/{project_id}/resolves-tensions", response_model=List[dict], status_code=status.HTTP_200_OK)
+def get_tensions_resolved_by_project(
+    *,
+    project_id: str,
+    skip: int = 0,
+    limit: int = 100,
+    repo: ProjectRepository = Depends(get_project_repo)
+) -> Any:
+    """
+    Get all Tensions that are being resolved by a specific Project.
+    """
+    project = repo.get_project_by_uid(uid=project_id)
+    if not project:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Project not found"
+        )
+    
+    tensions = repo.get_tensions_resolved_by_project(project_uid=project_id, skip=skip, limit=limit)
+    return [
+        {
+            "tension_id": tension.uid,
+            "title": tension.title,
+            "description": tension.description,
+            "status": tension.status,
+            "severity": tension.severity
+        }
+        for tension in tensions
+    ]
+
+@router.delete("/{project_id}/resolves-tension/{tension_id}", status_code=status.HTTP_204_NO_CONTENT)
+def remove_tension_from_project(
+    *,
+    project_id: str,
+    tension_id: str,
+    repo: ProjectRepository = Depends(get_project_repo)
+) -> None:
+    """
+    Remove the RESOLVES_TENSION relationship between a Project and a Tension.
+    """
+    success = repo.remove_tension_from_project(project_uid=project_id, tension_uid=tension_id)
+    if not success:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Project or Tension not found, or no relationship exists between them"
+        )
+    return None
+
 # TODO: Refactor this relationship endpoint using the repository pattern.
 # @router.post("/{project_id}/add-participant/{user_id}", response_model=Relationship, status_code=status.HTTP_201_CREATED)
 # def add_participant_to_project(

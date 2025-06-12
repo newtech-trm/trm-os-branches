@@ -1,6 +1,9 @@
 from neo4j import Driver
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from datetime import datetime
+import logging
+import traceback
+import uuid
 
 from trm_api.db.session import get_driver
 from trm_api.models.win import Win, WinCreate, WinUpdate, WinInDB
@@ -13,43 +16,130 @@ class WinService:
     def _get_db(self) -> Driver:
         return get_driver()
 
+    def _convert_neo4j_types(self, data: Any) -> Any:
+        """Recursively convert Neo4j types to Python native types"""
+        logging.debug(f"Converting Neo4j types: {type(data)} - {data}")
+        
+        # Handle None
+        if data is None:
+            return None
+            
+        # Handle dictionary
+        if isinstance(data, dict):
+            result = {}
+            for key, value in data.items():
+                logging.debug(f"Processing dict key {key}: {type(value)} - {value}")
+                result[key] = self._convert_neo4j_types(value)
+            return result
+            
+        # Handle list 
+        if isinstance(data, list):
+            result = []
+            for item in data:
+                logging.debug(f"Processing list item: {type(item)} - {item}")
+                result.append(self._convert_neo4j_types(item))
+            return result
+            
+        # Handle Neo4j DateTime - most important case
+        if hasattr(data, 'to_native'):
+            logging.debug(f"Converting Neo4j DateTime: {data} to native")
+            return data.to_native()
+            
+        # No conversion needed
+        return data
+
     def create_win(self, win_create: WinCreate) -> Win:
-        """Creates a new WIN node."""
-        win_db = WinInDB(**win_create.model_dump())
-        params = win_db.model_dump(by_alias=True)
+        try:
+            logging.debug(f"Creating WIN with data: {win_create}")
+            
+            # Convert Pydantic model to a regular dictionary
+            win_dict = win_create.model_dump()
+            logging.debug(f"WIN dict after conversion: {win_dict}")
+            
+            params = win_dict
+            
+            logging.debug(f"Creating WIN with params: {params}")
 
-        with self._get_db().session() as session:
-            result = session.write_transaction(self._create_win_tx, params)
-            return Win(**result)
+            with self._get_db().session() as session:
+                try:
+                    # Execute the transaction
+                    raw_result = session.write_transaction(self._create_win_tx, win_dict)
+                    logging.debug(f"Raw result from Neo4j: {raw_result}")
+                    logging.debug(f"Result types: {[(k, type(v)) for k, v in raw_result.items()]}")
+                    
+                    if not raw_result:
+                        logging.error("No result returned from Neo4j transaction")
+                        return None
+                    # Convert Neo4j types to Python types (especially DateTime)
+                    converted_data = self._convert_neo4j_types(raw_result)
+                    logging.debug(f"Converted data from Neo4j: {converted_data}")
+                    
+                    # Handle timestamps specially for reliability
+                    for dt_field in ['created_at', 'updated_at']:
+                        if dt_field in converted_data and hasattr(converted_data[dt_field], 'to_native'):
+                            converted_data[dt_field] = converted_data[dt_field].to_native()
+                            logging.debug(f"Specially handling timestamp {dt_field}: {converted_data[dt_field]}")
 
-    @staticmethod
-    def _create_win_tx(tx, params: dict) -> dict:
-        query = (
-            "CREATE (w:WIN { "
-            "  winId: $winId, "
-            "  summary: $summary, "
-            "  description: $description, "
-            "  winType: $winType, "
-            "  relatedEntityIds: $relatedEntityIds, "
-            "  createdAt: datetime($createdAt), "
-            "  updatedAt: null "
-            "}) "
-            "RETURN w"
+                    # Create the Win model for validation and return
+                    return Win(**converted_data)
+                except Exception as e:
+                    logging.error(f"Error creating WIN: {e}")
+                    raise
+        except Exception as e:
+            logging.error(f"Error creating WIN: {e}")
+            raise
+
+    def _create_win_tx(self, tx, win_data: dict) -> dict:
+        """Create a WIN node transaction."""
+        create_query = (
+            "CREATE (w:WIN {uid: $uid, summary: $summary, description: $description, win_type: $win_type}) "
+            "SET w.created_at = datetime(), w.updated_at = datetime() "
+            "RETURN w as win"
         )
-        result = tx.run(query, params)
+        
+        logging.debug(f"Executing Neo4j query: {create_query} with params: {win_data}")
+        
+        result = tx.run(
+            create_query,
+            uid=win_data.get('uid') or str(uuid.uuid4()),
+            summary=win_data.get('summary'),
+            description=win_data.get('description', ''),
+            win_type=win_data.get('win_type', 'standard'),
+        )
+        
         record = result.single()
-        return dict(record['w']) if record and record['w'] else None
+        if not record:
+            return {}
+            
+        win_node = record.get('win')
+        # Convert Neo4j node to dictionary
+        win_data = dict(win_node.items())
+        logging.debug(f"WIN data from Neo4j: {win_data}")
+        return win_data
 
-    def get_win_by_id(self, win_id: str) -> Optional[Win]:
-        """Retrieves a single WIN by its unique ID."""
-        with self._get_db().session() as session:
-            result = session.read_transaction(self._get_win_by_id_tx, win_id)
-            return Win(**result) if result else None
+    def get_win(self, uid: str) -> Optional[Win]:
+        """Get a WIN node by UID."""
+        try:
+            with self._get_db().session() as session:
+                # Execute the query
+                raw_result = session.read_transaction(self._get_win_by_uid_tx, uid)
+                if not raw_result:
+                    return None
+                
+                # Convert Neo4j types (especially DateTime)
+                processed_result = self._convert_neo4j_types(raw_result)
+                logging.debug(f"Processed WIN data: {processed_result}")
+                
+                # Return as a Win model instance
+                return Win(**processed_result)
+        except Exception as e:
+            logging.error(f"Error getting WIN: {str(e)}")
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            raise
 
-    @staticmethod
-    def _get_win_by_id_tx(tx, win_id: str) -> Optional[dict]:
-        query = "MATCH (w:WIN {winId: $winId}) RETURN w"
-        result = tx.run(query, winId=win_id)
+    def _get_win_by_uid_tx(self, tx, uid: str) -> Optional[dict]:
+        query = "MATCH (w:WIN {uid: $uid}) RETURN w"
+        result = tx.run(query, uid=uid)
         record = result.single()
         return dict(record['w']) if record and record['w'] else None
 

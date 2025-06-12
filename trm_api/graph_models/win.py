@@ -1,4 +1,5 @@
-from neomodel import StringProperty, RelationshipTo, RelationshipFrom, IntegerProperty
+from neomodel import StringProperty, RelationshipFrom, RelationshipTo, IntegerProperty
+from trm_api.graph_models.leads_to_win import LeadsToWinRel
 from .base import BaseNode
 
 class WIN(BaseNode):
@@ -12,8 +13,10 @@ class WIN(BaseNode):
     impact_level = IntegerProperty(default=1) # e.g., 1 (Low), 2 (Medium), 3 (High)
 
     # --- Relationships ---
-    # A WIN results from resolving a tension.
-    source_tension = RelationshipFrom('Tension', 'LEADS_TO_WIN')
+    # A WIN can result from various sources like RecognitionEvents or Projects
+    # Using LeadsToWinRel to store relationship properties according to ontology V3.2
+    source_recognition_events = RelationshipFrom('trm_api.graph_models.event.Event', 'LEADS_TO_WIN', model=LeadsToWinRel)
+    source_projects = RelationshipFrom('trm_api.graph_models.project.Project', 'LEADS_TO_WIN', model=LeadsToWinRel)
 
     # A WIN can generate new knowledge.
     generated_knowledge = RelationshipTo('KnowledgeSnippet', 'GENERATES_KNOWLEDGE')

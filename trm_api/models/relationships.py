@@ -39,6 +39,7 @@ class RelationshipType(str, Enum):
 
     # Project/Team-centric
     HAS_TENSION = "HAS_TENSION"    # Project -> Tension
+    RESOLVES_TENSION = "RESOLVES_TENSION"  # Project -> Tension
     ACHIEVED = "ACHIEVED"          # Project -> Win
 
     # Knowledge-centric

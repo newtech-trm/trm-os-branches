@@ -1,4 +1,5 @@
 from neomodel import config
+from neo4j import GraphDatabase
 from trm_api.core.config import settings
 
 def connect_to_db():
@@ -24,3 +25,26 @@ def close_db_connection():
     """
     print("Database connection managed by neomodel's thread-local driver. No explicit close action needed.")
     pass
+
+
+# Singleton driver instance
+_driver = None
+
+
+def get_driver():
+    """
+    Returns a Neo4j driver instance for direct Cypher queries.
+    This is used alongside neomodel when direct Neo4j driver access is needed.
+    """
+    global _driver
+    if _driver is None:
+        host = settings.NEO4J_URI
+        if "://" in host:
+            host = host.split("://")[1]
+        
+        uri = f"neo4j+s://{host}"
+        _driver = GraphDatabase.driver(
+            uri,
+            auth=(settings.NEO4J_USER, settings.NEO4J_PASSWORD)
+        )
+    return _driver
