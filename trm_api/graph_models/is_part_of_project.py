@@ -15,8 +15,8 @@ class IsPartOfProjectRel(StructuredRel):
     # Required properties
     relationshipId = StringProperty(unique_index=True, required=True)
     taskOrder = IntegerProperty(default=0)  # Không thể dùng cả required=True và default cùng lúc
-    creationDate = DateTimeProperty(default=datetime.now)
-    lastModifiedDate = DateTimeProperty(default=datetime.now)
+    creationDate = DateTimeProperty(default_now=True)
+    lastModifiedDate = DateTimeProperty(default_now=True)
     
     # Optional properties
     isRequired = BooleanProperty(default=True)  # Whether task is required for project completion

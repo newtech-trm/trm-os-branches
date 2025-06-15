@@ -20,8 +20,8 @@ class AssignsTaskRel(StructuredRel):
     """
     # Required properties - do neomodel không cho phép dùng cả required và default, chúng ta sử dụng default để đảm bảo luôn có ID
     relationshipId = StringProperty(unique_index=True, default=generate_relationship_id)
-    creationDate = DateTimeProperty(default=datetime.now)
-    lastModifiedDate = DateTimeProperty(default=datetime.now)
+    creationDate = DateTimeProperty(default_now=True)
+    lastModifiedDate = DateTimeProperty(default_now=True)
     
     # Optional properties
     assignmentType = StringProperty(
@@ -49,7 +49,7 @@ class AssignsTaskRel(StructuredRel):
     actualEffort = FloatProperty()     # Actual hours spent
     
     assignedBy = StringProperty()  # UID of user who made the assignment
-    assignmentDate = DateTimeProperty(default=datetime.now)  # When task was assigned
+    assignmentDate = DateTimeProperty(default_now=True)  # When task was assigned
     acceptanceDate = DateTimeProperty()  # When assignee accepted the task
     completionDate = DateTimeProperty()  # When assignee completed the task
     

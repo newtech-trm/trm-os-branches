@@ -1,3 +1,20 @@
+import sys
+import os
+import datetime
+
+LOG_FILE = "uvicorn_startup_log.txt"
+
+def log_to_file(message):
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
+        f.write(f"{datetime.datetime.now()}: {message}\n")
+
+log_to_file("--- Uvicorn/FastAPI Startup --- ")
+log_to_file(f"PYTHON_EXECUTABLE_IN_MAIN: {sys.executable}")
+log_to_file(f"SYS_PATH_IN_MAIN: {sys.path}")
+log_to_file(f"CURRENT_WORKING_DIRECTORY_IN_MAIN: {os.getcwd()}")
+log_to_file(f"PYTHONPATH: {os.environ.get('PYTHONPATH')}")
+log_to_file(f"VIRTUAL_ENV: {os.environ.get('VIRTUAL_ENV')}")
+
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from trm_api.core.config import settings

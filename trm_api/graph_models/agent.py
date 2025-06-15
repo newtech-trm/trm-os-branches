@@ -1,7 +1,10 @@
-from neomodel import StringProperty, RelationshipTo, BooleanProperty, DateTimeProperty, JSONProperty
+from neomodel import StringProperty, RelationshipTo, BooleanProperty, JSONProperty, ArrayProperty
+from trm_api.graph_models.custom_properties import Neo4jDateTimeProperty
 from trm_api.graph_models.has_skill import HasSkillRel
 from trm_api.graph_models.generates_event import GeneratesEventRel
 from .base import BaseNode
+from trm_api.graph_models.resource import Resource
+from trm_api.graph_models.project import Project
 import datetime
 
 class Agent(BaseNode):
@@ -27,9 +30,9 @@ class Agent(BaseNode):
     })
     description = StringProperty()
     contact_info = JSONProperty()  # Optional contact information for human agents
-    capabilities = JSONProperty()  # List of capabilities this agent possesses
-    creation_date = DateTimeProperty(default=datetime.datetime.utcnow)
-    last_modified_date = DateTimeProperty(default=datetime.datetime.utcnow)
+    capabilities = ArrayProperty(StringProperty())  # List of capabilities this agent possesses
+    creation_date = Neo4jDateTimeProperty(default_now=True)
+    last_modified_date = Neo4jDateTimeProperty(default_now=True)
     
     # Special properties for InternalAgent
     job_title = StringProperty()  # Only for InternalAgent
@@ -41,7 +44,8 @@ class Agent(BaseNode):
 
     # --- Relationships as defined in Ontology v3.2 ---
     # An agent can trigger events.
-    triggered_events = RelationshipTo('Event', 'TRIGGERED_EVENT')
+    # An agent can trigger events. This corresponds to 'triggered_by_actor' in Event model.
+    triggered_events = RelationshipTo('trm_api.graph_models.event.Event', 'ACTOR_TRIGGERED_EVENT')
 
     # An agent can be managed by another agent (e.g., AGE).
     managed_by = RelationshipTo('Agent', 'MANAGED_BY')

@@ -29,8 +29,8 @@ class ResolvesTensionRel(StructuredRel):
             'RequiresReview': 'Requires Review'
         }
     )
-    creationDate = DateTimeProperty(default=datetime.now)
-    lastModifiedDate = DateTimeProperty(default=datetime.now)
+    creationDate = DateTimeProperty(default_now=True)
+    lastModifiedDate = DateTimeProperty(default_now=True)
     
     # Optional properties
     resolutionApproach = StringProperty()

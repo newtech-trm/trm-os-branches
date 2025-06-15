@@ -16,8 +16,8 @@ class RequiresResourceRel(StructuredRel):
     # Required properties
     relationshipId = StringProperty(unique_index=True, required=True)
     quantityNeeded = IntegerProperty(default=1)  # Không thể dùng cả required=True và default cùng lúc
-    creationDate = DateTimeProperty(default=datetime.now)
-    lastModifiedDate = DateTimeProperty(default=datetime.now)
+    creationDate = DateTimeProperty(default_now=True)
+    lastModifiedDate = DateTimeProperty(default_now=True)
     
     # Optional properties
     priorityLevel = IntegerProperty(

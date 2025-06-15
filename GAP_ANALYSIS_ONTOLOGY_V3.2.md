@@ -1,89 +1,61 @@
-# Phân tích GAP Ontology V3.2
+# Phân tích GAP Ontology V3.2 (Cập nhật dựa trên OpenAPI)
 
 ## Entity GAP Analysis
 
-| Entity trong Ontology V3.2 | Trạng thái hiện tại | Chi tiết GAP |
-|---------------------------|---------------------|-------------|
-| **User/Agent** | ✅ Đã triển khai | User và Agent đã được triển khai cơ bản. |
-| **Project** | ⚠️ Thiếu thuộc tính | Thiếu nhiều thuộc tính như `goal`, `scope`, `priority`, `plannedStartDate`, `actualStartDate`, `plannedEndDate`, `actualEndDate`, `budget`, `budgetCurrency`, `actualCost`, `progressPercentage`, `ownerAgentId`, `stakeholderAgentIds`, `relatedTensionIds`. |
-| **Task** | ⚠️ Thiếu thuộc tính | Thiếu một số thuộc tính như `taskType`, `priority`, `reporterAgentId`, `startDate`, `actualCompletionDate`, `effortUnit`, `dependencies`, `subTasks`. |
-| **Resource** | ❌ Chưa triển khai | Entity Resource và các subtype của nó chưa được triển khai: `FinancialResource`, `KnowledgeResource`, `HumanResource`, `ToolResource`, `EquipmentResource`, `SpaceResource`. |
-| **Tension** | ⚠️ Triển khai cơ bản | Đã triển khai cơ bản nhưng thiếu các thuộc tính như `currentState`, `desiredState`, `impactAssessment`, `source`, `resolutionDate`. |
-| **Recognition** | ❌ Chưa triển khai | Entity Recognition chưa được triển khai trong hệ thống. |
-| **WIN** | ⚠️ Thiếu thuộc tính | Thiếu nhiều thuộc tính như `winType`, `timestamp`, `achievedByAgentIds`, `relatedRecognitionIds`, `relatedProjectIds`, `relatedTensionIds`, `evidenceUrls`, `lessonsLearned`, `nextSteps`. |
-| **KnowledgeAsset** | ❌ Chưa triển khai | Entity KnowledgeAsset và các subtype chưa được triển khai: `ConceptualFramework`, `Methodology`. |
-| **KnowledgeSnippet** | ⚠️ Triển khai cơ bản | Đã triển khai cơ bản nhưng thiếu các thuộc tính và phân loại theo ontology. |
-| **Event** | ⚠️ Triển khai cơ bản | Thiếu phân loại các subtype của Event: `SystemEvent`, `UserEvent`, `RecognitionEvent`, `TensionEvent`, `ProjectEvent`, `TaskEvent`, `WinEvent`, `FailureEvent`, `LearningEvent`, `ResourceEvent`. |
-| **Team** | ⚠️ Chưa xác định | Không tìm thấy đủ thông tin về triển khai chi tiết. |
-| **Skill** | ⚠️ Chưa xác định | Đã triển khai GraphSkill nhưng cần kiểm tra chi tiết với ontology. |
+| Entity trong Ontology V3.2 | Trạng thái hiện tại | Chi tiết GAP (Dựa trên OpenAPI và Ontology V3.2) |
+|---------------------------|---------------------|---------------------------------------------------|
+| **User/Agent**            | ✅ Đã triển khai     | User và Agent được quản lý qua API `/api/v1/users/`. Task có thể gán cho `user_id` và `agent_id`. Cần review thuộc tính chi tiết theo Ontology V3.2. |
+| **Project**               | ✅ Đã triển khai     | Đã triển khai CRUD cơ bản qua API `/api/v1/projects/`. Cần review thuộc tính chi tiết (`goal`, `scope`, `priority`, etc.) theo Ontology V3.2. |
+| **Task**                  | ✅ Đã triển khai     | Đã triển khai CRUD cơ bản qua API `/api/v1/tasks/` và các endpoint gán task. Cần review thuộc tính chi tiết (`taskType`, `priority`, etc.) theo Ontology V3.2. |
+| **Resource**              | ✅ Đã triển khai     | Entity Resource và các subtype (`FinancialResource`, `KnowledgeResource`, `HumanResource`, `ToolResource`, `EquipmentResource`, `SpaceResource`) đã có API tạo (POST) và quản lý (GET, PUT, DELETE) qua `/api/v1/resources/` và các sub-path. Cần review thuộc tính chi tiết. |
+| **Tension**               | ✅ Đã triển khai     | Đã triển khai CRUD cơ bản qua API `/api/v1/tensions/`. Cần review thuộc tính chi tiết (`currentState`, `desiredState`, etc.) theo Ontology V3.2. |
+| **Recognition**           | ⚠️ Triển khai một phần | Graph model `recognition.py` đã được cập nhật theo Ontology V3.2. API endpoints (CRUD) chưa triển khai. |
+| **WIN**                   | ⚠️ Triển khai một phần | Graph model `win.py` đã được cập nhật theo Ontology V3.2 (bao gồm các thuộc tính `name`, `status`, `winType`, `tags` và các mối quan hệ `led_to_by_events`, `led_to_by_projects`, `recognized_by_recognitions`, `generates_knowledge_snippets`, `generates_events`). API endpoints (CRUD) chưa triển khai. |
+| **KnowledgeAsset**        | ⚠️ Triển khai một phần | Có `KnowledgeResource` được triển khai qua API `/api/v1/resources/knowledge`. Cần làm rõ mối quan hệ với `ConceptualFramework`, `Methodology` và các thuộc tính chuyên biệt của `KnowledgeAsset`. |
+| **KnowledgeSnippet**      | ⚠️ Triển khai một phần | Có `KnowledgeResource` qua API. Chưa rõ `KnowledgeSnippet` có được quản lý riêng, là một phần của `KnowledgeResource`, hay cần API riêng. |
+| **Event**                 | ✅ Đã triển khai     | Graph model `event.py` đã được cập nhật đầy đủ theo Ontology V3.2 (bao gồm `name`, `description`, `tags`, `payload` và các mối quan hệ `triggered_by_actor`, `primary_context_agent/project/task/resource`, `generated_by_projects/tasks/agents/recognitions/wins`). API endpoints CRUD đã triển khai thành công qua `/api/v1/events/`. Đã thêm adapter serialization để xử lý datetime. |
+| **Team**                  | ✅ Đã triển khai     | Đã triển khai CRUD cơ bản qua API `/api/v1/teams/` và quản lý members. Cần review thuộc tính chi tiết theo Ontology V3.2. |
+| **Skill**                 | ✅ Đã triển khai     | Đã triển khai CRUD cơ bản qua API `/api/v1/skills/`. Cần review thuộc tính chi tiết theo Ontology V3.2. |
 
-## Relationship GAP Analysis
 
-| Relationship trong Ontology V3.2 | Trạng thái hiện tại | Chi tiết GAP |
-|----------------------------------|---------------------|-------------|
-| **ASSIGNS_TASK** | ✅ Đã triển khai | Đã triển khai đầy đủ với AssignsTaskRel. |
-| **LEADS_TO_WIN** | ✅ Đã triển khai | Đã triển khai đầy đủ với LeadsToWinRel. |
-| **GENERATES_EVENT** | ✅ Đã triển khai | Đã triển khai đầy đủ với GeneratesEventRel. |
-| **RESOLVES_TENSION** | ✅ Đã triển khai | Đã triển khai với ResolvesTensionRel. |
-| **IS_PART_OF_PROJECT** | ✅ Đã triển khai | Đã triển khai với IsPartOfProjectRel. |
-| **HAS_SKILL** | ✅ Đã triển khai | Đã triển khai với HasSkillRel. |
-| **PARTICIPATES_IN** | ⚠️ Triển khai cơ bản | Đã triển khai cơ bản nhưng không rõ có đầy đủ thuộc tính theo ontology không. |
-| **MANAGES_PROJECT** | ⚠️ Triển khai cơ bản | Đã triển khai cơ bản nhưng không rõ có đầy đủ thuộc tính theo ontology không. |
-| **GENERATES_KNOWLEDGE** | ⚠️ Thiếu thuộc tính | Đã có relationship hướng dẫn nhưng chưa có model riêng cho thuộc tính quan hệ (không thấy GeneratesKnowledgeRel). |
-| **USES_KNOWLEDGE** | ❌ Chưa triển khai | Relationship này chưa được triển khai. |
-| **CREATES_KNOWLEDGE** | ❌ Chưa triển khai | Relationship này chưa được triển khai. |
-| **TRIGGERED_BY** | ❌ Chưa triển khai | Relationship này chưa được triển khai. |
-| **TRIGGERS** | ❌ Chưa triển khai | Relationship này chưa được triển khai. |
-| **RELATED_TO** | ❌ Chưa triển khai | Relationship tổng quát này chưa được triển khai. |
+| Relationship trong Ontology V3.2 | Trạng thái hiện tại | Chi tiết GAP (Dựa trên OpenAPI và Ontology V3.2) |
+|----------------------------------|---------------------|---------------------------------------------------|
+| **ASSIGNS_TASK** (Agent/User ASSIGNS_TASK Task) | ✅ Đã triển khai | Triển khai qua API `/api/v1/tasks/{task_id}/assign/user/{user_id}` và `/api/v1/tasks/{task_id}/assign/agent/{agent_id}`. Có các thuộc tính quan hệ như `assignment_type`, `priority_level`, `estimated_effort`, `assigned_by`, `notes`. API cho phép chấp nhận và hoàn thành task. |
+| **LEADS_TO_WIN** (Project/Event LEADS_TO_WIN WIN) | ⚠️ Triển khai một phần | Graph model `win.py` định nghĩa mối quan hệ này từ `Project` và `Event` thông qua `LeadsToWinRel`. API (và WIN API) chưa triển khai. |
+| **GENERATES_EVENT** (Event <- Recognition): Recognition nào đã tạo ra Event này. | ⚠️ Triển khai một phần | Graph models `project.py`, `task.py`, `agent.py`, `recognition.py`, `win.py` và `event.py` (thông qua `GeneratesEventRel`) định nghĩa mối quan hệ này. API endpoints cho việc tạo/quản lý mối quan hệ này và cho `Event` entity vẫn chưa triển khai. |
+| **GIVEN_BY** (Agent GIVEN_BY Recognition) | ⚠️ Triển khai một phần | Graph model `recognition.py` định nghĩa mối quan hệ này (là `RelationshipFrom`). API chưa triển khai. |
+| **RECEIVED_BY** (Recognition RECEIVED_BY Agent) | ⚠️ Triển khai một phần | Graph model `recognition.py` định nghĩa mối quan hệ này. API chưa triển khai. |
+| **RECOGNIZES_WIN** (Recognition RECOGNIZES_WIN WIN) | ⚠️ Triển khai một phần | Graph models `recognition.py` và `win.py` định nghĩa mối quan hệ này thông qua `RecognizesWinRel`. API (và WIN/Recognition entity API) chưa triển khai. |
+| **RECOGNIZES_CONTRIBUTION_TO** (Recognition RECOGNIZES_CONTRIBUTION_TO [Project,Task,Resource]) | ⚠️ Triển khai một phần | Graph model `recognition.py` định nghĩa mối quan hệ này. API chưa triển khai. |
+| **RESOLVES_TENSION** (Project RESOLVES_TENSION Tension) | ✅ Đã triển khai | Triển khai qua API `/api/v1/projects/{project_id}/resolves-tension/{tension_id}` và `/api/v1/tensions/{tension_id}/resolved-by/{project_id}`. |
+| **IS_PART_OF_PROJECT** (Task IS_PART_OF_PROJECT Project) | ✅ Đã triển khai (ngầm) | Ngầm định qua API tạo (`POST /api/v1/tasks/` yêu cầu `project_id`) và liệt kê Task (`GET /api/v1/tasks/` theo `project_id`). |
+| **ACTOR_TRIGGERED_EVENT** (Event <- Agent): Ai/Cái gì đã kích hoạt Event này. | ✅ Đã triển khai | Graph model `event.py` định nghĩa mối quan hệ này (là `RelationshipFrom`). API đã triển khai và hoạt động đúng trong API `/api/v1/events/` thông qua tham số `actor_uid` trong request. |
+| **EVENT_CONTEXT** (Event EVENT_CONTEXT [Project,Task,etc.]) | ✅ Đã triển khai | Graph model `event.py` định nghĩa relationship riêng cho từng loại entity (`primary_context_agent`, `primary_context_project`, `primary_context_task`, `primary_context_resource`). API đã triển khai và hoạt động đúng trong `/api/v1/events/` thông qua `context_uid` và `context_node_label`. |
+| **HAS_SKILL** (User/Agent HAS_SKILL Skill) | ⚠️ Chưa rõ qua API | Không có API endpoint trực tiếp quản lý mối quan hệ này trong OpenAPI spec. Cần kiểm tra logic service hoặc nếu quản lý qua thuộc tính của User/Agent. |
+| **PARTICIPATES_IN** (User PARTICIPATES_IN Team) | ✅ Đã triển khai | Triển khai qua API `/api/v1/teams/{team_uid}/members/{user_uid}` (thêm user vào team) và `GET /api/v1/teams/{team_uid}/members`. |
+| **MANAGES_PROJECT** (Agent MANAGES_PROJECT Project) | ⚠️ Chưa rõ qua API | Không có API endpoint trực tiếp quản lý mối quan hệ này. Có thể được quản lý qua thuộc tính `ownerAgentId` của Project (nếu có). Cần kiểm tra schema Project và logic service. |
+| **ASSIGNED_TO_PROJECT** (Resource ASSIGNED_TO_PROJECT Project) | ✅ Đã triển khai | Triển khai qua API `/api/v1/resources/{resource_uid}/assign-to-project/{project_uid}`. |
+| **ASSIGNED_TO_TASK** (Resource ASSIGNED_TO_TASK Task) | ✅ Đã triển khai | Triển khai qua API `/api/v1/resources/{resource_uid}/assign-to-task/{task_uid}`. |
+| **GENERATES_KNOWLEDGE**          | ❌ Chưa triển khai   | Không có API endpoint tương ứng trong OpenAPI spec. |
+{{ ... }}
+    * Triển khai API endpoints cho các mối quan hệ đã được định nghĩa trong model và các mối quan hệ còn thiếu, bao gồm:
+        * `LEADS_TO_WIN` (Project → WIN)
+        * `GENERATES_EVENT` (từ `Project`, `Task`, `Agent`, `Recognition`, `WIN` tới `Event`): Model đã cập nhật. API đã được triển khai thành công.
+        * Các mối quan hệ của `Recognition`: `GIVEN_BY`, `RECEIVED_BY`, `RECOGNIZES_WIN`, `RECOGNIZES_CONTRIBUTION_TO`: Model đã cập nhật. API cần triển khai.
+        * Các mối quan hệ của `WIN`: `LEADS_TO_WIN` (từ `Project`, `Event`), `RECOGNIZED_BY` (từ `Recognition`), `GENERATES_KNOWLEDGE` (tới `KnowledgeSnippet`), `GENERATES_EVENT` (tới `Event`): Model đã cập nhật. API cần triển khai.
+        * `ACTOR_TRIGGERED_EVENT` (Event <- Agent): Ai/Cái gì đã kích hoạt Event này. API đã được triển khai thành công.
+        * `EVENT_CONTEXT` (Event → [Project,Task,etc.]): Model đã cập nhật. API đã được triển khai thành công thông qua các relationship riêng biệt cho từng loại entity.
+        * `HAS_SKILL` (User/Agent → Skill): Cân nhắc API trực tiếp nếu cần, hoặc làm rõ cách quản lý.
+        * `MANAGES_PROJECT` (Agent → Project): Cân nhắc API trực tiếp hoặc làm rõ qua thuộc tính `ownerAgentId`.
+        * `GENERATES_KNOWLEDGE` (ví dụ từ `WIN` tới `KnowledgeSnippet`), `USES_KNOWLEDGE`, `CREATES_KNOWLEDGE`.
+        * `TRIGGERED_BY`, `TRIGGERS` (rà soát lại các mối quan hệ này, có thể một số đã được thay thế bởi `ACTOR_TRIGGERED_EVENT` hoặc cần làm rõ thêm).
+{{ ... }}
 
-## API Endpoint GAP Analysis
+4.  **Kiểm thử toàn diện:**
+    * Kiểm thử tất cả các API endpoint đã triển khai dựa trên OpenAPI spec và logic nghiệp vụ.
+    *   Xác nhận đầy đủ thuộc tính của các entity và relationship models/schemas.
+    *   Kiểm tra tính đúng đắn của các mối quan hệ được tạo/quản lý qua API.
 
-| API Endpoint | Trạng thái hiện tại | Chi tiết GAP |
-|--------------|---------------------|-------------|
-| **/api/v1/users** | ✅ Đã triển khai | Đã kiểm thử thành công. |
-| **/api/v1/projects** | ✅ Đã triển khai | Đã kiểm thử thành công. |
-| **/api/v1/tasks** | ✅ Đã triển khai | Đã kiểm thử thành công. |
-| **/api/v1/wins** | ✅ Đã triển khai | Đã kích hoạt lại router, nhưng cần kiểm thử lại. |
-| **/api/v1/tensions** | ⚠️ Không rõ trạng thái | Không tìm thấy thông tin kiểm thử thực tế. |
-| **/api/v1/events** | ⚠️ Không rõ trạng thái | Không tìm thấy thông tin kiểm thử thực tế. |
-| **/api/v1/agents** | ⚠️ Không rõ trạng thái | Không tìm thấy thông tin kiểm thử thực tế. |
-| **/api/v1/knowledge-snippets** | ⚠️ Không rõ trạng thái | Không tìm thấy thông tin kiểm thử thực tế. |
-| **/api/v1/skills** | ⚠️ Không rõ trạng thái | Không tìm thấy thông tin kiểm thử thực tế. |
-| **/api/v1/resources** | ❌ Chưa triển khai | Endpoint này chưa được triển khai do entity Resource chưa triển khai. |
-| **/api/v1/recognitions** | ❌ Chưa triển khai | Endpoint này chưa được triển khai do entity Recognition chưa triển khai. |
-
-## Relationship API Endpoint GAP Analysis
-
-| Relationship API Endpoint | Trạng thái hiện tại | Chi tiết GAP |
-|--------------------------|---------------------|-------------|
-| **/api/v1/users/{id}/assigns-task** | ✅ Đã triển khai | Đã kiểm thử thành công. |
-| **/api/v1/projects/{id}/leads-to-win** | ✅ Đã triển khai | Đã kiểm thử nhưng cần xác nhận lại. |
-| **/api/v1/projects/{id}/has-task** | ⚠️ Không rõ trạng thái | Không tìm thấy thông tin kiểm thử thực tế. |
-| **/api/v1/projects/{id}/resolves-tension** | ⚠️ Không rõ trạng thái | Không tìm thấy thông tin kiểm thử thực tế. |
-| **/api/v1/projects/{id}/generates-event** | ⚠️ Không rõ trạng thái | Không tìm thấy thông tin kiểm thử thực tế. |
-| **/api/v1/users/{id}/has-skill** | ⚠️ Không rõ trạng thái | Không tìm thấy thông tin kiểm thử thực tế. |
-| **/api/v1/win/{id}/generates-knowledge** | ❌ Chưa triển khai | Endpoint này chưa được triển khai hoặc kiểm thử. |
-| **/api/v1/agents/{id}/uses-knowledge** | ❌ Chưa triển khai | Endpoint này chưa được triển khai hoặc kiểm thử. |
-
-## Bước tiếp theo
-
-1. **Triển khai Entity còn thiếu:**
-   - Resource và các subtype
-   - Recognition
-   - Bổ sung thuộc tính thiếu cho các entity hiện có
-
-2. **Triển khai Relationship còn thiếu:**
-   - CREATES_KNOWLEDGE
-   - USES_KNOWLEDGE
-   - TRIGGERED_BY
-   - TRIGGERS
-   - RELATED_TO
-
-3. **Bổ sung API Endpoint:**
-   - /api/v1/resources
-   - /api/v1/recognitions
-   - Các endpoint relationship còn thiếu
-
-4. **Kiểm thử toàn diện:**
-   - Kiểm thử tất cả các API endpoint đã triển khai
-   - Kiểm thử các relationship quan trọng từ thiết kế ontology
+5.  **Cập nhật tài liệu:**
+    *   Liên tục cập nhật `GAP_ANALYSIS_ONTOLOGY_V3.2.md` này.
+    *   Đảm bảo `ONTOLOGY NỘI BỘ TRM - BẢN THIẾT KẾ THỐNG NHẤT HOÀN CHỈNH V3.2.md` là nguồn tham chiếu chính xác.

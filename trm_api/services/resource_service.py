@@ -22,18 +22,18 @@ class ResourceService:
     def _get_db(self) -> Driver:
         return get_driver()
 
-    def create_resource(self, resource_create: ResourceBase) -> Resource:
+    def create_resource(self, resource_create: ResourceBase) -> Optional[Resource]:
         """Creates a new Resource node with type-specific details."""
         params = resource_create.model_dump(by_alias=True)
-        
-        # Extract details based on resource type
-        if hasattr(resource_create, 'details'):
-            resource_details = resource_create.details.model_dump(by_alias=True)
-            params["details"] = resource_details
-        else:
+
+        # Ensure 'details' is a dict. model_dump should handle this correctly for both
+        # Pydantic model details (dumps to dict) and dict details (includes as is).
+        # If 'details' could be None after dump (e.g. from an Optional field not provided),
+        # ensure it's an empty dict.
+        if not isinstance(params.get("details"), dict):
             params["details"] = {}
 
-        # Generate a unique resource ID
+        # Generate a unique resource ID, this will be mapped to 'uid' by process_record
         params["resourceId"] = str(uuid.uuid4())
         
         # Set creation and update timestamps
@@ -42,45 +42,44 @@ class ResourceService:
         params["updatedAt"] = now
 
         with self._get_db().session() as session:
-            result = session.execute_write(self._create_resource_tx, params)
-            return Resource(**result) if result else None
+            result_properties = session.execute_write(self._create_resource_tx, params)
+            
+            if result_properties:
+                # result_properties is from process_record, should align with ResourceInDB fields
+                # (uid, createdAt, updatedAt as Python datetime, details as dict)
+                return Resource(**result_properties)
+            return None
 
     @staticmethod
-    def _create_resource_tx(tx, params: dict) -> dict:
-        # Construct a query to create a Resource node with all common properties
+    def _create_resource_tx(tx, params: dict) -> Optional[dict]:
+        # Base properties for the Resource node
+        resource_props_list = [
+            "resourceId: $resourceId",
+            "name: $name",
+            "description: $description",
+            "resourceType: $resourceType",
+            "status: $status",
+            "createdAt: datetime($createdAt)", # Neo4j temporal type
+            "updatedAt: datetime($updatedAt)", # Neo4j temporal type
+            "details: $details" # $details is expected to be a map/dictionary
+        ]
+
+        # Conditionally add ownerAgentId if present and not None in params
+        if params.get("ownerAgentId") is not None:
+            resource_props_list.append("ownerAgentId: $ownerAgentId")
+
+        # Construct the SET part of the query
+        resource_props_str = ", ".join(resource_props_list)
+        
         query = (
-            "CREATE (r:Resource { "
-            "  resourceId: $resourceId, "
-            "  name: $name, "
-            "  description: $description, "
-            "  resourceType: $resourceType, "
-            "  status: $status, "
-            "  createdAt: datetime($createdAt), "
-            "  updatedAt: datetime($updatedAt), "
-            "  details: $details "
-            "}) "
+            f"CREATE (r:Resource {{ {resource_props_str} }}) "
             "RETURN r"
         )
         
-        # Add ownerAgentId if it exists
-        if "ownerAgentId" in params and params["ownerAgentId"] is not None:
-            query = (
-                "CREATE (r:Resource { "
-                "  resourceId: $resourceId, "
-                "  name: $name, "
-                "  description: $description, "
-                "  resourceType: $resourceType, "
-                "  status: $status, "
-                "  ownerAgentId: $ownerAgentId, "
-                "  createdAt: datetime($createdAt), "
-                "  updatedAt: datetime($updatedAt), "
-                "  details: $details "
-                "}) "
-                "RETURN r"
-            )
-        
         result = tx.run(query, params)
         record = result.single()
+        # process_record should handle Neo4j datetime to Python datetime conversion
+        # and map 'resourceId' to 'uid' for Pydantic model compatibility.
         return process_record(record) if record else None
     
     def create_financial_resource(self, resource_create: FinancialResourceCreate) -> Resource:

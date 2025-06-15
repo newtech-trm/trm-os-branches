@@ -24,8 +24,8 @@ class GeneratesEventRel(StructuredRel):
             'System': 'System'
         }
     )
-    creationDate = DateTimeProperty(default=datetime.now)
-    lastModifiedDate = DateTimeProperty(default=datetime.now)
+    creationDate = DateTimeProperty(default_now=True)
+    lastModifiedDate = DateTimeProperty(default_now=True)
     
     # Optional properties
     impact = IntegerProperty(default=1)  # 1-5 scale of impact

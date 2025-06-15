@@ -25,7 +25,7 @@ from rich.console import Console
 from rich.table import Table
 
 # --- Configuration ---
-BASE_URL = "http://127.0.0.1:8000/api/v1"
+BASE_URL = "http://127.0.0.1:8001/api/v1"  # Updated to port 8001
 console = Console()
 
 # --- Sample Data cho Founder (InternalAgent đặc biệt) ---
@@ -211,7 +211,7 @@ def create_founder_relationships(founder: dict, resources: list, projects: list,
     # --- Founder APPROVES Projects ---
     # Founder phê duyệt và định hướng các dự án chiến lược
     for project in projects:
-        endpoint = f"/agents/{founder['agentId']}/approves/{project['projectId']}"
+        endpoint = f"/agents/{founder['agentId']}/approves/{project['uid']}"
         rel_data = {
             "approvalDate": datetime.now().isoformat(),
             "priority": project['priority'],
@@ -319,6 +319,18 @@ def main():
         console.rule("[bold green]✅ Founder Seeding Completed Successfully ✅[/bold green]")
     else:
         console.rule("[bold red]⚠️ Founder Seeding Completed with Issues ⚠️[/bold red]")
+
+    # --- Print UIDs for Event API testing ---
+    if founder and founder.get('agentId'):
+        console.print(f"\n[bold yellow]--- For Event API Testing ---[/bold yellow]")
+        console.print(f"Founder (Actor) UID: [bold cyan]{founder['agentId']}[/bold cyan]")
+        if projects and len(projects) > 0 and projects[0].get('projectId'):
+            console.print(f"Test Project (Context) UID: [bold cyan]{projects[0]['projectId']}[/bold cyan]")
+            console.print(f"Test Project (Context) Label: [bold cyan]Project[/bold cyan]")
+        else:
+            console.print("No test projects created or project UID not found.")
+    else:
+        console.print("\n[bold red]Could not retrieve Founder UID for Event API testing.[/bold red]")
 
 if __name__ == "__main__":
     main()

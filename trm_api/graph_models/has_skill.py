@@ -26,8 +26,8 @@ class HasSkillRel(StructuredRel):
             5: 'Expert'
         }
     )
-    creationDate = DateTimeProperty(default=datetime.now)
-    lastModifiedDate = DateTimeProperty(default=datetime.now)
+    creationDate = DateTimeProperty(default_now=True)
+    lastModifiedDate = DateTimeProperty(default_now=True)
     
     # Optional properties
     confidenceScore = FloatProperty(default=0.5)  # 0.0 to 1.0

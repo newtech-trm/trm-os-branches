@@ -1,4 +1,10 @@
 from neo4j.time import DateTime
+from neo4j.graph import Node
+
+COMMON_ID_FIELDS = [
+    "agentId", "resourceId", "projectId", "taskId", "eventId", 
+    "winId", "recognitionId", "goalId", "objectiveId", "keyResultId", "metricId"
+]
 
 def to_py_native(obj):
     """
@@ -23,11 +29,17 @@ def process_record(record):
         item = record.values()[0]
         if isinstance(item, Node):
             processed_node = {}
-            for key, value in item.items():
-                if hasattr(value, 'to_native'): # Check for Neo4j temporal types
-                    processed_node[key] = value.to_native()
+            id_field_found = None
+            for node_key, node_value in item.items():
+                if hasattr(node_value, 'to_native'): # Check for Neo4j temporal types
+                    processed_node[node_key] = node_value.to_native()
                 else:
-                    processed_node[key] = value
+                    processed_node[node_key] = node_value
+                if node_key in COMMON_ID_FIELDS:
+                    id_field_found = node_key
+            
+            if id_field_found:
+                processed_node['uid'] = processed_node[id_field_found]
             return processed_node
         return item
 
@@ -35,13 +47,19 @@ def process_record(record):
     processed_record = {}
     for key, value in record.items():
         if isinstance(value, Node):
-            processed_node = {}
-            for node_key, node_value in value.items():
-                if hasattr(node_value, 'to_native'): # Check for Neo4j temporal types
-                    processed_node[node_key] = node_value.to_native()
+            node_dict_for_key = {}
+            id_field_found = None
+            for node_prop_key, node_prop_value in value.items():
+                if hasattr(node_prop_value, 'to_native'): # Check for Neo4j temporal types
+                    node_dict_for_key[node_prop_key] = node_prop_value.to_native()
                 else:
-                    processed_node[node_key] = node_value
-            processed_record[key] = processed_node
+                    node_dict_for_key[node_prop_key] = node_prop_value
+                if node_prop_key in COMMON_ID_FIELDS:
+                    id_field_found = node_prop_key
+            
+            if id_field_found:
+                node_dict_for_key['uid'] = node_dict_for_key[id_field_found]
+            processed_record[key] = node_dict_for_key
         elif hasattr(value, 'to_native'):
             processed_record[key] = value.to_native()
         else:

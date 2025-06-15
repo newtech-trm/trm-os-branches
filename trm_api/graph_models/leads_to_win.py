@@ -25,8 +25,8 @@ class LeadsToWinRel(StructuredRel):
             5: "Critical"
         }
     )
-    creationDate = DateTimeProperty(default=datetime.now)
-    lastModifiedDate = DateTimeProperty(default=datetime.now)
+    creationDate = DateTimeProperty(default_now=True)
+    lastModifiedDate = DateTimeProperty(default_now=True)
     
     # Optional properties
     directContribution = BooleanProperty(default=True)

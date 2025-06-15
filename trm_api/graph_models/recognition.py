@@ -5,29 +5,52 @@ from neomodel import (
 from datetime import datetime
 import uuid
 
-from trm_api.graph_models.base_node import BaseNode
+from .base import BaseNode
 
 class Recognition(BaseNode):
     """
-    Neo4j node representing a Recognition in the system.
-    Recognitions are typically given to acknowledge a WIN or contribution.
+    Neo4j node representing a Recognition in the system. (Ontology V3.2)
+    Recognitions acknowledge value, contributions, or achievements, often linked to a WIN.
     """
-    winId = StringProperty(required=True, index=True)
-    granterUserId = StringProperty(required=True, index=True)  # ID of user giving the recognition
-    recipientUserIds = ArrayProperty(StringProperty(), required=True)  # IDs of users receiving the recognition
-    message = StringProperty(required=True)
-    recognitionType = StringProperty(default="Gratitude")  # e.g., 'Gratitude', 'Impact', 'Innovation'
+    # Core Properties
+    name = StringProperty(required=True, index=True)  # A concise title for the recognition
+    message = StringProperty(required=True)           # Detailed message or description
+    recognitionType = StringProperty(default="GRATITUDE", index=True, choices={ # e.g., 'Gratitude', 'Impact', 'Innovation', 'Endorsement'
+        "GRATITUDE": "Expressing gratitude for an action or contribution.",
+        "IMPACT": "Acknowledging significant impact or results.",
+        "INNOVATION": "Recognizing novel ideas or approaches.",
+        "ENDORSEMENT": "Endorsing a skill, capability, or work.",
+        "ACHIEVEMENT": "Celebrating a specific achievement or milestone."
+    })
+    status = StringProperty(choices={'PROPOSED': 'Proposed', 'GRANTED': 'Granted', 'ARCHIVED': 'Archived'}, default='GRANTED', index=True)
+    value_level = StringProperty(index=True, required=False) # Qualitative (e.g., "High Value") or quantitative score
+    tags = ArrayProperty(StringProperty(), default=lambda: []) # Using lambda for default mutable
+
+    # Relationships (Ontology V3.2)
+    # Agent who grants the recognition
+    given_by = RelationshipFrom('trm_api.graph_models.agent.Agent', 'GIVEN_BY')
+    # Agent(s) who receive the recognition
+    received_by = RelationshipTo('trm_api.graph_models.agent.Agent', 'RECEIVED_BY')
+    # WIN that this recognition is for (primary focus)
+    recognizes_win = RelationshipTo('trm_api.graph_models.win.WIN', 'RECOGNIZES_WIN')
     
-    # Relationships
-    given_by = RelationshipFrom('trm_api.graph_models.user.User', 'GIVES_RECOGNITION')
-    received_by = RelationshipTo('trm_api.graph_models.user.User', 'RECEIVES_RECOGNITION')
-    recognizes_win = RelationshipTo('trm_api.graph_models.win.WIN', 'RECOGNIZES')
+    # What specific contribution is being recognized (Project, Task, Resource)
+    # Tách thành các relationship riêng biệt thay vì dùng list
+    recognizes_contribution_to_project = RelationshipTo(
+        'trm_api.graph_models.project.Project',
+        'RECOGNIZES_CONTRIBUTION_TO'
+    )
+    recognizes_contribution_to_task = RelationshipTo(
+        'trm_api.graph_models.task.Task',
+        'RECOGNIZES_CONTRIBUTION_TO'
+    )
+    recognizes_contribution_to_resource = RelationshipTo(
+        'trm_api.graph_models.resource.Resource',
+        'RECOGNIZES_CONTRIBUTION_TO'
+    )
     
-    @classmethod
-    def create(cls, **props):
-        """Create a new Recognition node with a generated recognitionId."""
-        # Set default values for required fields
-        props.setdefault('uid', str(uuid.uuid4()))
-        props.setdefault('createdAt', datetime.utcnow())
-        
-        return super(Recognition, cls).create(**props)
+    # Event generated when this recognition is granted
+    generates_event = RelationshipTo('trm_api.graph_models.event.Event', 'GENERATES_EVENT')
+
+    def __str__(self):
+        return f"Recognition: {self.name} ({self.uid})"

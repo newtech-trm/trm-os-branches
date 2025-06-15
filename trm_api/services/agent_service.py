@@ -1,6 +1,7 @@
 from neo4j import Driver
 from typing import List, Optional
 from datetime import datetime
+from fastapi import HTTPException
 
 from trm_api.db.session import get_driver
 from trm_api.models.agent import Agent, AgentCreate, AgentUpdate, AgentInDB
@@ -13,92 +14,228 @@ class AgentService:
     def _get_db(self) -> Driver:
         return get_driver()
 
-    def create_agent(self, agent_create: AgentCreate) -> Agent:
+    def create_agent(self, agent_create: AgentCreate) -> Optional[Agent]:
         """Creates a new Agent node."""
-        agent_db = AgentInDB(**agent_create.model_dump())
-        params = agent_db.model_dump(by_alias=True)
+        agent_db_for_params = AgentInDB(**agent_create.model_dump(exclude_unset=True))
+        params = agent_db_for_params.model_dump(by_alias=True)
+
+        print(f"DEBUG: Params sent to _create_agent_tx: {params}") # For debugging
 
         with self._get_db().session() as session:
-            result = session.write_transaction(self._create_agent_tx, params)
-            return Agent(**result)
+            result_data = session.write_transaction(self._create_agent_tx, params)
+        if not result_data:
+            raise HTTPException(status_code=404, detail="Agent could not be created in DB")
+        
+        # Convert neo4j.time.DateTime to python datetime
+        if 'creationDate' in result_data and result_data['creationDate'] is not None:
+            if hasattr(result_data['creationDate'], 'to_native'): # Check if it's a neo4j datetime object
+                result_data['creationDate'] = result_data['creationDate'].to_native()
+        if 'lastModifiedDate' in result_data and result_data['lastModifiedDate'] is not None:
+            if hasattr(result_data['lastModifiedDate'], 'to_native'): # Check if it's a neo4j datetime object
+                result_data['lastModifiedDate'] = result_data['lastModifiedDate'].to_native()
+
+        # print(f"DEBUG: Result data from DB before Pydantic model: {result_data}") # For debugging
+        return Agent(**result_data)
 
     @staticmethod
-    def _create_agent_tx(tx, params: dict) -> dict:
+    def _create_agent_tx(tx, params: dict) -> Optional[dict]:
+        # params includes aliased keys like agentId, agentType, creationDate, etc.
         query = (
             "CREATE (a:Agent { "
-            "  agentId: $agentId, "
+            "  uid: $agentId, "                 # Neo4j 'uid' from params['agentId']
             "  name: $name, "
+            "  agent_type: $agentType, "       # Neo4j 'agent_type' from params['agentType']
+            "  purpose: $purpose, "
             "  description: $description, "
-            "  version: $version, "
-            "  type: $type, "
             "  status: $status, "
-            "  createdAt: datetime($createdAt), "
-            "  updatedAt: null "
+            "  capabilities: $capabilities, "
+            "  job_title: $jobTitle, "
+            "  department: $department, "
+            "  is_founder: $isFounder, "
+            "  founder_recognition_authority: $founderRecognitionAuthority, "
+            "  contact_info: $contactInfo, "
+            "  creation_date: datetime($creationDate), "          # Neo4j 'creation_date'
+            "  last_modified_date: datetime($lastModifiedDate) "  # Neo4j 'last_modified_date'
+            # 'purpose' is in Pydantic model but not in Agent graph_model, so not persisted here.
             "}) "
-            "RETURN a"
+            "RETURN "
+            "  a.uid AS agentId, "
+            "  a.name AS name, "
+            "  a.agent_type AS agentType, "
+            "  a.purpose AS purpose, "
+            "  a.description AS description, "
+            "  a.status AS status, "
+            "  a.capabilities AS capabilities, "
+            "  a.job_title AS jobTitle, "
+            "  a.department AS department, "
+            "  a.is_founder AS isFounder, "
+            "  a.founder_recognition_authority AS founderRecognitionAuthority, "
+            "  a.contact_info AS contactInfo, "
+            "  a.creation_date AS creationDate, "
+            "  a.last_modified_date AS lastModifiedDate"
+            # 'purpose' from Pydantic is not returned as it's not stored on the node
+            # tool_ids are not directly on the Agent node in graph_model, handle via relationships if needed
         )
+        
+        print(f"DEBUG: Cypher query for CREATE Agent: {query}") # For debugging
+        print(f"DEBUG: Cypher params for CREATE Agent: {params}") # For debugging
+
         result = tx.run(query, params)
         record = result.single()
-        return dict(record['a']) if record and record['a'] else None
+        
+        if record:
+            print(f"DEBUG: Record from DB after CREATE Agent: {dict(record)}") # For debugging
+            return dict(record)
+        return None
 
     def get_agent_by_id(self, agent_id: str) -> Optional[Agent]:
         """Retrieves a single agent by its unique ID."""
         with self._get_db().session() as session:
-            result = session.read_transaction(self._get_agent_by_id_tx, agent_id)
-            return Agent(**result) if result else None
+            result_data = session.read_transaction(self._get_agent_by_id_tx, agent_id)
+       
+        if not result_data:
+            return None
+       
+        # Convert neo4j.time.DateTime to python datetime
+        if 'creationDate' in result_data and result_data['creationDate'] is not None:
+            if hasattr(result_data['creationDate'], 'to_native'):
+                result_data['creationDate'] = result_data['creationDate'].to_native()
+        if 'lastModifiedDate' in result_data and result_data['lastModifiedDate'] is not None:
+            if hasattr(result_data['lastModifiedDate'], 'to_native'):
+                result_data['lastModifiedDate'] = result_data['lastModifiedDate'].to_native()
+       
+        return Agent(**result_data)
 
     @staticmethod
     def _get_agent_by_id_tx(tx, agent_id: str) -> Optional[dict]:
-        query = "MATCH (a:Agent {agentId: $agentId}) RETURN a"
+        query = (
+            "MATCH (a:Agent {uid: $agentId}) "
+            "RETURN "
+            "  a.uid AS agentId, "
+            "  a.name AS name, "
+            "  a.agent_type AS agentType, "
+            "  a.purpose AS purpose, "
+            "  a.description AS description, "
+            "  a.status AS status, "
+            "  a.capabilities AS capabilities, "
+            "  a.job_title AS jobTitle, "
+            "  a.department AS department, "
+            "  a.is_founder AS isFounder, "
+            "  a.founder_recognition_authority AS founderRecognitionAuthority, "
+            "  a.contact_info AS contactInfo, "
+            "  a.creation_date AS creationDate, "
+            "  a.last_modified_date AS lastModifiedDate"
+        )
         result = tx.run(query, agentId=agent_id)
         record = result.single()
-        return dict(record['a']) if record and record['a'] else None
+        return dict(record) if record else None
 
     def list_agents(self, skip: int = 0, limit: int = 100) -> List[Agent]:
         """Retrieves a list of agents with pagination."""
         with self._get_db().session() as session:
-            results = session.read_transaction(self._list_agents_tx, skip, limit)
-            return [Agent(**result) for result in results]
+            raw_results = session.read_transaction(self._list_agents_tx, skip, limit)
+       
+        processed_agents = []
+        for agent_data in raw_results:
+            # Convert neo4j.time.DateTime to python datetime
+            if 'creationDate' in agent_data and agent_data['creationDate'] is not None:
+                if hasattr(agent_data['creationDate'], 'to_native'):
+                    agent_data['creationDate'] = agent_data['creationDate'].to_native()
+            if 'lastModifiedDate' in agent_data and agent_data['lastModifiedDate'] is not None:
+                if hasattr(agent_data['lastModifiedDate'], 'to_native'):
+                    agent_data['lastModifiedDate'] = agent_data['lastModifiedDate'].to_native()
+            processed_agents.append(Agent(**agent_data))
+        return processed_agents
 
     @staticmethod
     def _list_agents_tx(tx, skip: int, limit: int) -> List[dict]:
         query = (
             "MATCH (a:Agent) "
-            "RETURN a "
+            "RETURN "
+            "  a.uid AS agentId, "
+            "  a.name AS name, "
+            "  a.agent_type AS agentType, "
+            "  a.purpose AS purpose, "
+            "  a.description AS description, "
+            "  a.status AS status, "
+            "  a.capabilities AS capabilities, "
+            "  a.job_title AS jobTitle, "
+            "  a.department AS department, "
+            "  a.is_founder AS isFounder, "
+            "  a.founder_recognition_authority AS founderRecognitionAuthority, "
+            "  a.contact_info AS contactInfo, "
+            "  a.creation_date AS creationDate, "
+            "  a.last_modified_date AS lastModifiedDate "
             "ORDER BY a.name ASC "
             "SKIP $skip LIMIT $limit"
         )
         result = tx.run(query, skip=skip, limit=limit)
-        return [dict(record['a']) for record in result]
+        return [dict(record) for record in result]
 
     def update_agent(self, agent_id: str, agent_update: AgentUpdate) -> Optional[Agent]:
         """Updates an existing agent."""
-        update_data = agent_update.model_dump(exclude_unset=True, by_alias=True)
-        if not update_data:
-            return self.get_agent_by_id(agent_id)
+        update_data_from_request = agent_update.model_dump(exclude_unset=True, by_alias=True)
 
-        update_data['updatedAt'] = datetime.utcnow()
+        if not update_data_from_request:
+            pass 
+
+        final_update_data = update_data_from_request.copy()
+        final_update_data['updatedAt'] = datetime.utcnow()
 
         with self._get_db().session() as session:
-            result = session.write_transaction(self._update_agent_tx, agent_id, update_data)
-            return Agent(**result) if result else None
+            result_data = session.write_transaction(self._update_agent_tx, agent_id, final_update_data)
+    
+        if not result_data:
+            return None
+
+        if 'creationDate' in result_data and result_data['creationDate'] is not None:
+            if hasattr(result_data['creationDate'], 'to_native'):
+                result_data['creationDate'] = result_data['creationDate'].to_native()
+        if 'lastModifiedDate' in result_data and result_data['lastModifiedDate'] is not None:
+            if hasattr(result_data['lastModifiedDate'], 'to_native'): 
+                result_data['lastModifiedDate'] = result_data['lastModifiedDate'].to_native()
+    
+        return Agent(**result_data)
 
     @staticmethod
     def _update_agent_tx(tx, agent_id: str, update_data: dict) -> Optional[dict]:
-        set_clauses = [f"a.{key} = ${key}" for key in update_data.keys()]
-        if 'updatedAt' in update_data:
-            set_clauses.remove('a.updatedAt = $updatedAt')
-            set_clauses.append('a.updatedAt = datetime($updatedAt)')
+        set_clauses = []
+        for key in update_data.keys():
+            if key == 'updatedAt': 
+                set_clauses.append(f"a.last_modified_date = datetime($updatedAt)")
+            elif key != 'agentId': 
+                 set_clauses.append(f"a.{key} = ${key}")
+
+        if not set_clauses:
+            # This case implies only agentId was in update_data, which shouldn't happen if we add 'updatedAt'
+            # Or if update_data was empty except for agentId. If 'updatedAt' is always added, this path is less likely.
+            # However, if it's possible that no valid fields to SET are generated, we might need to return early or handle.
+            # For now, assume 'updatedAt' ensures at least one SET clause.
+            pass
 
         query = (
-            f"MATCH (a:Agent {{agentId: $agentId}}) "
+            f"MATCH (a:Agent {{uid: $agentId}}) "
             f"SET {', '.join(set_clauses)} "
-            "RETURN a"
+            "RETURN "
+            "  a.uid AS agentId, "
+            "  a.name AS name, "
+            "  a.agent_type AS agentType, "
+            "  a.purpose AS purpose, "
+            "  a.description AS description, "
+            "  a.status AS status, "
+            "  a.capabilities AS capabilities, "
+            "  a.job_title AS jobTitle, "
+            "  a.department AS department, "
+            "  a.is_founder AS isFounder, "
+            "  a.founder_recognition_authority AS founderRecognitionAuthority, "
+            "  a.contact_info AS contactInfo, "
+            "  a.creation_date AS creationDate, "
+            "  a.last_modified_date AS lastModifiedDate"
         )
         params = {'agentId': agent_id, **update_data}
         result = tx.run(query, params)
         record = result.single()
-        return dict(record['a']) if record and record['a'] else None
+        return dict(record) if record else None
 
     def delete_agent(self, agent_id: str) -> bool:
         """Deletes an agent by its ID."""
@@ -108,7 +245,7 @@ class AgentService:
 
     @staticmethod
     def _delete_agent_tx(tx, agent_id: str) -> bool:
-        query = "MATCH (a:Agent {agentId: $agentId}) DETACH DELETE a"
+        query = "MATCH (a:Agent {uid: $agentId}) DETACH DELETE a" # Changed to uid
         result = tx.run(query, agentId=agent_id)
         summary = result.consume()
         return summary.counters.nodes_deleted > 0
