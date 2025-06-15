@@ -4597,3 +4597,1442 @@ asyncio.exceptions.CancelledError
 2025-06-15 08:48:26,880 - uvicorn.error - INFO - Application shutdown complete.
 2025-06-15 08:48:26,880 - uvicorn.error - INFO - Finished server process [8020]
 2025-06-15 08:48:27,671 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 09:58:53,193 - uvicorn.access - INFO - 127.0.0.1:58451 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 09:58:53,198 - uvicorn.access - INFO - 127.0.0.1:58452 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 09:58:53,202 - uvicorn.access - INFO - 127.0.0.1:58453 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 09:58:53,206 - uvicorn.access - INFO - 127.0.0.1:58454 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 09:58:53,209 - uvicorn.access - INFO - 127.0.0.1:58455 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:00:48,917 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:01:10,355 - uvicorn.error - INFO - Shutting down
+2025-06-15 10:01:10,464 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:01:10,464 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:01:10,464 - uvicorn.error - INFO - Finished server process [36356]
+2025-06-15 10:01:31,059 - uvicorn.access - INFO - 127.0.0.1:59022 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:01:31,061 - uvicorn.access - INFO - 127.0.0.1:59023 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:01:31,063 - uvicorn.access - INFO - 127.0.0.1:59024 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:01:31,066 - uvicorn.access - INFO - 127.0.0.1:59025 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:01:31,069 - uvicorn.access - INFO - 127.0.0.1:59026 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:01:49,774 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:02:05,944 - uvicorn.access - INFO - 127.0.0.1:59150 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:02:05,946 - uvicorn.access - INFO - 127.0.0.1:59151 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:02:05,949 - uvicorn.access - INFO - 127.0.0.1:59152 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:02:05,952 - uvicorn.access - INFO - 127.0.0.1:59153 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:02:05,954 - uvicorn.access - INFO - 127.0.0.1:59154 - "GET /api/v1/health-check HTTP/1.1" 404
+2025-06-15 10:03:14,157 - uvicorn.error - INFO - Shutting down
+2025-06-15 10:03:14,266 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:03:14,268 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:03:14,269 - uvicorn.error - INFO - Finished server process [34280]
+2025-06-15 10:03:15,128 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:03:42,236 - uvicorn.access - INFO - 127.0.0.1:59488 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:03:42,242 - uvicorn.access - INFO - 127.0.0.1:59489 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:03:42,247 - uvicorn.access - INFO - 127.0.0.1:59490 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:03:42,250 - uvicorn.access - INFO - 127.0.0.1:59491 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:03:42,254 - uvicorn.access - INFO - 127.0.0.1:59492 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:13,069 - uvicorn.access - INFO - 127.0.0.1:59609 - "GET /health HTTP/1.1" 200
+2025-06-15 10:04:43,242 - uvicorn.access - INFO - 127.0.0.1:59761 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:43,244 - uvicorn.access - INFO - 127.0.0.1:59762 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:43,246 - uvicorn.access - INFO - 127.0.0.1:59763 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:43,249 - uvicorn.access - INFO - 127.0.0.1:59764 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:43,250 - uvicorn.access - INFO - 127.0.0.1:59765 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:58,280 - uvicorn.access - INFO - 127.0.0.1:59815 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:58,282 - uvicorn.access - INFO - 127.0.0.1:59816 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:58,285 - uvicorn.access - INFO - 127.0.0.1:59817 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:58,287 - uvicorn.access - INFO - 127.0.0.1:59818 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:04:58,290 - uvicorn.access - INFO - 127.0.0.1:59819 - "GET /api/v1/health HTTP/1.1" 404
+2025-06-15 10:08:59,336 - uvicorn.error - INFO - Shutting down
+2025-06-15 10:08:59,445 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:08:59,445 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:08:59,445 - uvicorn.error - INFO - Finished server process [22904]
+2025-06-15 10:09:00,274 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:09:09,021 - uvicorn.access - INFO - 127.0.0.1:60694 - "GET /health HTTP/1.1" 200
+2025-06-15 10:09:09,023 - uvicorn.access - INFO - 127.0.0.1:60695 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:09:09,027 - uvicorn.access - INFO - 127.0.0.1:60696 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 10:09:09,030 - uvicorn.access - INFO - 127.0.0.1:60696 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 10:09:09,035 - uvicorn.access - INFO - 127.0.0.1:60698 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 10:09:09,036 - uvicorn.access - INFO - 127.0.0.1:60698 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 10:09:09,040 - uvicorn.access - INFO - 127.0.0.1:60699 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 10:09:09,042 - uvicorn.access - INFO - 127.0.0.1:60699 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 10:09:09,045 - uvicorn.access - INFO - 127.0.0.1:60700 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 10:09:09,047 - uvicorn.access - INFO - 127.0.0.1:60700 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 10:09:09,049 - uvicorn.access - INFO - 127.0.0.1:60701 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:09:09,052 - uvicorn.access - INFO - 127.0.0.1:60702 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:09:53,340 - uvicorn.access - INFO - 127.0.0.1:60873 - "GET /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:10:13,412 - uvicorn.error - INFO - Shutting down
+2025-06-15 10:10:13,522 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:10:13,524 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:10:13,524 - uvicorn.error - INFO - Finished server process [13716]
+2025-06-15 10:10:14,305 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:10:14,306 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\base_events.py", line 650, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "E:\tech\trm-os-branches\trm_api\main.py", line 13, in lifespan
+    yield
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 743, in lifespan
+    await receive()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-06-15 10:10:15,016 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:11:29,442 - uvicorn.error - INFO - Shutting down
+2025-06-15 10:11:29,551 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:11:29,554 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:11:29,554 - uvicorn.error - INFO - Finished server process [29000]
+2025-06-15 10:11:30,324 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:15:14,406 - uvicorn.error - INFO - Shutting down
+2025-06-15 10:15:14,515 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:15:14,517 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:15:14,517 - uvicorn.error - INFO - Finished server process [27112]
+2025-06-15 10:15:15,555 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:20:54,446 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:21:23,525 - uvicorn.access - INFO - 127.0.0.1:63398 - "GET /health HTTP/1.1" 200
+2025-06-15 10:21:23,529 - uvicorn.access - INFO - 127.0.0.1:63399 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:21:23,533 - uvicorn.access - INFO - 127.0.0.1:63400 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 10:21:23,536 - uvicorn.access - INFO - 127.0.0.1:63400 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 10:21:23,541 - uvicorn.access - INFO - 127.0.0.1:63401 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 10:21:23,543 - uvicorn.access - INFO - 127.0.0.1:63401 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 10:21:23,548 - uvicorn.access - INFO - 127.0.0.1:63402 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 10:21:23,549 - uvicorn.access - INFO - 127.0.0.1:63402 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 10:21:23,553 - uvicorn.access - INFO - 127.0.0.1:63403 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 10:21:23,554 - uvicorn.access - INFO - 127.0.0.1:63403 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 10:21:23,559 - uvicorn.access - INFO - 127.0.0.1:63404 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:21:23,562 - uvicorn.access - INFO - 127.0.0.1:63405 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:21:46,306 - uvicorn.access - INFO - 127.0.0.1:63493 - "GET /health HTTP/1.1" 200
+2025-06-15 10:21:46,309 - uvicorn.access - INFO - 127.0.0.1:63494 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:21:46,313 - uvicorn.access - INFO - 127.0.0.1:63495 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 10:21:46,314 - uvicorn.access - INFO - 127.0.0.1:63495 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 10:21:46,320 - uvicorn.access - INFO - 127.0.0.1:63496 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 10:21:46,323 - uvicorn.access - INFO - 127.0.0.1:63496 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 10:21:46,327 - uvicorn.access - INFO - 127.0.0.1:63497 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 10:21:46,330 - uvicorn.access - INFO - 127.0.0.1:63497 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 10:21:46,333 - uvicorn.access - INFO - 127.0.0.1:63498 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 10:21:46,335 - uvicorn.access - INFO - 127.0.0.1:63498 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 10:21:46,339 - uvicorn.access - INFO - 127.0.0.1:63499 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:21:46,343 - uvicorn.access - INFO - 127.0.0.1:63500 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:24:34,993 - uvicorn.access - INFO - 127.0.0.1:64109 - "GET /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:25:27,696 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:28:12,496 - uvicorn.access - INFO - 127.0.0.1:64937 - "GET /health HTTP/1.1" 200
+2025-06-15 10:28:39,600 - uvicorn.access - INFO - 127.0.0.1:65022 - "GET /health HTTP/1.1" 200
+2025-06-15 10:29:52,624 - uvicorn.access - INFO - 127.0.0.1:65279 - "GET /health HTTP/1.1" 200
+2025-06-15 10:29:52,628 - uvicorn.access - INFO - 127.0.0.1:65280 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:29:52,631 - uvicorn.access - INFO - 127.0.0.1:65281 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 10:29:52,633 - uvicorn.access - INFO - 127.0.0.1:65281 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 10:29:52,637 - uvicorn.access - INFO - 127.0.0.1:65282 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 10:29:52,639 - uvicorn.access - INFO - 127.0.0.1:65282 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 10:29:52,643 - uvicorn.access - INFO - 127.0.0.1:65283 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 10:29:52,644 - uvicorn.access - INFO - 127.0.0.1:65283 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 10:29:52,647 - uvicorn.access - INFO - 127.0.0.1:65284 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 10:29:52,649 - uvicorn.access - INFO - 127.0.0.1:65284 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 10:29:52,653 - uvicorn.access - INFO - 127.0.0.1:65285 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:29:52,655 - uvicorn.access - INFO - 127.0.0.1:65286 - "POST /api/v1/agents HTTP/1.1" 404
+2025-06-15 10:30:52,194 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:30:52,194 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): only one usage of each socket address (protocol/network address/port) is normally permitted
+2025-06-15 10:30:52,195 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:30:52,195 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:31:20,171 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:31:20,172 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): only one usage of each socket address (protocol/network address/port) is normally permitted
+2025-06-15 10:31:20,172 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:31:20,173 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:36:25,915 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:36:25,915 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): only one usage of each socket address (protocol/network address/port) is normally permitted
+2025-06-15 10:36:25,915 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:36:25,915 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:37:04,618 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:37:04,618 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): only one usage of each socket address (protocol/network address/port) is normally permitted
+2025-06-15 10:37:04,618 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:37:04,619 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:38:32,175 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:38:32,175 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8000): only one usage of each socket address (protocol/network address/port) is normally permitted
+2025-06-15 10:38:32,176 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:38:32,177 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:40:02,765 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 10:40:02,765 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8001): only one usage of each socket address (protocol/network address/port) is normally permitted
+2025-06-15 10:40:02,766 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:40:02,766 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:42:09,121 - uvicorn.error - INFO - Shutting down
+2025-06-15 10:42:09,229 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 10:42:09,230 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 10:42:09,231 - uvicorn.error - INFO - Finished server process [32664]
+2025-06-15 10:42:10,035 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 11:17:01,637 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 11:17:01,637 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+2025-06-15 11:22:25,568 - uvicorn.access - INFO - 127.0.0.1:51619 - "GET /health HTTP/1.1" 200
+2025-06-15 11:22:25,571 - uvicorn.access - INFO - 127.0.0.1:51620 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:22:25,573 - uvicorn.access - INFO - 127.0.0.1:51620 - "POST /api/v1/agents/ HTTP/1.1" 422
+2025-06-15 11:22:25,576 - uvicorn.access - INFO - 127.0.0.1:51621 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 11:22:25,578 - uvicorn.access - INFO - 127.0.0.1:51621 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 11:22:25,582 - uvicorn.access - INFO - 127.0.0.1:51622 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 11:22:25,583 - uvicorn.access - INFO - 127.0.0.1:51622 - "POST /api/v1/resources/ HTTP/1.1" 422
+2025-06-15 11:22:25,587 - uvicorn.access - INFO - 127.0.0.1:51623 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 11:22:25,590 - uvicorn.access - INFO - 127.0.0.1:51623 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 11:22:25,594 - uvicorn.access - INFO - 127.0.0.1:51624 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 11:22:25,596 - uvicorn.access - INFO - 127.0.0.1:51624 - "POST /api/v1/projects/ HTTP/1.1" 422
+2025-06-15 11:22:25,600 - uvicorn.access - INFO - 127.0.0.1:51626 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:22:25,603 - uvicorn.access - INFO - 127.0.0.1:51626 - "POST /api/v1/agents/ HTTP/1.1" 422
+2025-06-15 11:22:25,606 - uvicorn.access - INFO - 127.0.0.1:51627 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:22:25,608 - uvicorn.access - INFO - 127.0.0.1:51627 - "POST /api/v1/agents/ HTTP/1.1" 422
+2025-06-15 11:24:00,917 - uvicorn.access - INFO - 127.0.0.1:51877 - "GET /health HTTP/1.1" 200
+2025-06-15 11:24:00,920 - uvicorn.access - INFO - 127.0.0.1:51878 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:24:02,088 - uvicorn.access - INFO - 127.0.0.1:51878 - "POST /api/v1/agents/ HTTP/1.1" 500
+2025-06-15 11:24:02,088 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\agent.py", line 17, in create_agent
+    return service.create_agent(agent_create=agent_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 22, in create_agent
+    result = session.write_transaction(self._create_agent_tx, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_meta.py", line 219, in inner
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\session.py", line 797, in write_transaction
+    return self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\session.py", line 552, in _run_transaction
+    result = transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 40, in _create_agent_tx
+    result = tx.run(query, params)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\transaction.py", line 168, in run
+    result._tx_ready_run(query, parameters)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\result.py", line 131, in _tx_ready_run
+    self._run(query, parameters, None, None, None, None, None, None)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\result.py", line 181, in _run
+    self._attach()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\result.py", line 301, in _attach
+    self._connection.fetch_message()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_common.py", line 178, in inner
+    func(*args, **kwargs)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_bolt.py", line 850, in fetch_message
+    res = self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_bolt5.py", line 369, in _process_message
+    response.on_failure(summary_metadata or {})
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_common.py", line 245, in on_failure
+    raise Neo4jError.hydrate(**metadata)
+neo4j.exceptions.ClientError: {code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): description, type}
+2025-06-15 11:24:02,177 - uvicorn.access - INFO - 127.0.0.1:51884 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 11:24:02,179 - uvicorn.access - INFO - 127.0.0.1:51884 - "POST /api/v1/resources/ HTTP/1.1" 500
+2025-06-15 11:24:02,179 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\resource.py", line 28, in create_resource
+    db_resource = repo.create_typed_resource(resource_data=resource)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\resource_repository.py", line 36, in create_typed_resource
+    details = resource_data.details.model_dump(by_alias=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'model_dump'
+2025-06-15 11:24:02,182 - uvicorn.access - INFO - 127.0.0.1:51885 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 11:24:02,184 - uvicorn.access - INFO - 127.0.0.1:51885 - "POST /api/v1/resources/ HTTP/1.1" 500
+2025-06-15 11:24:02,184 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\resource.py", line 28, in create_resource
+    db_resource = repo.create_typed_resource(resource_data=resource)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\resource_repository.py", line 36, in create_typed_resource
+    details = resource_data.details.model_dump(by_alias=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'model_dump'
+2025-06-15 11:24:02,187 - uvicorn.access - INFO - 127.0.0.1:51886 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 11:24:03,012 - uvicorn.access - INFO - 127.0.0.1:51886 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-15 11:24:03,015 - uvicorn.access - INFO - 127.0.0.1:51891 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 11:24:03,126 - uvicorn.access - INFO - 127.0.0.1:51891 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-15 11:24:03,130 - uvicorn.access - INFO - 127.0.0.1:51893 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:24:03,395 - uvicorn.access - INFO - 127.0.0.1:51893 - "POST /api/v1/agents/ HTTP/1.1" 500
+2025-06-15 11:24:03,395 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\agent.py", line 17, in create_agent
+    return service.create_agent(agent_create=agent_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 22, in create_agent
+    result = session.write_transaction(self._create_agent_tx, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_meta.py", line 219, in inner
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\session.py", line 797, in write_transaction
+    return self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\session.py", line 552, in _run_transaction
+    result = transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 40, in _create_agent_tx
+    result = tx.run(query, params)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\transaction.py", line 168, in run
+    result._tx_ready_run(query, parameters)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\result.py", line 131, in _tx_ready_run
+    self._run(query, parameters, None, None, None, None, None, None)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\result.py", line 181, in _run
+    self._attach()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\result.py", line 301, in _attach
+    self._connection.fetch_message()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_common.py", line 178, in inner
+    func(*args, **kwargs)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_bolt.py", line 850, in fetch_message
+    res = self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_bolt5.py", line 369, in _process_message
+    response.on_failure(summary_metadata or {})
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_common.py", line 245, in on_failure
+    raise Neo4jError.hydrate(**metadata)
+neo4j.exceptions.ClientError: {code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): description, type}
+2025-06-15 11:24:03,400 - uvicorn.access - INFO - 127.0.0.1:51894 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:24:03,660 - uvicorn.access - INFO - 127.0.0.1:51894 - "POST /api/v1/agents/ HTTP/1.1" 500
+2025-06-15 11:24:03,660 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 74, in app
+    response = await func(request)
+               ^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\fastapi\routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\agent.py", line 17, in create_agent
+    return service.create_agent(agent_create=agent_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 22, in create_agent
+    result = session.write_transaction(self._create_agent_tx, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_meta.py", line 219, in inner
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\session.py", line 797, in write_transaction
+    return self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\session.py", line 552, in _run_transaction
+    result = transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 40, in _create_agent_tx
+    result = tx.run(query, params)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\transaction.py", line 168, in run
+    result._tx_ready_run(query, parameters)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\result.py", line 131, in _tx_ready_run
+    self._run(query, parameters, None, None, None, None, None, None)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\result.py", line 181, in _run
+    self._attach()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\work\result.py", line 301, in _attach
+    self._connection.fetch_message()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_common.py", line 178, in inner
+    func(*args, **kwargs)
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_bolt.py", line 850, in fetch_message
+    res = self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_bolt5.py", line 369, in _process_message
+    response.on_failure(summary_metadata or {})
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\neo4j\_sync\io\_common.py", line 245, in on_failure
+    raise Neo4jError.hydrate(**metadata)
+neo4j.exceptions.ClientError: {code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): description, type}
+2025-06-15 11:36:02,847 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 11:36:32,628 - uvicorn.access - INFO - 127.0.0.1:53755 - "GET / HTTP/1.1" 200
+2025-06-15 11:36:32,649 - uvicorn.access - INFO - 127.0.0.1:53755 - "GET /favicon.ico HTTP/1.1" 404
+2025-06-15 11:36:41,039 - uvicorn.access - INFO - 127.0.0.1:53786 - "GET /docs HTTP/1.1" 200
+2025-06-15 11:36:41,403 - uvicorn.access - INFO - 127.0.0.1:53786 - "GET /api/v1/openapi.json HTTP/1.1" 200
+2025-06-15 11:37:39,578 - uvicorn.access - INFO - 127.0.0.1:53934 - "GET /health HTTP/1.1" 200
+2025-06-15 11:37:39,580 - uvicorn.access - INFO - 127.0.0.1:53935 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:37:40,758 - uvicorn.access - INFO - 127.0.0.1:53935 - "POST /api/v1/agents/ HTTP/1.1" 500
+2025-06-15 11:37:40,758 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\agent.py", line 17, in create_agent
+    return service.create_agent(agent_create=agent_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 22, in create_agent
+    result = session.write_transaction(self._create_agent_tx, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_meta.py", line 219, in inner
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 797, in write_transaction
+    return self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 552, in _run_transaction
+    result = transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 40, in _create_agent_tx
+    result = tx.run(query, params)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\transaction.py", line 168, in run
+    result._tx_ready_run(query, parameters)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 131, in _tx_ready_run
+    self._run(query, parameters, None, None, None, None, None, None)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 181, in _run
+    self._attach()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 301, in _attach
+    self._connection.fetch_message()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 178, in inner
+    func(*args, **kwargs)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt.py", line 850, in fetch_message
+    res = self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt5.py", line 369, in _process_message
+    response.on_failure(summary_metadata or {})
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 245, in on_failure
+    raise Neo4jError.hydrate(**metadata)
+neo4j.exceptions.ClientError: {code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): description, type}
+2025-06-15 11:37:40,833 - uvicorn.access - INFO - 127.0.0.1:53940 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 11:37:40,836 - uvicorn.access - INFO - 127.0.0.1:53940 - "POST /api/v1/resources/ HTTP/1.1" 500
+2025-06-15 11:37:40,836 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\resource.py", line 28, in create_resource
+    db_resource = repo.create_typed_resource(resource_data=resource)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\resource_repository.py", line 36, in create_typed_resource
+    details = resource_data.details.model_dump(by_alias=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'model_dump'
+2025-06-15 11:37:40,852 - uvicorn.access - INFO - 127.0.0.1:53942 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 11:37:40,856 - uvicorn.access - INFO - 127.0.0.1:53942 - "POST /api/v1/resources/ HTTP/1.1" 500
+2025-06-15 11:37:40,856 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\resource.py", line 28, in create_resource
+    db_resource = repo.create_typed_resource(resource_data=resource)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\resource_repository.py", line 36, in create_typed_resource
+    details = resource_data.details.model_dump(by_alias=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'model_dump'
+2025-06-15 11:37:40,860 - uvicorn.access - INFO - 127.0.0.1:53943 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 11:37:41,741 - uvicorn.access - INFO - 127.0.0.1:53943 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-15 11:37:41,744 - uvicorn.access - INFO - 127.0.0.1:53947 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 11:37:41,863 - uvicorn.access - INFO - 127.0.0.1:53947 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-15 11:37:41,866 - uvicorn.access - INFO - 127.0.0.1:53949 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:37:42,141 - uvicorn.access - INFO - 127.0.0.1:53949 - "POST /api/v1/agents/ HTTP/1.1" 500
+2025-06-15 11:37:42,141 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\agent.py", line 17, in create_agent
+    return service.create_agent(agent_create=agent_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 22, in create_agent
+    result = session.write_transaction(self._create_agent_tx, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_meta.py", line 219, in inner
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 797, in write_transaction
+    return self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 552, in _run_transaction
+    result = transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 40, in _create_agent_tx
+    result = tx.run(query, params)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\transaction.py", line 168, in run
+    result._tx_ready_run(query, parameters)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 131, in _tx_ready_run
+    self._run(query, parameters, None, None, None, None, None, None)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 181, in _run
+    self._attach()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 301, in _attach
+    self._connection.fetch_message()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 178, in inner
+    func(*args, **kwargs)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt.py", line 850, in fetch_message
+    res = self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt5.py", line 369, in _process_message
+    response.on_failure(summary_metadata or {})
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 245, in on_failure
+    raise Neo4jError.hydrate(**metadata)
+neo4j.exceptions.ClientError: {code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): description, type}
+2025-06-15 11:37:42,144 - uvicorn.access - INFO - 127.0.0.1:53950 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:37:42,418 - uvicorn.access - INFO - 127.0.0.1:53950 - "POST /api/v1/agents/ HTTP/1.1" 500
+2025-06-15 11:37:42,418 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\agent.py", line 17, in create_agent
+    return service.create_agent(agent_create=agent_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 22, in create_agent
+    result = session.write_transaction(self._create_agent_tx, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_meta.py", line 219, in inner
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 797, in write_transaction
+    return self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 552, in _run_transaction
+    result = transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 40, in _create_agent_tx
+    result = tx.run(query, params)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\transaction.py", line 168, in run
+    result._tx_ready_run(query, parameters)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 131, in _tx_ready_run
+    self._run(query, parameters, None, None, None, None, None, None)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 181, in _run
+    self._attach()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 301, in _attach
+    self._connection.fetch_message()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 178, in inner
+    func(*args, **kwargs)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt.py", line 850, in fetch_message
+    res = self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt5.py", line 369, in _process_message
+    response.on_failure(summary_metadata or {})
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 245, in on_failure
+    raise Neo4jError.hydrate(**metadata)
+neo4j.exceptions.ClientError: {code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): description, type}
+2025-06-15 11:38:30,421 - uvicorn.access - INFO - 127.0.0.1:54062 - "GET /health HTTP/1.1" 200
+2025-06-15 11:38:30,424 - uvicorn.access - INFO - 127.0.0.1:54063 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:38:30,701 - uvicorn.access - INFO - 127.0.0.1:54063 - "POST /api/v1/agents/ HTTP/1.1" 500
+2025-06-15 11:38:30,701 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\agent.py", line 17, in create_agent
+    return service.create_agent(agent_create=agent_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 22, in create_agent
+    result = session.write_transaction(self._create_agent_tx, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_meta.py", line 219, in inner
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 797, in write_transaction
+    return self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 552, in _run_transaction
+    result = transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 40, in _create_agent_tx
+    result = tx.run(query, params)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\transaction.py", line 168, in run
+    result._tx_ready_run(query, parameters)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 131, in _tx_ready_run
+    self._run(query, parameters, None, None, None, None, None, None)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 181, in _run
+    self._attach()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 301, in _attach
+    self._connection.fetch_message()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 178, in inner
+    func(*args, **kwargs)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt.py", line 850, in fetch_message
+    res = self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt5.py", line 369, in _process_message
+    response.on_failure(summary_metadata or {})
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 245, in on_failure
+    raise Neo4jError.hydrate(**metadata)
+neo4j.exceptions.ClientError: {code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): description, type}
+2025-06-15 11:38:30,705 - uvicorn.access - INFO - 127.0.0.1:54065 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 11:38:30,707 - uvicorn.access - INFO - 127.0.0.1:54065 - "POST /api/v1/resources/ HTTP/1.1" 500
+2025-06-15 11:38:30,707 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\resource.py", line 28, in create_resource
+    db_resource = repo.create_typed_resource(resource_data=resource)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\resource_repository.py", line 36, in create_typed_resource
+    details = resource_data.details.model_dump(by_alias=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'model_dump'
+2025-06-15 11:38:30,711 - uvicorn.access - INFO - 127.0.0.1:54066 - "POST /api/v1/resources HTTP/1.1" 307
+2025-06-15 11:38:30,713 - uvicorn.access - INFO - 127.0.0.1:54066 - "POST /api/v1/resources/ HTTP/1.1" 500
+2025-06-15 11:38:30,713 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\resource.py", line 28, in create_resource
+    db_resource = repo.create_typed_resource(resource_data=resource)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\repositories\resource_repository.py", line 36, in create_typed_resource
+    details = resource_data.details.model_dump(by_alias=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'model_dump'
+2025-06-15 11:38:30,716 - uvicorn.access - INFO - 127.0.0.1:54067 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 11:38:30,837 - uvicorn.access - INFO - 127.0.0.1:54067 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-15 11:38:30,839 - uvicorn.access - INFO - 127.0.0.1:54068 - "POST /api/v1/projects HTTP/1.1" 307
+2025-06-15 11:38:30,958 - uvicorn.access - INFO - 127.0.0.1:54068 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-15 11:38:30,962 - uvicorn.access - INFO - 127.0.0.1:54069 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:38:31,237 - uvicorn.access - INFO - 127.0.0.1:54069 - "POST /api/v1/agents/ HTTP/1.1" 500
+2025-06-15 11:38:31,238 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\agent.py", line 17, in create_agent
+    return service.create_agent(agent_create=agent_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 22, in create_agent
+    result = session.write_transaction(self._create_agent_tx, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_meta.py", line 219, in inner
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 797, in write_transaction
+    return self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 552, in _run_transaction
+    result = transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 40, in _create_agent_tx
+    result = tx.run(query, params)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\transaction.py", line 168, in run
+    result._tx_ready_run(query, parameters)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 131, in _tx_ready_run
+    self._run(query, parameters, None, None, None, None, None, None)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 181, in _run
+    self._attach()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 301, in _attach
+    self._connection.fetch_message()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 178, in inner
+    func(*args, **kwargs)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt.py", line 850, in fetch_message
+    res = self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt5.py", line 369, in _process_message
+    response.on_failure(summary_metadata or {})
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 245, in on_failure
+    raise Neo4jError.hydrate(**metadata)
+neo4j.exceptions.ClientError: {code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): description, type}
+2025-06-15 11:38:31,241 - uvicorn.access - INFO - 127.0.0.1:54070 - "POST /api/v1/agents HTTP/1.1" 307
+2025-06-15 11:38:31,517 - uvicorn.access - INFO - 127.0.0.1:54070 - "POST /api/v1/agents/ HTTP/1.1" 500
+2025-06-15 11:38:31,517 - uvicorn.error - ERROR - Exception in ASGI application
+Traceback (most recent call last):
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\protocols\http\httptools_impl.py", line 409, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\applications.py", line 112, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 187, in __call__
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\fastapi\routing.py", line 214, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\starlette\concurrency.py", line 37, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\to_thread.py", line 56, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 2470, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\anyio\_backends\_asyncio.py", line 967, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\api\v1\endpoints\agent.py", line 17, in create_agent
+    return service.create_agent(agent_create=agent_in)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 22, in create_agent
+    result = session.write_transaction(self._create_agent_tx, params)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_meta.py", line 219, in inner
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 797, in write_transaction
+    return self._run_transaction(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\session.py", line 552, in _run_transaction
+    result = transaction_function(tx, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\tech\trm-os-branches\trm_api\services\agent_service.py", line 40, in _create_agent_tx
+    result = tx.run(query, params)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\transaction.py", line 168, in run
+    result._tx_ready_run(query, parameters)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 131, in _tx_ready_run
+    self._run(query, parameters, None, None, None, None, None, None)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 181, in _run
+    self._attach()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\work\result.py", line 301, in _attach
+    self._connection.fetch_message()
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 178, in inner
+    func(*args, **kwargs)
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt.py", line 850, in fetch_message
+    res = self._process_message(tag, fields)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_bolt5.py", line 369, in _process_message
+    response.on_failure(summary_metadata or {})
+  File "C:\Users\devpc\AppData\Roaming\Python\Python311\site-packages\neo4j\_sync\io\_common.py", line 245, in on_failure
+    raise Neo4jError.hydrate(**metadata)
+neo4j.exceptions.ClientError: {code: Neo.ClientError.Statement.ParameterMissing} {message: Expected parameter(s): description, type}

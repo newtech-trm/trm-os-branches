@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from trm_api.api.v1.endpoints import project, tension, task, user, team, skill, win, resource, recognition, relationship, knowledge_snippet #, agent, event, tool
+from trm_api.api.v1.endpoints import project, tension, task, user, team, skill, win, resource, recognition, relationship, knowledge_snippet, agent #, event, tool
 
 api_router = APIRouter()
 
@@ -20,6 +20,6 @@ api_router.include_router(win.router, prefix="/wins", tags=["WINs"])
 api_router.include_router(recognition.router, prefix="/recognitions", tags=["Recognitions"])
 api_router.include_router(relationship.router, prefix="/relationships", tags=["Relationships"])
 api_router.include_router(knowledge_snippet.router, prefix="/knowledge-snippets", tags=["Knowledge Snippets"])
-# api_router.include_router(agent.router, prefix="/agents", tags=["Agents"])
+api_router.include_router(agent.router, prefix="/agents", tags=["Agents"])
 # api_router.include_router(event.router, prefix="/events", tags=["Events"])
 # api_router.include_router(tool.router, prefix="/tools", tags=["Tools"])
