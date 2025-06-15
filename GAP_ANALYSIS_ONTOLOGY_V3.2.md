@@ -37,7 +37,33 @@
 | **ASSIGNED_TO_PROJECT** (Resource ASSIGNED_TO_PROJECT Project) | ✅ Đã triển khai | Triển khai qua API `/api/v1/resources/{resource_uid}/assign-to-project/{project_uid}`. |
 | **ASSIGNED_TO_TASK** (Resource ASSIGNED_TO_TASK Task) | ✅ Đã triển khai | Triển khai qua API `/api/v1/resources/{resource_uid}/assign-to-task/{task_uid}`. |
 | **GENERATES_KNOWLEDGE**          | ❌ Chưa triển khai   | Không có API endpoint tương ứng trong OpenAPI spec. |
-{{ ... }}
+3.  **Triển khai các API endpoint còn lại**
+    * Chi tiết API endpoints cho `Recognition`:
+        * `POST /api/v1/recognitions/` ✗ Chưa triển khai
+        * `GET /api/v1/recognitions/{recognition_uid}` ✗ Chưa triển khai
+        * `PUT /api/v1/recognitions/{recognition_uid}` ✗ Chưa triển khai
+        * `DELETE /api/v1/recognitions/{recognition_uid}` ✗ Chưa triển khai
+        * `GET /api/v1/recognitions/` ✗ Chưa triển khai
+
+    * Chi tiết API endpoints cho `WIN`:
+        * `POST /api/v1/wins/` ✗ Chưa triển khai
+        * `GET /api/v1/wins/{win_uid}` ✗ Chưa triển khai
+        * `PUT /api/v1/wins/{win_uid}` ✗ Chưa triển khai
+        * `DELETE /api/v1/wins/{win_uid}` ✗ Chưa triển khai
+        * `GET /api/v1/wins/` ✗ Chưa triển khai
+
+    * Chi tiết API endpoints cho `KnowledgeSnippet`:
+        * `POST /api/v1/knowledge-snippets/` ✗ Chưa triển khai
+        * `GET /api/v1/knowledge-snippets/{snippet_uid}` ✗ Chưa triển khai
+        * `PUT /api/v1/knowledge-snippets/{snippet_uid}` ✗ Chưa triển khai
+        * `DELETE /api/v1/knowledge-snippets/{snippet_uid}` ✗ Chưa triển khai
+        * `GET /api/v1/knowledge-snippets/` ✗ Chưa triển khai
+
+    * API endpoints quản lý relationship chung:
+        * `POST /api/v1/{entity_type}/{entity_uid}/relationships/{relationship_type}` ✗ Chưa triển khai
+        * `DELETE /api/v1/{entity_type}/{entity_uid}/relationships/{relationship_type}/{target_uid}` ✗ Chưa triển khai
+        * `GET /api/v1/{entity_type}/{entity_uid}/relationships/{relationship_type}` ✗ Chưa triển khai
+
     * Triển khai API endpoints cho các mối quan hệ đã được định nghĩa trong model và các mối quan hệ còn thiếu, bao gồm:
         * `LEADS_TO_WIN` (Project → WIN)
         * `GENERATES_EVENT` (từ `Project`, `Task`, `Agent`, `Recognition`, `WIN` tới `Event`): Model đã cập nhật. API đã được triển khai thành công.
@@ -55,6 +81,7 @@
     * Kiểm thử tất cả các API endpoint đã triển khai dựa trên OpenAPI spec và logic nghiệp vụ.
     *   Xác nhận đầy đủ thuộc tính của các entity và relationship models/schemas.
     *   Kiểm tra tính đúng đắn của các mối quan hệ được tạo/quản lý qua API.
+    *   Kiểm thử việc serialize/deserialize datetime cho tất cả entity, sử dụng chuẩn `Neo4jDateTimeProperty` và adapter ISO format. ✗ Chưa triển khai toàn diện cho mọi entity.
 
 5.  **Cập nhật tài liệu:**
     *   Liên tục cập nhật `GAP_ANALYSIS_ONTOLOGY_V3.2.md` này.

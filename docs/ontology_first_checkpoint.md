@@ -79,7 +79,124 @@ def convert_event_to_schema(event: EventGraphModel) -> EventSchema:
     )
 ```
 
-## 4. Mục tiêu tiếp theo
+## 4. Cấu trúc thư mục và đường dẫn code
+
+### Thư mục gốc (root)
+
+```plaintext
+e:\tech\trm-os-branches\
+```
+
+### Cấu trúc thư mục chính
+
+- **docs/** - Tài liệu kỹ thuật và đặc tả
+  - **core-specs/** - Đặc tả cốt lõi
+  - **integration-specs/** - Đặc tả tích hợp
+  - **technical-decisions/** - Các quyết định kỹ thuật
+- **trm_api/** - Mã nguồn chính của API
+  - **api/** - API endpoints và routers
+    - **v1/** - API version 1
+      - **endpoints/** - Các endpoint cụ thể
+      - **schemas/** - Các schema Pydantic
+  - **graph_models/** - Models Neo4j dựa trên ontology
+  - **services/** - Lớp service xử lý logic nghiệp vụ
+- **scripts/** - Các script hỗ trợ, seed dữ liệu
+
+### Đường dẫn chính cần chú ý
+
+1. **Graph Models** (entity và relationship) được định nghĩa tại:
+
+   ```plaintext
+   e:\tech\trm-os-branches\trm_api\graph_models\*.py
+   ```
+
+   Ví dụ: `agent.py`, `event.py`, `resource.py`, `project.py`, v.v.
+
+2. **API Endpoints** được triển khai tại:
+
+   ```plaintext
+   e:\tech\trm-os-branches\trm_api\api\v1\endpoints\*.py
+   ```
+
+   Ví dụ: `event.py`, `agent.py`, `project.py`, v.v.
+
+3. **API Schemas** (Pydantic models) được định nghĩa tại:
+
+   ```plaintext
+   e:\tech\trm-os-branches\trm_api\api\v1\schemas\*.py
+   ```
+
+   Ví dụ: `event.py`, `agent.py`, `project.py`, v.v.
+
+4. **Services** (xử lý logic nghiệp vụ) được triển khai tại:
+
+   ```plaintext
+   e:\tech\trm-os-branches\trm_api\services\*.py
+   ```
+
+   Ví dụ: `event_service.py`, `agent_service.py`, v.v.
+
+5. **Scripts** (seed dữ liệu, test) được lưu tại:
+
+   ```plaintext
+   e:\tech\trm-os-branches\scripts\*.py
+   ```
+
+   Ví dụ: `seed_agent_data.py`, `seed_event_data.py`, v.v.
+
+## 5. Bài học kinh nghiệm (Lessons Learned)
+
+### Từ các fix lỗi Event API
+
+1. **Xử lý DateTime trong Neo4j**
+   - Luôn sử dụng custom `Neo4jDateTimeProperty` thay cho `DateTimeProperty` của neomodel
+   - Đảm bảo signature `inflate()` của Neo4jDateTimeProperty nhận đủ các tham số mà framework truyền vào
+   - Code tham khảo trong `trm_api/graph_models/base.py`
+
+2. **Serialize/Deserialize datetime**
+   - Thêm adapter function trong endpoint để chuyển đổi các trường datetime sang string ISO format
+   - Đảm bảo schema Pydantic định nghĩa các trường datetime dạng string
+   - Code tham khảo trong `trm_api/api/v1/endpoints/event.py`
+
+3. **Định nghĩa Relationship**
+   - Không sử dụng relationship trừ u tượng cho các node khác loại
+   - Sử dụng relationship cụ thể cho từng loại node (ví dụ `AGENT_CONTEXT`, `PROJECT_CONTEXT`)
+   - Cân nhắc kiểm tra kỹ RelationshipTo/From, đảm bảo truyền đúng kiểu (class hoặc string tên class)
+
+4. **Xử lý Array/JSON**
+   - Sử dụng `ArrayProperty(StringProperty())` thay vì `JSONProperty` cho các trường mang tính array đơn giản
+   - Đảm bảo dữ liệu trong Neo4j đúng kiểu với property định nghĩa trong model
+
+### Lưu ý cho các phần tiếp theo
+
+1. **Triển khai Recognition API**
+   - Tuân thủ các checklist trong GAP Analysis
+   - Áp dụng các lesson learned về datetime và relationship
+   - Đảm bảo tương thích với các entity đã triển khai
+
+2. **Triển khai WIN API**
+   - Tuân thủ các checklist trong GAP Analysis
+   - Đặc biệt chú ý các relationship quan trọng: LEADS_TO_WIN, GENERATES_KNOWLEDGE
+
+3. **Triển khai KnowledgeSnippet**
+   - Cần làm rõ mối quan hệ với KnowledgeResource trước khi triển khai
+   - Tích hợp chặt chẽ với WIN thông qua GENERATES_KNOWLEDGE
+
+### Kiểm soát chất lượng (QA)
+
+1. **Kiểm thử unit test cho từng entity**
+   - Mỗi entity cần test CRUD đầy đủ
+   - Các validation logic cần được test kỹ
+
+2. **Kiểm thử relationship**
+   - Test việc tạo và query các relationship
+   - Đảm bảo các relationship hoạt động đúng theo ontology
+
+3. **Seed dữ liệu mẫu**
+   - Luôn seed dữ liệu mẫu sau khi triển khai entity mới
+   - Kiểm tra tính chất graph traversal của Neo4j qua relationship
+
+## 6. Mục tiêu tiếp theo
 
 Theo kế hoạch được cập nhật, mục tiêu tiếp theo là:
 

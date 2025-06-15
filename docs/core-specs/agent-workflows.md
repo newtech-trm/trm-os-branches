@@ -37,14 +37,22 @@ This document details the core workflows that agents follow in the MVP version o
 
 ---
 
-## 3. Task Completion and Recognition Workflow
+## 3. Task Completion and Event Generation Workflow
 
-**Goal:** To recognize the completion of a task and trigger subsequent actions.
+**Goal:** To ghi nhận hoàn thành task và tạo event phù hợp trong hệ thống.
 
-- **Trigger:** A `task`'s status is updated to `'done'`.
-- **Responsible Agent:** The agent that performed the task, or a generic `systemAgent` monitoring status changes.
+- **Trigger:** Trạng thái của `task` được cập nhật thành `'done'`.
+- **Responsible Agent:** Agent thực hiện task, hoặc một `systemAgent` chuyên giám sát thay đổi trạng thái.
 - **Steps:**
-    1.  **Detect Task Completion:** The agent detects the status change.
-    2.  **Create Event:** It creates a `taskCompleted` `event` node.
-    3.  **Link Entities:** It establishes the `(agent)-[:triggers]->(event)` and `(event)-[:affects]->(task)` relationships.
-    4.  **Update Tension Status (Chain Reaction):** This `taskCompleted` event can trigger another workflow (potentially by the `tensionResolutionAgent`) to check if all tasks for a given `tension` are complete. If so, the agent can update the `tension`'s status to `resolved`.
+    1. **Detect Task Completion:** Agent phát hiện thay đổi trạng thái task.
+    2. **Create Event:** Agent tạo node `event` với name là `TASK_COMPLETED`.
+    3. **Link Entities:** Thiết lập các relationship:
+       - `(agent)-[:ACTOR_TRIGGERED_EVENT]->(event)` 
+       - `(event)-[:EVENT_CONTEXT]->(task)`
+    4. **Update Related Entities:** Cập nhật trạng thái của các entity liên quan.
+
+**Hiện trạng (2025-06-15):**
+- Event API đã hoàn thiện và có thể xử lý việc tạo event cho task completed
+- Relationship ACTOR_TRIGGERED_EVENT và EVENT_CONTEXT đã được triển khai
+- Seed script đã test thành công việc tạo event và liên kết với các entity
+- Cần phát triển service layer để tự động hóa quy trình này khi task được cập nhật

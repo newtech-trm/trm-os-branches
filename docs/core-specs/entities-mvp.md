@@ -97,7 +97,7 @@ Represents an autonomous entity (AI or human-in-the-loop) that performs actions 
 A record of a significant occurrence within the system. Events are immutable and form the basis of the "Recognition → Event → WIN" philosophy. Event API đã được triển khai thành công và dữ liệu Event có thể được seed và lưu vào Neo4j.
 
 - **Node Label:** `Event`
-- **Key Properties:** *(đã triển khai đúng theo mô hình Neo4j)*
+- **Key Properties:** **(đã triển khai đúng theo mô hình Neo4j)**
   - `uid` (String, UUID): Unique identifier. **(Primary Key)**
   - `name` (String): The type of event (e.g., `USER_LOGIN`, `PROJECT_STATUS_UPDATED`, `TASK_ASSIGNED`).
   - `description` (String): A human-readable description of the event.
