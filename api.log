@@ -4410,3 +4410,190 @@ asyncio.exceptions.CancelledError
 2025-06-15 07:56:10,854 - uvicorn.access - INFO - 127.0.0.1:64639 - "POST /api/v1/projects/ HTTP/1.1" 201
 2025-06-15 07:56:13,279 - uvicorn.access - INFO - 127.0.0.1:64647 - "POST /api/v1/tasks/ HTTP/1.1" 201
 2025-06-15 07:56:15,316 - uvicorn.access - INFO - 127.0.0.1:64655 - "POST /api/v1/knowledge-snippets/ HTTP/1.1" 422
+2025-06-15 08:20:04,490 - uvicorn.access - INFO - 127.0.0.1:53659 - "POST /api/v1/projects/ HTTP/1.1" 400
+2025-06-15 08:30:12,693 - uvicorn.error - INFO - Shutting down
+2025-06-15 08:30:12,709 - uvicorn.error - INFO - Shutting down
+2025-06-15 08:30:12,801 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 08:30:12,802 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 08:30:12,803 - uvicorn.error - INFO - Finished server process [30980]
+2025-06-15 08:30:12,817 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 08:30:12,818 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 08:30:12,819 - uvicorn.error - INFO - Finished server process [32164]
+2025-06-15 08:30:14,379 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:30:14,382 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\base_events.py", line 650, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "E:\tech\trm-os-branches\trm_api\main.py", line 13, in lifespan
+    yield
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 743, in lifespan
+    await receive()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-06-15 08:30:14,382 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:30:14,384 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\base_events.py", line 650, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "E:\tech\trm-os-branches\trm_api\main.py", line 13, in lifespan
+    yield
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 743, in lifespan
+    await receive()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-06-15 08:30:15,490 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:30:15,502 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:33:21,217 - uvicorn.error - INFO - Shutting down
+2025-06-15 08:33:21,325 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 08:33:21,326 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 08:33:21,326 - uvicorn.error - INFO - Finished server process [36684]
+2025-06-15 08:33:29,852 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:39:22,947 - uvicorn.access - INFO - 127.0.0.1:57814 - "POST /api/v1/projects/ HTTP/1.1" 400
+2025-06-15 08:42:48,606 - uvicorn.error - INFO - Shutting down
+2025-06-15 08:42:48,717 - uvicorn.error - INFO - Waiting for connections to close. (CTRL+C to force quit)
+2025-06-15 08:42:49,669 - uvicorn.access - INFO - 127.0.0.1:58586 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-15 08:42:49,694 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 08:42:49,695 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 08:42:49,695 - uvicorn.error - INFO - Finished server process [36664]
+2025-06-15 08:42:50,654 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:42:50,656 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\base_events.py", line 650, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "E:\tech\trm-os-branches\trm_api\main.py", line 13, in lifespan
+    yield
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 743, in lifespan
+    await receive()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-06-15 08:42:51,501 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:43:26,773 - uvicorn.error - INFO - Shutting down
+2025-06-15 08:43:26,882 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 08:43:26,882 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 08:43:26,882 - uvicorn.error - INFO - Finished server process [33864]
+2025-06-15 08:43:27,697 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:43:27,699 - uvicorn.error - ERROR - Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\base_events.py", line 650, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Python311\Lib\contextlib.py", line 222, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "E:\tech\trm-os-branches\trm_api\main.py", line 13, in lifespan
+    yield
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\starlette\routing.py", line 743, in lifespan
+    await receive()
+  File "e:\tech\trm-os-branches\.venv\Lib\site-packages\uvicorn\lifespan\on.py", line 137, in receive
+    return await self.receive_queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python311\Lib\asyncio\queues.py", line 158, in get
+    await getter
+asyncio.exceptions.CancelledError
+
+2025-06-15 08:43:28,540 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:44:01,232 - uvicorn.error - INFO - Shutting down
+2025-06-15 08:44:01,342 - uvicorn.error - INFO - Waiting for connections to close. (CTRL+C to force quit)
+2025-06-15 08:44:02,269 - uvicorn.access - INFO - 127.0.0.1:58864 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-15 08:44:02,320 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 08:44:02,321 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 08:44:02,321 - uvicorn.error - INFO - Finished server process [36824]
+2025-06-15 08:44:03,198 - uvicorn.error - INFO - Application startup complete.
+2025-06-15 08:44:04,203 - uvicorn.access - INFO - 127.0.0.1:58871 - "GET /api/v1/users/ HTTP/1.1" 200
+2025-06-15 08:44:29,202 - uvicorn.access - INFO - 127.0.0.1:58990 - "POST /api/v1/projects/ HTTP/1.1" 201
+2025-06-15 08:48:26,771 - uvicorn.error - INFO - Shutting down
+2025-06-15 08:48:26,879 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-15 08:48:26,880 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-15 08:48:26,880 - uvicorn.error - INFO - Finished server process [8020]
+2025-06-15 08:48:27,671 - uvicorn.error - INFO - Application startup complete.
