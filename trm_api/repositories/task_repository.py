@@ -36,7 +36,8 @@ class TaskRepository:
         new_task = GraphTask(**task_properties).save()
 
         # 3. Create the relationship from Project to the new Task.
-        project.tasks.connect(new_task)
+        #    The IsPartOfProjectRel model requires a 'relationshipId'.
+        project.tasks.connect(new_task, {'relationshipId': str(uuid.uuid4())})
 
         return new_task
 

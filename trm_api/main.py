@@ -55,5 +55,5 @@ if __name__ == "__main__":
     neomodel_logger = logging.getLogger('neomodel')
     neomodel_logger.setLevel(logging.DEBUG)
     
-    print(f"[TRM API] Khởi động server trên cổng 8000 với logging cấp độ DEBUG")
-    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="debug")
+    print(f"[TRM API] Khởi động server trên cổng 8001 với logging cấp độ DEBUG")
+    uvicorn.run(app, host="127.0.0.1", port=8001, log_level="debug")

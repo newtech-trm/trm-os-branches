@@ -45,6 +45,13 @@ class RelationshipType(str, Enum):
     # Knowledge-centric
     DOCUMENTS = "DOCUMENTS"        # KnowledgeSnippet -> Win/Tension/Task
     IMPROVES = "IMPROVES"          # KnowledgeSnippet -> Skill
+    CREATES_KNOWLEDGE = "CREATES_KNOWLEDGE"  # User/Agent/Task -> KnowledgeSnippet
+    USES_KNOWLEDGE = "USES_KNOWLEDGE"        # User/Agent/Task -> KnowledgeSnippet
+    
+    # Event/Process-centric
+    TRIGGERED_BY = "TRIGGERED_BY"  # Event/Task/Tension -> Event/Task/User
+    TRIGGERS = "TRIGGERS"          # Event/Task/User -> Event/Task/Tension
+    RELATED_TO = "RELATED_TO"      # Any entity -> Any entity
 
 
 class Relationship(BaseModel):

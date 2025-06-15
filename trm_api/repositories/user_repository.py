@@ -71,7 +71,29 @@ class UserRepository:
         """
         Retrieves a list of all users with pagination.
         """
-        return GraphUser.nodes.all()[skip:skip + limit]
+        print(f"DEBUG - UserRepository.list_users: Bắt đầu lấy danh sách người dùng. Skip: {skip}, Limit: {limit}")
+        try:
+            from neomodel import db
+            # Kiểm tra kết nối nhanh
+            db.cypher_query("MATCH (n:User) RETURN count(n) AS user_count")
+            print(f"DEBUG - UserRepository.list_users: Kết nối Neo4j và truy vấn kiểm tra thành công.")
+            
+            all_users_node_set = GraphUser.nodes.all()
+            print(f"DEBUG - UserRepository.list_users: Đã gọi GraphUser.nodes.all(). Số lượng (ước tính): {len(all_users_node_set)}")
+            
+            users = all_users_node_set[skip:skip + limit]
+            print(f"DEBUG - UserRepository.list_users: Đã cắt danh sách. Số lượng sau khi cắt: {len(users)}")
+            
+            # Chuyển đổi sang danh sách để đảm bảo không có vấn đề lazy loading
+            user_list = list(users)
+            print(f"DEBUG - UserRepository.list_users: Hoàn thành, trả về {len(user_list)} người dùng.")
+            return user_list
+        except Exception as e:
+            import traceback
+            print(f"ERROR - UserRepository.list_users: Lỗi khi lấy danh sách người dùng: {str(e)}")
+            print(traceback.format_exc())
+            # Trả về danh sách rỗng trong trường hợp lỗi để tránh treo API
+            return []
 
     def update_user(self, uid: str, user_data: UserUpdate) -> Optional[GraphUser]:
         """
