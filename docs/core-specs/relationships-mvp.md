@@ -49,20 +49,26 @@ This document defines the core relationships (edges) between the entities for th
 
 ---
 
-## 5. `(Agent)-[:TRIGGERS]->(Event)`
+## 5. `(Agent)-[:ACTOR_TRIGGERED_EVENT]->(Event)`
 
 - **Description:** Signifies that an `Agent` has performed an action that resulted in a noteworthy `Event` being created.
 - **Direction:** `Agent` -> `Event`
 - **Source Node:** `Agent`
 - **Target Node:** `Event`
+- **Hiện trạng:** Đã triển khai thành công trong Event API, quan hệ được xây dựng qua trường triggered_by_actor của EventGraphModel. Seed event tạo relationship này thành công.
 
 ---
 
-## 6. `(Event)-[:RELATES_TO]->(Entity)`
+## 6. `(Event)-[:EVENT_CONTEXT]->(Entity)`
 
-- **Description:** A generic but powerful relationship linking an `Event` to the primary entity it concerns. This allows for a flexible and auditable event log.
-- **Direction:** `Event` -> `Entity`
+- **Description:** Quan hệ liên kết từ một `Event` đến entity chính mà sự kiện liên quan đến. Cho phép tạo event log linh hoạt và có thể kiểm tra.
+- **Direction:** `Event` -> `Entity` 
 - **Source Node:** `Event`
-- **Target Node:** Can be a `Tension`, `Task`, or `Project` node.
+- **Target Node:** Có thể là `Agent`, `Project`, `Task`, `Resource` hoặc entity khác.
+- **Hiện trạng:**
+  - Đã refactor thành các relationship riêng biệt cho từng loại entity: `primary_context_agent`, `primary_context_project`, `primary_context_task`, `primary_context_resource`.
+  - Đã fix lỗi __label__ bằng cách không sử dụng BaseNode trừu tượng mà kết nối trực tiếp đến các entity cụ thể.
+  - Sử dụng trường context_node_label trong API payload để xác định loại entity khi tạo relationship.
+  - Seed event tạo relationship này thành công.
 - **Example Usage:**
-  - An `Event` of type `taskCompleted` would have a `RELATES_TO` relationship pointing to the specific `Task` node that was completed. [Đã chuyển về camelCase]
+  - Event "TASK_COMPLETED" có relationship `primary_context_task` trỏ đến Task node cụ thể đã hoàn thành.

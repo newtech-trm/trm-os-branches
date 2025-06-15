@@ -94,15 +94,28 @@ Represents an autonomous entity (AI or human-in-the-loop) that performs actions 
 
 ## 5. Event
 
-A record of a significant occurrence within the system. Events are immutable and form the basis of the "Recognition → Event → WIN" philosophy.
+A record of a significant occurrence within the system. Events are immutable and form the basis of the "Recognition → Event → WIN" philosophy. Event API đã được triển khai thành công và dữ liệu Event có thể được seed và lưu vào Neo4j.
 
 - **Node Label:** `Event`
-- **Key Properties:**
-  - `eventId` (String, UUID): Unique identifier. **(Primary Key)** [Thay thế cho `id`]
-  - `eventType` (String): The type of event (e.g., `TaskCompleted`, `TensionDetected`). [Thay thế cho `type` và sử dụng camelCase]
-  - `metadata` (JSON/String): A JSON object containing the data associated with the event. [Thay thế cho `payload`]
-  - `source` (String): The entity or agent that generated the event.
-  - `correlationId` (String, Optional): An ID to link related events in a workflow. [Thay thế cho `correlation_id`]
-  - `timestamp` (Datetime): Timestamp when the event occurred. [Thay thế cho `created_at`]
+- **Key Properties:** *(đã triển khai đúng theo mô hình Neo4j)*
+  - `uid` (String, UUID): Unique identifier. **(Primary Key)**
+  - `name` (String): The type of event (e.g., `USER_LOGIN`, `PROJECT_STATUS_UPDATED`, `TASK_ASSIGNED`).
+  - `description` (String): A human-readable description of the event.
+  - `payload` (JSONProperty): A flexible JSON object containing event-specific data.
+  - `tags` (ArrayProperty): Tags for categorizing or filtering events.
+  - `created_at` (DateTimeProperty): Timestamp của thời điểm tạo event (ISO format string).
+  - `updated_at` (DateTimeProperty): Timestamp của lần cập nhật cuối (ISO format string).
 
-> **Thuộc tính mở rộng trong tương lai:** `description`, `creationDate`, `status`, `causationId`, `priority`, `actorAgentId`, `targetEntityId`, `targetEntityType` và các phân loại subtypes (SystemEvent, HumanInputEvent, RecognitionEvent, TensionEvent, ProjectEvent, TaskEvent, WinEvent, FailureEvent, LearningEvent, ResourceEvent) - xem Ontology V3.2 cho chi tiết đầy đủ
+- **Key Relationships:** *(đã triển khai đầy đủ)*
+  - `triggered_by_actor` (RelationshipFrom): Từ Agent đến Event (ACTOR_TRIGGERED_EVENT)
+  - `primary_context_agent` (RelationshipTo): Từ Event đến Agent (EVENT_CONTEXT)
+  - `primary_context_project` (RelationshipTo): Từ Event đến Project (EVENT_CONTEXT)
+  - `primary_context_task` (RelationshipTo): Từ Event đến Task (EVENT_CONTEXT)
+  - `primary_context_resource` (RelationshipTo): Từ Event đến Resource (EVENT_CONTEXT)
+  - `generated_by_projects` (RelationshipFrom): Từ Project đến Event (GENERATES_EVENT)
+  - `generated_by_tasks` (RelationshipFrom): Từ Task đến Event (GENERATES_EVENT)
+  - `generated_by_agents` (RelationshipFrom): Từ Agent đến Event (GENERATES_EVENT)
+  - `generated_by_recognitions` (RelationshipFrom): Từ Recognition đến Event (GENERATES_EVENT)
+  - `generated_by_wins` (RelationshipFrom): Từ WIN đến Event (GENERATES_EVENT)
+
+> **Cập nhật hiện trạng:** Event API đã triển khai thành công endpoint CRUD (/api/v1/events/) và serialize đúng datetime thành ISO format string. Relationships được tổ chức riêng biệt cho từng entity type (không còn lỗi __label__). API sử dụng context_node_label để phân biệt loại entity khi tạo relationship.
