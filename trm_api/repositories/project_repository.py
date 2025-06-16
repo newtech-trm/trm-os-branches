@@ -33,6 +33,21 @@ class ProjectRepository:
         Retrieves a list of all projects with pagination.
         """
         return GraphProject.nodes.all()[skip:skip + limit]
+        
+    def get_paginated_projects(self, page: int = 1, page_size: int = 10) -> Tuple[List[GraphProject], int, int]:
+        """
+        Retrieves a paginated list of all projects.
+        
+        Args:
+            page: The page number (1-indexed)
+            page_size: Number of items per page
+            
+        Returns:
+            Tuple of (projects, total_count, page_count)
+        """
+        from trm_api.repositories.pagination_helper import PaginationHelper
+        
+        return PaginationHelper.paginate_query(GraphProject.nodes, page, page_size)
 
     def update_project(self, uid: str, project_data: ProjectUpdate) -> Optional[GraphProject]:
         """
@@ -147,6 +162,26 @@ class ProjectRepository:
         # Get all tensions connected with RESOLVES_TENSION relationship
         return list(project.resolves_tensions.all()[skip:skip+limit])
         
+    def get_paginated_tensions_by_project(self, project_uid: str, page: int = 1, page_size: int = 10) -> Tuple[List[GraphTension], int, int]:
+        """
+        Retrieves a paginated list of tensions that are resolved by a specific project.
+        
+        Args:
+            project_uid: UID of the project
+            page: The page number (1-indexed)
+            page_size: Number of items per page
+            
+        Returns:
+            Tuple of (tensions, total_count, page_count)
+        """
+        from trm_api.repositories.pagination_helper import PaginationHelper
+        
+        project = self.get_project_by_uid(project_uid)
+        if not project:
+            return [], 0, 0
+            
+        return PaginationHelper.paginate_relationship(project.resolves_tensions, page, page_size)
+        
     @db.transaction
     def remove_tension_from_project(self, project_uid: str, tension_uid: str) -> bool:
         """
@@ -254,6 +289,26 @@ class ProjectRepository:
             
         # Get all tasks connected with HAS_TASK relationship
         return list(project.tasks.all()[skip:skip+limit])
+        
+    def get_paginated_tasks_by_project(self, project_uid: str, page: int = 1, page_size: int = 10) -> Tuple[List[GraphTask], int, int]:
+        """
+        Retrieves a paginated list of tasks that are part of a specific project.
+        
+        Args:
+            project_uid: UID of the project
+            page: The page number (1-indexed)
+            page_size: Number of items per page
+            
+        Returns:
+            Tuple of (tasks, total_count, page_count)
+        """
+        from trm_api.repositories.pagination_helper import PaginationHelper
+        
+        project = self.get_project_by_uid(project_uid)
+        if not project:
+            return [], 0, 0
+            
+        return PaginationHelper.paginate_relationship(project.tasks, page, page_size)
         
     def get_project_tasks_with_relationships(self, project_uid: str) -> List[Dict[str, Any]]:
         """

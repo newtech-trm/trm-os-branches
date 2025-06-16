@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
-from typing import List, Optional
+from typing import List, Optional, Any
 
 from trm_api.models.resource import (
     Resource, ResourceCreate, ResourceUpdate, ResourceType,
@@ -9,6 +9,7 @@ from trm_api.models.resource import (
 )
 from trm_api.models.relationships import Relationship
 from trm_api.repositories.resource_repository import ResourceRepository
+from trm_api.models.pagination import PaginatedResponse
 
 router = APIRouter()
 
@@ -28,22 +29,22 @@ def create_resource(
     db_resource = repo.create_typed_resource(resource_data=resource)
     return db_resource
 
-@router.get("/", response_model=List[Resource])
+@router.get("/", response_model=PaginatedResponse[Resource])
 def list_resources(
-    skip: int = 0,
-    limit: int = 100,
+    page: int = Query(1, ge=1, description="Page number, 1-indexed"),
+    page_size: int = Query(10, ge=1, le=100, description="Number of items per page"),
     resource_type: Optional[ResourceType] = None,
     repo: ResourceRepository = Depends(get_resource_repository)
-):
+) -> Any:
     """
-    Retrieve a list of resources with optional type filtering.
+    Retrieve a paginated list of resources with optional type filtering.
     """
-    resources = repo.list_resources(
-        skip=skip, 
-        limit=limit, 
+    resources, total_count, page_count = repo.get_paginated_resources(
+        page=page, 
+        page_size=page_size, 
         resource_type=resource_type.value if resource_type else None
     )
-    return resources
+    return PaginatedResponse.create(items=resources, total_count=total_count, page=page, page_size=page_size)
 
 @router.get("/{uid}", response_model=Resource)
 def get_resource(
@@ -192,28 +193,36 @@ def assign_resource_to_task(
 
 # --- Additional Resource Query Endpoints ---
 
-@router.get("/project/{project_uid}/resources", response_model=List[Resource])
+@router.get("/project/{project_uid}/resources", response_model=PaginatedResponse[Resource])
 def list_project_resources(
     project_uid: str,
-    skip: int = 0,
-    limit: int = 100,
+    page: int = Query(1, ge=1, description="Page number, 1-indexed"),
+    page_size: int = Query(10, ge=1, le=100, description="Number of items per page"),
     repo: ResourceRepository = Depends(get_resource_repository)
-):
+) -> Any:
     """
-    List all resources assigned to a specific project.
+    List all resources assigned to a specific project in a paginated format.
     """
-    resources = repo.list_project_resources(project_uid=project_uid, skip=skip, limit=limit)
-    return resources
+    resources, total_count, page_count = repo.get_paginated_project_resources(
+        project_uid=project_uid, 
+        page=page, 
+        page_size=page_size
+    )
+    return PaginatedResponse.create(items=resources, total_count=total_count, page=page, page_size=page_size)
 
-@router.get("/task/{task_uid}/resources", response_model=List[Resource])
+@router.get("/task/{task_uid}/resources", response_model=PaginatedResponse[Resource])
 def list_task_resources(
     task_uid: str,
-    skip: int = 0,
-    limit: int = 100,
+    page: int = Query(1, ge=1, description="Page number, 1-indexed"),
+    page_size: int = Query(10, ge=1, le=100, description="Number of items per page"),
     repo: ResourceRepository = Depends(get_resource_repository)
-):
+) -> Any:
     """
-    List all resources used by a specific task.
+    List all resources used by a specific task in a paginated format.
     """
-    resources = repo.list_task_resources(task_uid=task_uid, skip=skip, limit=limit)
-    return resources
+    resources, total_count, page_count = repo.get_paginated_task_resources(
+        task_uid=task_uid, 
+        page=page, 
+        page_size=page_size
+    )
+    return PaginatedResponse.create(items=resources, total_count=total_count, page=page, page_size=page_size)

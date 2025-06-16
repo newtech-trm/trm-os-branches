@@ -2,12 +2,14 @@ from typing import Optional, List, Tuple, Dict, Any
 from neomodel import db
 from datetime import datetime
 import uuid
+import math
 
 from trm_api.models.task import TaskCreate, TaskUpdate
 from trm_api.graph_models.task import Task as GraphTask
 from trm_api.graph_models.project import Project as GraphProject
 from trm_api.graph_models.user import User as GraphUser
 from trm_api.graph_models.agent import Agent as GraphAgent
+from trm_api.utils.pagination import calculate_pagination
 
 class TaskRepository:
     """
@@ -61,6 +63,40 @@ class TaskRepository:
             return tasks[skip:skip+limit]
         except GraphProject.DoesNotExist:
             return []
+            
+    def get_paginated_tasks_for_project(self, project_id: str, page: int = 1, page_size: int = 10) -> Tuple[List[GraphTask], int, int]:
+        """
+        Gets paginated tasks for a specific project with total count and page count.
+        
+        Args:
+            project_id: ID of the project to get tasks for
+            page: Page number (1-indexed)
+            page_size: Number of items per page
+            
+        Returns:
+            Tuple of (tasks, total_count, page_count)
+        """
+        try:
+            # Get the project
+            project = GraphProject.nodes.get(uid=project_id)
+            
+            # Get all tasks for this project
+            all_tasks = list(project.tasks.all())
+            
+            # Calculate pagination
+            total_count = len(all_tasks)
+            page_count = math.ceil(total_count / page_size) if total_count > 0 else 1
+            
+            # Calculate offset using the page and page_size
+            offset = (page - 1) * page_size
+            
+            # Return paginated result
+            paginated_tasks = all_tasks[offset:offset + page_size]
+            
+            return paginated_tasks, total_count, page_count
+            
+        except GraphProject.DoesNotExist:
+            return [], 0, 0
 
     def update_task(self, uid: str, task_data: TaskUpdate) -> Optional[GraphTask]:
         """

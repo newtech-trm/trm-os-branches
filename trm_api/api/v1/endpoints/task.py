@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from typing import Any, List, Dict, Optional
 
+from trm_api.models.pagination import PaginatedResponse
+
 from trm_api.models.task import Task, TaskCreate, TaskUpdate
 from trm_api.repositories.task_repository import TaskRepository
 
@@ -9,19 +11,23 @@ router = APIRouter()
 def get_task_repo() -> TaskRepository:
     return TaskRepository()
 
-@router.get("/", response_model=List[Task])
+@router.get("/", response_model=PaginatedResponse[Task])
 def list_tasks_for_project(
     *, 
     project_id: str,
-    skip: int = 0,
-    limit: int = 100,
+    page: int = Query(1, ge=1, description="Page number, 1-indexed"),
+    page_size: int = Query(10, ge=1, le=100, description="Number of items per page"),
     repo: TaskRepository = Depends(get_task_repo)
 ) -> Any:
     """
-    Retrieve tasks for a specific project.
+    Retrieve paginated tasks for a specific project.
     """
-    tasks = repo.list_tasks_for_project(project_id=project_id, skip=skip, limit=limit)
-    return tasks
+    tasks, total_count, page_count = repo.get_paginated_tasks_for_project(
+        project_id=project_id, 
+        page=page, 
+        page_size=page_size
+    )
+    return PaginatedResponse.create(items=tasks, total_count=total_count, page=page, page_size=page_size)
 
 @router.post("/", response_model=Task, status_code=status.HTTP_201_CREATED)
 def create_task(

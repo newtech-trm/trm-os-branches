@@ -1,4 +1,4 @@
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Tuple
 from neomodel import db
 
 from trm_api.models.resource import (
@@ -10,6 +10,7 @@ from trm_api.models.resource import (
 from trm_api.graph_models.resource import Resource as GraphResource
 from trm_api.graph_models.project import Project as GraphProject
 from trm_api.graph_models.task import Task as GraphTask
+from trm_api.repositories.pagination_helper import PaginationHelper
 
 class ResourceRepository:
     """
@@ -57,6 +58,25 @@ class ResourceRepository:
             return GraphResource.nodes.filter(resourceType=resource_type)[skip:skip+limit]
         else:
             return GraphResource.nodes.all()[skip:skip+limit]
+    
+    def get_paginated_resources(self, page: int = 1, page_size: int = 10, resource_type: Optional[str] = None) -> Tuple[List[GraphResource], int, int]:
+        """
+        Retrieves a paginated list of resources with optional type filtering.
+        
+        Args:
+            page: The page number (1-indexed)
+            page_size: Number of items per page
+            resource_type: Optional filter by resource type
+            
+        Returns:
+            Tuple of (resources, total_count, page_count)
+        """
+        if resource_type:
+            node_set = GraphResource.nodes.filter(resourceType=resource_type)
+        else:
+            node_set = GraphResource.nodes.all()
+            
+        return PaginationHelper.paginate_query(node_set, page, page_size)
 
     def update_resource(self, uid: str, update_data: Dict[str, Any]) -> Optional[GraphResource]:
         """
@@ -136,6 +156,24 @@ class ResourceRepository:
         except GraphProject.DoesNotExist:
             return []
     
+    def get_paginated_project_resources(self, project_uid: str, page: int = 1, page_size: int = 10) -> Tuple[List[GraphResource], int, int]:
+        """
+        Retrieves a paginated list of resources assigned to a specific project.
+        
+        Args:
+            project_uid: UID of the project
+            page: The page number (1-indexed)
+            page_size: Number of items per page
+            
+        Returns:
+            Tuple of (resources, total_count, page_count)
+        """
+        try:
+            project = GraphProject.nodes.get(uid=project_uid)
+            return PaginationHelper.paginate_relationship(project.resources, page, page_size)
+        except GraphProject.DoesNotExist:
+            return [], 0, 0
+    
     def list_task_resources(self, task_uid: str, skip: int = 0, limit: int = 100) -> List[GraphResource]:
         """
         Lists all resources used by a specific task.
@@ -145,3 +183,21 @@ class ResourceRepository:
             return task.resources.all()[skip:skip+limit]
         except GraphTask.DoesNotExist:
             return []
+            
+    def get_paginated_task_resources(self, task_uid: str, page: int = 1, page_size: int = 10) -> Tuple[List[GraphResource], int, int]:
+        """
+        Retrieves a paginated list of resources used by a specific task.
+        
+        Args:
+            task_uid: UID of the task
+            page: The page number (1-indexed)
+            page_size: Number of items per page
+            
+        Returns:
+            Tuple of (resources, total_count, page_count)
+        """
+        try:
+            task = GraphTask.nodes.get(uid=task_uid)
+            return PaginationHelper.paginate_relationship(task.resources, page, page_size)
+        except GraphTask.DoesNotExist:
+            return [], 0, 0

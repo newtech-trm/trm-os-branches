@@ -20,6 +20,7 @@ Phiên backend đã hoàn thành các mục tiêu chính:
 - Các entity chính đã được triển khai và kiểm thử thành công
 - Dữ liệu thực tế trong Neo4j: 23 Project, 3 Task, 2 User, 1 Tension, 14 WIN
 - Không có mock/demo/fake data, tất cả đều là dữ liệu thực được lưu trong Neo4j
+- Sử dụng Windows 11, PowerShell
 
 ## Cấu trúc dự án và Tầng hiện tại
 1. **Database Layer**: Neo4j + Ontology models (GraphProject, GraphTask, GraphWIN, v.v.)
@@ -80,14 +81,10 @@ Dữ liệu trên Neo4j hiện tại còn "sơ sài" vì:
   - /tests: Kiểm thử tự động
 
 ## Lưu ý quan trọng
-1. Mục tiêu lớn nhất là xây dựng hệ thống AI Agent thực sự, không phải demo/prototype
+1. Mục tiêu lớn nhất là xây dựng hệ thống AI Agent tự chủ thực sự, không phải demo/prototype
 2. Mọi dữ liệu phải thực sự được lưu vào Neo4j, kiểm tra bằng truy vấn trực tiếp
 3. Không đơn giản hóa khi gặp lỗi, phải giải quyết triệt để vấn đề gốc rễ
 4. Luôn tuân thủ schema Ontology, không thay đổi tùy tiện
 5. Đảm bảo pipeline hoạt động trơn tru từ API đến DB
 6. Tăng cường bảo mật và validation cho mọi endpoint
 
-## Câu hỏi ban đầu cho AI
-1. Bạn muốn bắt đầu với việc tối ưu API hay bổ sung entity Resource trước?
-2. Có muốn xem thêm mã nguồn cụ thể của phần nào không?
-3. Cần phát triển UI/UX frontend hay tập trung hoàn thiện backend trước?

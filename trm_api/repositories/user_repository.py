@@ -1,5 +1,6 @@
-from typing import Optional, List
+from typing import Optional, List, Tuple
 from passlib.context import CryptContext
+import math
 from trm_api.graph_models.user import User as GraphUser
 from trm_api.models.user import UserCreate, UserUpdate # Pydantic model for API data
 
@@ -94,6 +95,44 @@ class UserRepository:
             print(traceback.format_exc())
             # Trả về danh sách rỗng trong trường hợp lỗi để tránh treo API
             return []
+            
+    def get_paginated_users(self, page: int = 1, page_size: int = 10) -> Tuple[List[GraphUser], int, int]:
+        """
+        Retrieves a paginated list of all users with total count and page count.
+        
+        Args:
+            page: Page number (1-indexed)
+            page_size: Number of items per page
+            
+        Returns:
+            Tuple of (users, total_count, page_count)
+        """
+        print(f"DEBUG - UserRepository.get_paginated_users: Bắt đầu lấy danh sách người dùng phân trang. Page: {page}, Page Size: {page_size}")
+        try:
+            from neomodel import db
+            # Kiểm tra kết nối nhanh
+            results, meta = db.cypher_query("MATCH (n:User) RETURN count(n) AS user_count")
+            total_count = results[0][0]
+            print(f"DEBUG - UserRepository.get_paginated_users: Kết nối Neo4j thành công. Tổng số người dùng: {total_count}")
+            
+            # Tính toán số trang
+            page_count = math.ceil(total_count / page_size) if total_count > 0 else 1
+            
+            # Tính toán offset dựa trên page và page_size
+            offset = (page - 1) * page_size
+            
+            # Lấy danh sách người dùng theo phân trang
+            all_users = list(GraphUser.nodes.all())
+            paginated_users = all_users[offset:offset + page_size]
+            
+            print(f"DEBUG - UserRepository.get_paginated_users: Hoàn thành, trả về {len(paginated_users)} người dùng, trang {page}/{page_count}")
+            return paginated_users, total_count, page_count
+        except Exception as e:
+            import traceback
+            print(f"ERROR - UserRepository.get_paginated_users: Lỗi khi lấy danh sách người dùng phân trang: {str(e)}")
+            print(traceback.format_exc())
+            # Trả về danh sách rỗng trong trường hợp lỗi để tránh treo API
+            return [], 0, 0
 
     def update_user(self, uid: str, user_data: UserUpdate) -> Optional[GraphUser]:
         """

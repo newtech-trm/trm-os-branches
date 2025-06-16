@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, status
-from typing import Any, List
+from fastapi import APIRouter, Depends, HTTPException, status, Query
+from typing import Any, List, Optional
 
 from trm_api.models.project import Project, ProjectCreate, ProjectUpdate
 from trm_api.repositories.project_repository import ProjectRepository
 from trm_api.models.relationships import Relationship
+from trm_api.models.pagination import PaginatedResponse
 
 router = APIRouter()
 
@@ -11,17 +12,17 @@ router = APIRouter()
 def get_project_repo() -> ProjectRepository:
     return ProjectRepository()
 
-@router.get("/", response_model=List[Project])
+@router.get("/", response_model=PaginatedResponse[Project])
 def list_projects(
-    skip: int = 0,
-    limit: int = 100,
+    page: int = Query(1, ge=1, description="Page number, 1-indexed"),
+    page_size: int = Query(10, ge=1, le=100, description="Number of items per page"),
     repo: ProjectRepository = Depends(get_project_repo)
 ) -> Any:
     """
-    Retrieve a list of projects.
+    Retrieve a paginated list of projects.
     """
-    projects = repo.list_projects(skip=skip, limit=limit)
-    return projects
+    projects, total_count, page_count = repo.get_paginated_projects(page=page, page_size=page_size)
+    return PaginatedResponse.create(items=projects, total_count=total_count, page=page, page_size=page_size)
 
 @router.post("/", response_model=Project, status_code=status.HTTP_201_CREATED)
 def create_project(
@@ -123,12 +124,12 @@ def add_tension_to_resolve(
         "relationship": "RESOLVES_TENSION"
     }
 
-@router.get("/{project_id}/resolves-tensions", response_model=List[dict], status_code=status.HTTP_200_OK)
+@router.get("/{project_id}/resolves-tensions", response_model=PaginatedResponse[dict], status_code=status.HTTP_200_OK)
 def get_tensions_resolved_by_project(
     *,
     project_id: str,
-    skip: int = 0,
-    limit: int = 100,
+    page: int = Query(1, ge=1, description="Page number, 1-indexed"),
+    page_size: int = Query(10, ge=1, le=100, description="Number of items per page"),
     repo: ProjectRepository = Depends(get_project_repo)
 ) -> Any:
     """
@@ -141,8 +142,11 @@ def get_tensions_resolved_by_project(
             detail="Project not found"
         )
     
-    tensions = repo.get_tensions_resolved_by_project(project_uid=project_id, skip=skip, limit=limit)
-    return [
+    tensions, total_count, page_count = repo.get_paginated_tensions_by_project(
+        project_uid=project_id, page=page, page_size=page_size
+    )
+    
+    tension_items = [
         {
             "tension_id": tension.uid,
             "title": tension.title,
@@ -152,6 +156,13 @@ def get_tensions_resolved_by_project(
         }
         for tension in tensions
     ]
+    
+    return PaginatedResponse.create(
+        items=tension_items, 
+        total_count=total_count, 
+        page=page, 
+        page_size=page_size
+    )
 
 @router.delete("/{project_id}/resolves-tension/{tension_id}", status_code=status.HTTP_204_NO_CONTENT)
 def remove_tension_from_project(

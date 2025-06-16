@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from typing import Any, List
+
+from trm_api.models.pagination import PaginatedResponse
 
 from trm_api.models.user import User, UserCreate, UserUpdate
 from trm_api.repositories.user_repository import UserRepository
@@ -43,17 +45,20 @@ def get_user(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     return graph_user
 
-@router.get("/", response_model=List[User])
+@router.get("/", response_model=PaginatedResponse[User])
 def list_users(
-    skip: int = 0,
-    limit: int = 100,
+    page: int = Query(1, ge=1, description="Page number, 1-indexed"),
+    page_size: int = Query(10, ge=1, le=100, description="Number of items per page"),
     repo: UserRepository = Depends(get_user_repo)
 ) -> Any:
     """
-    Retrieve a list of Users.
+    Retrieve a paginated list of Users.
     """
-    users = repo.list_users(skip=skip, limit=limit)
-    return users
+    users, total_count, page_count = repo.get_paginated_users(
+        page=page,
+        page_size=page_size
+    )
+    return PaginatedResponse.create(items=users, total_count=total_count, page=page, page_size=page_size)
 
 @router.put("/{user_id}", response_model=User)
 def update_user(
