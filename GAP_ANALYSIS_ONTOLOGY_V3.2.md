@@ -1,5 +1,13 @@
 # Phân tích GAP Ontology V3.2 (Cập nhật dựa trên OpenAPI)
 
+## Tiến độ mới nhất (16/06/2025)
+
+- ✅ **Chuẩn hóa API Pagination**: Đã hoàn thành chuẩn hóa pagination cho tất cả các API endpoints trả về danh sách (Project, Resource, Task, User). Đã pass toàn bộ test tự động với metadata chuẩn (`page`, `page_size`, `total_count`, `page_count`, `has_next`, `has_previous`). Đã fix toàn bộ lỗi import module và cấu trúc response.
+
+- ⚠️ **Tiếp tục xây dựng theo chiến lược Ontology-First**: Đã hoàn thành lớp Pagination Helper và các chuẩn PaginatedResponse. Đang chuyển trọng tâm sang bổ sung thuộc tính mở rộng và relationship phức tạp cho các entity chính (Project, Task, WIN, KnowledgeAsset) theo đúng Ontology V3.2.
+
+- 🔍 **GAP thực tế hiện tại**: Cần hoàn thiện đầy đủ thuộc tính mở rộng cho các entity chính theo Ontology V3.2, bổ sung relationship phức tạp, và seed data đa dạng để kiểm thử thực tế.
+
 ## Entity GAP Analysis
 
 | Entity trong Ontology V3.2 | Trạng thái hiện tại | Chi tiết GAP (Dựa trên OpenAPI và Ontology V3.2) |
