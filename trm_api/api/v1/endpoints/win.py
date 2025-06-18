@@ -1,60 +1,215 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Body
+from fastapi import APIRouter, Depends, HTTPException, status, Body, Query
 from typing import List, Optional, Dict, Any
-from datetime import datetime
+import logging
 
-from trm_api.models.win import Win, WinCreate, WinUpdate
+from fastapi import APIRouter, Depends, HTTPException, status, Query
+
+# Schema imports
+from trm_api.schemas.win import WIN, WINCreate, WINUpdate, WINList
+
+# Service imports
+from trm_api.services.win_service import WinService, win_service
+from trm_api.services.user_service import get_current_active_user
+
+# Adapter imports
+from trm_api.adapters.enum_adapter import normalize_win_status, normalize_win_type
+from trm_api.adapters.datetime_adapter import normalize_datetime, normalize_dict_datetimes
+
+# Repository imports
 from trm_api.repositories.win_repository import WINRepository
-from trm_api.services.win_service import win_service, WinService
 
 router = APIRouter()
 
-@router.post("/", response_model=Win, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=WIN, status_code=status.HTTP_201_CREATED)
 def create_win(
-    win_in: WinCreate,
+    win_in: WINCreate,
     service: WinService = Depends(lambda: win_service)
 ):
     """
-    Create a new WIN.
+    Tạo mới một WIN (Wisdom-Infused Narrative)
     """
-    return service.create_win(win_create=win_in)
+    try:
+        logging.info(f"Đang tạo mới WIN với dữ liệu: {win_in.model_dump()}")
+        
+        # Chuẩn hóa enum
+        win_data = win_in.model_dump()
+        win_data["status"] = normalize_win_status(win_data.get("status"))
+        win_data["winType"] = normalize_win_type(win_data.get("winType"))
+        
+        # Tạo WIN
+        result = service.create_win(win_data=win_data)
+        
+        if not result:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Không thể tạo WIN. Vui lòng kiểm tra logs."
+            )
+            
+        # Chuẩn hóa datetime và trả về kết quả
+        normalized_result = normalize_dict_datetimes(result)
+        logging.debug(f"Đã tạo WIN thành công: {normalized_result}")
+        return normalized_result
+        
+    except Exception as e:
+        logging.error(f"Lỗi khi tạo WIN: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Lỗi khi tạo WIN: {str(e)}"
+        )
 
-@router.get("/{win_id}", response_model=Win)
+@router.get("/{win_id}")
 def get_win(
     win_id: str,
     service: WinService = Depends(lambda: win_service)
 ):
     """
-    Get a specific WIN by its ID.
+    Lấy thông tin một WIN cụ thể theo ID
     """
-    db_win = service.get_win_by_id(win_id=win_id)
-    if db_win is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="WIN not found")
-    return db_win
+    try:
+        logging.info(f"Đang lấy thông tin WIN với ID: {win_id}")
+        db_win = service.get_win(uid=win_id)
+        
+        if db_win is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail=f"Không tìm thấy WIN với ID: {win_id}"
+            )
+        
+        # Chuẩn hóa enum và datetime
+        win_data = db_win
+        if isinstance(win_data, dict):
+            # Chuẩn hóa enum
+            if "status" in win_data:
+                win_data["status"] = normalize_win_status(win_data.get("status"))
+            if "winType" in win_data:
+                win_data["winType"] = normalize_win_type(win_data.get("winType"))
+            
+            # Chuẩn hóa datetime
+            win_data = normalize_dict_datetimes(win_data)
+            
+        logging.debug(f"Đã lấy thành công thông tin WIN: {win_data}")
+        return win_data
+        
+    except HTTPException as e:
+        logging.error(f"HTTP Exception khi lấy WIN: {str(e)}")
+        raise
+    except Exception as e:
+        logging.error(f"Lỗi khi lấy thông tin WIN: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Lỗi server khi lấy thông tin WIN: {str(e)}"
+        )
 
-@router.get("/", response_model=List[Win])
+@router.get("/")
 def list_wins(
-    skip: int = 0,
-    limit: int = 25,
+    skip: int = Query(0, ge=0, description="Số item bỏ qua (dùng cho phân trang)"),
+    limit: int = Query(25, ge=1, le=100, description="Số item tối đa trả về"),
     service: WinService = Depends(lambda: win_service)
 ):
     """
-    Retrieve a list of WINs.
+    Lấy danh sách các WIN
     """
-    return service.list_wins(skip=skip, limit=limit)
+    try:
+        logging.info(f"Đang lấy danh sách WINs. Skip: {skip}, Limit: {limit}")
+        
+        # Lấy dữ liệu từ service
+        wins = service.list_wins(skip=skip, limit=limit)
+        
+        # Xử lý trường hợp không có kết quả
+        if not wins:
+            logging.info("Không có WIN nào được tìm thấy")
+            return {"items": [], "count": 0}
+        
+        # Chuẩn hóa dữ liệu trước khi trả về
+        normalized_items = []
+        error_items = []
+        
+        for item in wins:
+            try:
+                if isinstance(item, dict):
+                    # Chuẩn hóa enum
+                    if "status" in item:
+                        item["status"] = normalize_win_status(item.get("status"))
+                    if "winType" in item:
+                        item["winType"] = normalize_win_type(item.get("winType"))
+                        
+                    # Chuẩn hóa datetime
+                    normalized_item = normalize_dict_datetimes(item)
+                    normalized_items.append(normalized_item)
+                else:
+                    # Có thể đã là model Pydantic
+                    normalized_items.append(item)
+            except Exception as e:
+                logging.error(f"Lỗi khi chuẩn hóa item WIN: {str(e)}. Item: {item}")
+                error_items.append({"item": item, "error": str(e)})
+        
+        # Báo cáo lỗi nếu có
+        if error_items:
+            logging.warning(f"Có {len(error_items)} item gặp lỗi khi chuẩn hóa")
+            
+        result = {"items": normalized_items, "count": len(wins)}
+        logging.debug(f"Kết quả danh sách WIN: {len(normalized_items)} items")
+        return result
+        
+    except Exception as e:
+        logging.error(f"Lỗi khi lấy danh sách WIN: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Lỗi server khi lấy danh sách WIN: {str(e)}"
+        )
 
-@router.put("/{win_id}", response_model=Win)
+@router.put("/{win_id}")
 def update_win(
     win_id: str,
-    win_in: WinUpdate,
+    win_in: WINUpdate,
     service: WinService = Depends(lambda: win_service)
 ):
     """
-    Update an existing WIN.
+    Cập nhật một WIN đã tồn tại
     """
-    updated_win = service.update_win(win_id=win_id, win_update=win_in)
-    if updated_win is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="WIN not found")
-    return updated_win
+    try:
+        logging.info(f"Đang cập nhật WIN với ID: {win_id}. Dữ liệu: {win_in.model_dump()}")
+        
+        # Kiểm tra WIN có tồn tại
+        db_win = service.get_win(uid=win_id)
+        if db_win is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail=f"Không tìm thấy WIN với ID: {win_id}"
+            )
+        
+        # Chuẩn hóa các trường enum trong dữ liệu cập nhật
+        update_data = win_in.model_dump(exclude_unset=True)
+        
+        if "status" in update_data:
+            update_data["status"] = normalize_win_status(update_data.get("status"))
+            
+        if "winType" in update_data:
+            update_data["winType"] = normalize_win_type(update_data.get("winType"))
+        
+        # Cập nhật WIN
+        updated_win = service.update_win(win_id=win_id, update_data=update_data)
+        
+        if not updated_win:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+                detail="Có lỗi khi cập nhật WIN. Vui lòng kiểm tra logs."
+            )
+        
+        # Chuẩn hóa dữ liệu trước khi trả về
+        normalized_result = normalize_dict_datetimes(updated_win)
+        logging.debug(f"Đã cập nhật WIN thành công. Kết quả: {normalized_result}")
+        return normalized_result
+        
+    except HTTPException as e:
+        logging.error(f"HTTP Exception khi cập nhật WIN: {str(e)}")
+        raise
+    except Exception as e:
+        logging.error(f"Lỗi khi cập nhật WIN: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Lỗi server khi cập nhật WIN: {str(e)}"
+        )
 
 @router.delete("/{win_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_win(
@@ -62,12 +217,40 @@ def delete_win(
     service: WinService = Depends(lambda: win_service)
 ):
     """
-    Delete a WIN.
+    Xóa một WIN
     """
-    deleted = service.delete_win(win_id=win_id)
-    if not deleted:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="WIN not found")
-    return
+    try:
+        logging.info(f"Đang xóa WIN với ID: {win_id}")
+        
+        # Kiểm tra WIN có tồn tại không
+        db_win = service.get_win(uid=win_id)
+        if db_win is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail=f"Không tìm thấy WIN với ID: {win_id}"
+            )
+        
+        # Thực hiện xóa WIN
+        deleted = service.delete_win(win_id=win_id)
+        
+        if not deleted:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, 
+                detail="Có lỗi khi xóa WIN. Vui lòng kiểm tra logs."
+            )
+            
+        logging.info(f"Đã xóa thành công WIN với ID: {win_id}")
+        return None
+        
+    except HTTPException as e:
+        logging.error(f"HTTP Exception khi xóa WIN: {str(e)}")
+        raise
+    except Exception as e:
+        logging.error(f"Lỗi khi xóa WIN: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Lỗi server khi xóa WIN: {str(e)}"
+        )
 
 # --- LEADS_TO_WIN Relationship Endpoints ---
 
