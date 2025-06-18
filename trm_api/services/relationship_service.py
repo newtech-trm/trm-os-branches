@@ -122,13 +122,18 @@ class RelationshipService:
         record = result.single()
         
         if record:
+            # Chuyển đổi neo4j.time.DateTime sang python datetime
+            created_at = record["createdAt"]
+            if created_at and hasattr(created_at, 'to_native'):
+                created_at = created_at.to_native()
+                
             return Relationship(
                 source_id=record["source_id"],
                 source_type=record["source_type"],
                 target_id=record["target_id"],
                 target_type=record["target_type"],
                 type=record["type"],
-                createdAt=record["createdAt"]
+                createdAt=created_at
             )
         return None
 

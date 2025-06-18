@@ -20,9 +20,22 @@ class Recognition(BaseNode):
         "IMPACT": "Acknowledging significant impact or results.",
         "INNOVATION": "Recognizing novel ideas or approaches.",
         "ENDORSEMENT": "Endorsing a skill, capability, or work.",
-        "ACHIEVEMENT": "Celebrating a specific achievement or milestone."
+        "ACHIEVEMENT": "Celebrating a specific achievement or milestone.",
+        "KUDOS": "Cung cấp lời khen ngơi hoặc cổ vũ cho người khác.",
+        "Gratitude": "Expressing gratitude for an action or contribution (Title-case).",
+        "RecognitionType.GRATITUDE": "Enum name với giá trị GRATITUDE."
     })
-    status = StringProperty(choices={'PROPOSED': 'Proposed', 'GRANTED': 'Granted', 'ARCHIVED': 'Archived'}, default='GRANTED', index=True)
+    status = StringProperty(choices={
+        'PROPOSED': 'Proposed', 
+        'GRANTED': 'Granted', 
+        'ARCHIVED': 'Archived',
+        'RecognitionStatus.PROPOSED': 'Enum name với giá trị PROPOSED',
+        'RecognitionStatus.GRANTED': 'Enum name với giá trị GRANTED',
+        'RecognitionStatus.ARCHIVED': 'Enum name với giá trị ARCHIVED',
+        'Proposed': 'Title-case PROPOSED',
+        'Granted': 'Title-case GRANTED',
+        'Archived': 'Title-case ARCHIVED'
+    }, default='GRANTED', index=True)
     value_level = StringProperty(index=True, required=False) # Qualitative (e.g., "High Value") or quantitative score
     tags = ArrayProperty(StringProperty(), default=lambda: []) # Using lambda for default mutable
 

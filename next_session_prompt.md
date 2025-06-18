@@ -22,6 +22,25 @@ Phiên backend đã hoàn thành các mục tiêu chính:
 - Không có mock/demo/fake data, tất cả đều là dữ liệu thực được lưu trong Neo4j
 - Sử dụng Windows 11, PowerShell
 
+### Tiến độ gần đây
+- ✅ Đã refactor TaskService và API endpoints Task để sử dụng layer service đúng cách
+- ✅ Đã chuẩn hóa và bổ sung thuộc tính cho Task model theo Ontology V3.2
+- ✅ Đã chuẩn hóa response pagination cho các endpoint trả về nhiều kết quả (projects, tasks)
+- ✅ Đã khắc phục tất cả lỗi unit tests TaskService:
+  - Sửa TaskService gọi repository.remove_assignment() thay vì remove_task_assignment()
+  - Khắc phục xử lý tham số include_relationship_details trong get_task_assignees()
+- ✅ Đã thiết lập Neo4j thật cho integration tests:
+  - Tạo fixtures để kết nối Neo4j thật và seed dữ liệu
+  - Sửa lỗi enum values cho tương thích với model (TaskType, TaskStatus)
+  - Triển khai entity KnowledgeSnippet theo Ontology V3.2
+  - Sửa lỗi required properties cho các relationships phức tạp (IsPartOfProjectRel)
+  - Cập nhật API payloads để khớp với schema
+- ⚠️ **Đã phát hiện các vấn đề cần giải quyết**:
+  - Schema response không nhất quán giữa API và tests (field `id` vs `recognitionId`/`relationshipId`)
+  - Neo4j DateTime không tương thích trực tiếp với Pydantic datetime
+  - Relationship có thuộc tính (properties) cần model đối tượng đầy đủ (ManagesProjectRel)
+  - Cần chuẩn hóa cách dùng enum trong fixtures và API endpoints
+
 ## Cấu trúc dự án và Tầng hiện tại
 1. **Database Layer**: Neo4j + Ontology models (GraphProject, GraphTask, GraphWIN, v.v.)
 2. **Service Layer**: ProjectService, TaskService, RelationshipService, v.v.
@@ -29,7 +48,9 @@ Phiên backend đã hoàn thành các mục tiêu chính:
 4. **UI Layer**: Chưa phát triển
 
 ## GAP Analysis
-Dữ liệu trên Neo4j hiện tại còn "sơ sài" vì:
+Dữ liệu trên Neo4j và codebase hiện tại còn tồn tại các GAP sau:
+
+### GAP về dữ liệu:
 1. Mới chỉ seed và kiểm thử các entity chính, chưa có data thực tế phong phú từ người dùng
 2. Chưa có entity Resource và các subtype (Asset, Document, File, ...)
 3. Chưa bổ sung đầy đủ thuộc tính mở rộng cho Project/Task/Win/KnowledgeAsset
@@ -37,28 +58,42 @@ Dữ liệu trên Neo4j hiện tại còn "sơ sài" vì:
 5. Chưa phát triển UI/UX nên chưa có nguồn nhập liệu từ người dùng cuối
 6. Chưa seed data mẫu đa dạng cho các workflow thực tế
 
-## Yêu cầu phát triển (ưu tiên theo thứ tự)
-1. **Tối ưu hóa API và codebase**:
-   - Tối ưu hiệu suất các endpoint
-   - Tăng cường bảo mật và xử lý lỗi
-   - Cải thiện logging và monitoring
-   - Xem xét thêm pagination cho các endpoint trả về nhiều dữ liệu
+### GAP về kỹ thuật:
+1. Unit tests và integration tests đang gặp lỗi với Neo4j - cần mock thay vì kết nối trực tiếp
+2. Vấn đề tương thích phiên bản giữa FastAPI, Starlette và httpx trong môi trường tests
+3. Thiếu chuẩn hóa đồng bộ cho response pagination trên toàn bộ API
+4. Chưa có xử lý lỗi đầy đủ cho các endpoint API
+5. Chưa bổ sung logging chi tiết cho monitoring và debug
+6. Chưa có authentication/authorization đầy đủ cho API
+7. Chưa có documentation đầy đủ cho API (OpenAPI/Swagger)
 
-2. **Bổ sung entity còn thiếu**:
-   - Phát triển model Resource và các subtype theo Ontology
-   - Tạo service và API endpoint cho Resource
-   - Bổ sung thuộc tính mở rộng cho Project/Task/Win theo Ontology
-   - Mở rộng các relationship phức tạp giữa entity
+## Những thách thức và nhiệm vụ tiếp theo
 
-3. **Nâng cao chất lượng kiểm thử**:
-   - Seed thêm data mẫu thực tế đa dạng
-   - Mở rộng kiểm thử tự động
-   - Bổ sung validation phức tạp hơn
+### 1. Cần GIẢI QUYẾT LỖI từ integration tests
+   - **Chuẩn hóa schema response** - đồng bộ field name (`id` thay vì `recognitionId`/`relationshipId`)
+   - **Adapter Neo4j DateTime → Pydantic** - tạo utility chuyển đổi DateTime trong tất cả service
+   - **Hoàn thiện relationship models** - triển khai `ManagesProjectRel` và các relationship có thuộc tính
+   - **Chuẩn hóa enum** - nhất quán giữa API, fixtures và model (dùng Title Case cho display, lowercase cho storage)
 
-4. **Phát triển UI/UX frontend (tùy chọn, hãy hỏi user)**:
-   - Thiết kế UI hiện đại, đơn giản, dễ sử dụng
-   - Tích hợp với backend API
-   - Hiển thị quan hệ ontology trực quan
+### 2. Thiết lập CI/CD cho Neo4j test container
+   - **Cấu hình GitHub Actions** - khởi tạo Neo4j container cho test
+   - **Quản lý credentials** - sử dụng secrets manager cho NEO4J_URI, USER, PASSWORD
+   - **Cleanup data** - đảm bảo xoá dữ liệu test sau mỗi lần chạy
+
+### 3. Hoàn thiện các entity theo Ontology V3.2
+   - **Task, WIN, KnowledgeAsset** - bổ sung thuộc tính mở rộng và relationship phức tạp
+   - **Resource** - tạo entity mới với các subtype (Asset, Document, File)
+   - **Tension** - hoàn thiện theo Ontology V3.2
+
+### 4. Nâng cao chất lượng kiểm thử
+   - **Seed thêm data mẫu thực tế** - tạo dataset đa dạng
+   - **Mở rộng kiểm thử tự động** - thêm test cases phức tạp
+   - **Bổ sung validation phức tạp** - kiểm tra constraints và business rules
+
+### 5. Phát triển UI/UX frontend (tùy chọn)
+   - **Thiết kế UI hiện đại** - đơn giản, dễ sử dụng
+   - **Tích hợp với backend API** - hiển thị dữ liệu thực
+   - **Trực quan hóa ontology** - hiển thị quan hệ ontology trực quan, relationships và graphs
 
 ## Các đặc điểm quan trọng cần tuân thủ
 1. **Không mock/demo/fake**: Mọi tích hợp đều phải liên thông với DB thực, không giả lập

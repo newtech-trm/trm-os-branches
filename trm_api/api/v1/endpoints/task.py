@@ -4,12 +4,12 @@ from typing import Any, List, Dict, Optional
 from trm_api.models.pagination import PaginatedResponse
 
 from trm_api.models.task import Task, TaskCreate, TaskUpdate
-from trm_api.repositories.task_repository import TaskRepository
+from trm_api.services.task_service import TaskService
 
 router = APIRouter()
 
-def get_task_repo() -> TaskRepository:
-    return TaskRepository()
+def get_task_service() -> TaskService:
+    return TaskService()
 
 @router.get("/", response_model=PaginatedResponse[Task])
 def list_tasks_for_project(
@@ -17,29 +17,29 @@ def list_tasks_for_project(
     project_id: str,
     page: int = Query(1, ge=1, description="Page number, 1-indexed"),
     page_size: int = Query(10, ge=1, le=100, description="Number of items per page"),
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> Any:
     """
     Retrieve paginated tasks for a specific project.
     """
-    tasks, total_count, page_count = repo.get_paginated_tasks_for_project(
+    # Use TaskService to handle pagination logic
+    return service.get_paginated_tasks_for_project(
         project_id=project_id, 
         page=page, 
         page_size=page_size
     )
-    return PaginatedResponse.create(items=tasks, total_count=total_count, page=page, page_size=page_size)
 
 @router.post("/", response_model=Task, status_code=status.HTTP_201_CREATED)
 def create_task(
     *, 
     task_in: TaskCreate, 
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> Any:
     """
-    Create a new task for a project.
+    Create a new task for a project according to Ontology V3.2.
     """
-    # The repository now handles finding the project and linking it.
-    created_task = repo.create_task(task_data=task_in)
+    # The service handles validation, finding the project and linking it
+    created_task = service.create_task(task_data=task_in)
     if not created_task:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -51,15 +51,15 @@ def create_task(
 def get_task(
     *, 
     task_id: str, 
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> Any:
     """
     Get task by ID.
     """
-    task = repo.get_task_by_uid(uid=task_id)
+    task = service.get_task_by_id(task_id=task_id)
     if not task:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, 
+            status_code=status.HTTP_404_NOT_FOUND,
             detail="Task not found"
         )
     return task
@@ -69,12 +69,12 @@ def update_task(
     *, 
     task_id: str,
     task_in: TaskUpdate,
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> Any:
     """
-    Update a task.
+    Update a task according to Ontology V3.2.
     """
-    updated_task = repo.update_task(uid=task_id, task_data=task_in)
+    updated_task = service.update_task(task_id=task_id, task_data=task_in)
     if not updated_task:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -86,12 +86,12 @@ def update_task(
 def delete_task(
     *, 
     task_id: str,
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> None:
     """
     Delete a task.
     """
-    deleted = repo.delete_task(uid=task_id)
+    deleted = service.delete_task(task_id=task_id)
     if not deleted:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -111,16 +111,16 @@ def assign_task_to_user(
     estimated_effort: Optional[float] = Query(None, description="Estimated effort in hours"),
     assigned_by: Optional[str] = Query(None, description="User ID of the person making the assignment"),
     notes: Optional[str] = Query(None, description="Additional notes about this assignment"),
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> Dict[str, Any]:
     """
     Assign a task to a user with ASSIGNS_TASK relationship properties.
     
     This follows the TRM Ontology V3.2 specification for ASSIGNS_TASK relationship.
     """
-    result = repo.assign_task_to_user(
-        task_uid=task_id, 
-        user_uid=user_id,
+    result = service.assign_task_to_user(
+        task_id=task_id, 
+        user_id=user_id,
         assignment_type=assignment_type,
         priority_level=priority_level,
         estimated_effort=estimated_effort,
@@ -153,16 +153,16 @@ def assign_task_to_agent(
     estimated_effort: Optional[float] = Query(None, description="Estimated effort in hours"),
     assigned_by: Optional[str] = Query(None, description="User ID of the person making the assignment"),
     notes: Optional[str] = Query(None, description="Additional notes about this assignment"),
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> Dict[str, Any]:
     """
     Assign a task to an agent with ASSIGNS_TASK relationship properties.
     
     This follows the TRM Ontology V3.2 specification for ASSIGNS_TASK relationship.
     """
-    result = repo.assign_task_to_agent(
-        task_uid=task_id, 
-        agent_uid=agent_id,
+    result = service.assign_task_to_agent(
+        task_id=task_id, 
+        agent_id=agent_id,
         assignment_type=assignment_type,
         priority_level=priority_level,
         estimated_effort=estimated_effort,
@@ -190,7 +190,7 @@ def get_task_assignees(
     *,
     task_id: str,
     include_relationship_details: bool = Query(False, description="Include detailed relationship properties"),
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> Dict[str, Any]:
     """
     Get all assignees (users and agents) for a specific task.
@@ -199,18 +199,15 @@ def get_task_assignees(
     according to TRM Ontology V3.2.
     """
     # Check if task exists
-    task = repo.get_task_by_uid(uid=task_id)
+    task = service.get_task_by_id(task_id=task_id)
     if not task:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Task not found"
         )
     
-    # Get assignees with or without relationship details
-    if include_relationship_details:
-        assignees = repo.get_task_assignees_with_relationships(task_uid=task_id)
-    else:
-        assignees = repo.get_task_assignees(task_uid=task_id)
+    # Get assignees with relationship details
+    assignees = service.get_task_assignees(task_id=task_id, include_relationship_details=include_relationship_details)
     
     return assignees
 
@@ -220,16 +217,16 @@ def accept_task_assignment(
     task_id: str,
     assignee_id: str = Query(..., description="ID of the user or agent accepting the task"),
     acceptance_notes: Optional[str] = Query(None, description="Optional notes about task acceptance"),
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> Dict[str, Any]:
     """
     Accept a task assignment by the assigned user or agent.
     
     Updates the ASSIGNS_TASK relationship with acceptance information.
     """
-    success = repo.accept_task_assignment(
-        task_uid=task_id,
-        assignee_uid=assignee_id,
+    success = service.accept_task_assignment(
+        task_id=task_id,
+        assignee_id=assignee_id,
         acceptance_notes=acceptance_notes
     )
     
@@ -252,16 +249,16 @@ def complete_task_assignment(
     task_id: str,
     assignee_id: str = Query(..., description="ID of the user or agent completing the task"),
     actual_effort: Optional[float] = Query(None, description="Actual effort spent in hours"),
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> Dict[str, Any]:
     """
     Mark a task assignment as completed by the assigned user or agent.
     
     Updates the ASSIGNS_TASK relationship with completion information.
     """
-    success = repo.complete_task_assignment(
-        task_uid=task_id,
-        assignee_uid=assignee_id,
+    success = service.complete_task_assignment(
+        task_id=task_id,
+        assignee_id=assignee_id,
         actual_effort=actual_effort
     )
     
@@ -283,12 +280,12 @@ def remove_task_assignment(
     *,
     task_id: str,
     assignee_id: str,
-    repo: TaskRepository = Depends(get_task_repo)
+    service: TaskService = Depends(get_task_service)
 ) -> None:
     """
     Remove a task assignment (ASSIGNS_TASK relationship) between a task and a user/agent.
     """
-    success = repo.remove_assignment(task_uid=task_id, assignee_uid=assignee_id)
+    success = service.remove_task_assignment(task_id=task_id, assignee_id=assignee_id)
     
     if not success:
         raise HTTPException(

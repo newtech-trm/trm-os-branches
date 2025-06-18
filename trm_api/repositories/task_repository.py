@@ -20,7 +20,7 @@ class TaskRepository:
     @db.transaction
     def create_task(self, task_data: TaskCreate) -> Optional[GraphTask]:
         """
-        Creates a new Task and connects it to a parent Project.
+        Creates a new Task and connects it to a parent Project according to Ontology V3.2.
 
         This operation is transactional. If any step fails, the entire
         operation is rolled back.
@@ -33,13 +33,28 @@ class TaskRepository:
             return None
 
         # 2. Create the new task node.
-        # The 'name' field in Pydantic's TaskBase maps to 'name' in GraphTask.
+        # Convert Pydantic model to dict and handle special mappings
         task_properties = task_data.model_dump(exclude={'project_id'})
+        
+        # Map from schema fields to graph model fields if names differ
+        if 'effort_estimate' in task_properties and task_properties['effort_estimate'] is not None:
+            task_properties['effort_estimate'] = task_properties.get('effort_estimate')
+        
+        # Ensure creation and last modified dates are set
+        task_properties['creation_date'] = datetime.now()
+        task_properties['last_modified_date'] = datetime.now()
+        
+        # Create and save the new task with all properties
         new_task = GraphTask(**task_properties).save()
 
-        # 3. Create the relationship from Project to the new Task.
+        # 3. Create the relationship from Project to the new Task with metadata
         #    The IsPartOfProjectRel model requires a 'relationshipId'.
-        project.tasks.connect(new_task, {'relationshipId': str(uuid.uuid4())})
+        relationship_props = {
+            'relationshipId': str(uuid.uuid4()),
+            'creationDate': datetime.now(),
+            'lastModifiedDate': datetime.now()
+        }
+        project.tasks.connect(new_task, relationship_props)
 
         return new_task
 
@@ -100,17 +115,26 @@ class TaskRepository:
 
     def update_task(self, uid: str, task_data: TaskUpdate) -> Optional[GraphTask]:
         """
-        Updates an existing task.
+        Updates an existing task with attributes from Ontology V3.2.
         """
         task = self.get_task_by_uid(uid)
         if not task:
             return None
 
-        # Use exclude_unset=True to only update fields that were provided.
+        # Use exclude_unset=True to only update fields that were provided
         update_data = task_data.model_dump(exclude_unset=True)
+        
+        # Map any fields with different names between schema and graph model
+        # Currently all fields have the same names, but this is where we'd handle any differences
+        
+        # Always update the last_modified_date when a task is modified
+        update_data['last_modified_date'] = datetime.now()
+        
+        # Update the task object with all provided fields
         for key, value in update_data.items():
             setattr(task, key, value)
         
+        # Save the updated task
         task.save()
         return task
 

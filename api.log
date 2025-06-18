@@ -17060,3 +17060,57 @@ asyncio.exceptions.CancelledError
 2025-06-16 13:38:11,390 - uvicorn.access - INFO - 127.0.0.1:62598 - "GET /api/v1/resources/?page=1&page_size=10 HTTP/1.1" 200
 2025-06-16 13:38:13,693 - uvicorn.access - INFO - 127.0.0.1:62605 - "GET /api/v1/tasks/?page=1&page_size=10&project_id=39c8b90e5f3d4344bae6d1b5ded584fe HTTP/1.1" 200
 2025-06-16 13:38:16,000 - uvicorn.access - INFO - 127.0.0.1:62611 - "GET /api/v1/users/?page=1&page_size=10 HTTP/1.1" 200
+2025-06-16 13:44:12,079 - uvicorn.access - INFO - 127.0.0.1:63540 - "GET / HTTP/1.1" 200
+2025-06-16 13:44:22,577 - uvicorn.access - INFO - 127.0.0.1:63541 - "GET /docs HTTP/1.1" 200
+2025-06-16 13:44:22,694 - uvicorn.access - INFO - 127.0.0.1:63541 - "GET /api/v1/openapi.json HTTP/1.1" 200
+2025-06-16 13:44:29,363 - uvicorn.access - INFO - 127.0.0.1:63542 - "GET /api/v1/openapi.json HTTP/1.1" 200
+2025-06-16 14:08:00,844 - uvicorn.error - INFO - Application startup complete.
+2025-06-16 14:08:00,844 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8001): only one usage of each socket address (protocol/network address/port) is normally permitted
+2025-06-16 14:08:00,846 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-16 14:08:00,846 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-16 14:08:07,393 - uvicorn.error - INFO - Shutting down
+2025-06-16 14:08:07,502 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-16 14:08:07,502 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-16 14:08:07,502 - uvicorn.error - INFO - Finished server process [30124]
+2025-06-16 14:08:15,930 - uvicorn.error - INFO - Application startup complete.
+2025-06-16 14:08:15,930 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+2025-06-16 14:18:25,257 - uvicorn.error - INFO - Application startup complete.
+2025-06-16 14:18:25,257 - uvicorn.error - ERROR - [Errno 10048] error while attempting to bind on address ('127.0.0.1', 8001): only one usage of each socket address (protocol/network address/port) is normally permitted
+2025-06-16 14:18:25,257 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-16 14:18:25,258 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-16 16:38:35,266 - uvicorn.error - INFO - Shutting down
+2025-06-16 16:38:35,374 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-16 16:38:35,375 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-16 16:38:35,375 - uvicorn.error - INFO - Finished server process [18264]
+2025-06-16 16:57:01,774 - uvicorn.error - INFO - Application startup complete.
+2025-06-16 16:57:01,776 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+2025-06-16 16:57:58,403 - uvicorn.error - INFO - Shutting down
+2025-06-16 16:57:58,512 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-16 16:57:58,513 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-16 16:57:58,515 - uvicorn.error - INFO - Finished server process [20576]
+2025-06-16 17:10:31,869 - uvicorn.error - INFO - Application startup complete.
+2025-06-16 17:10:31,871 - uvicorn.error - INFO - Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+2025-06-16 17:10:32,179 - uvicorn.access - INFO - 127.0.0.1:62274 - "GET / HTTP/1.1" 200
+2025-06-16 17:11:20,915 - uvicorn.access - INFO - 127.0.0.1:62421 - "GET /health HTTP/1.1" 200
+2025-06-16 17:12:15,216 - uvicorn.access - INFO - 127.0.0.1:62581 - "GET /projects?page=1&page_size=5 HTTP/1.1" 404
+2025-06-16 17:14:36,876 - uvicorn.access - INFO - 127.0.0.1:62927 - "GET /api/v1/projects?page=1&page_size=5 HTTP/1.1" 307
+2025-06-16 17:14:38,265 - uvicorn.access - INFO - 127.0.0.1:62927 - "GET /api/v1/projects/?page=1&page_size=5 HTTP/1.1" 200
+2025-06-16 17:23:02,274 - uvicorn.access - INFO - 127.0.0.1:64195 - "GET /api/v1/projects?page=1&page_size=5 HTTP/1.1" 307
+2025-06-16 17:23:02,730 - uvicorn.access - INFO - 127.0.0.1:64195 - "GET /api/v1/projects/?page=1&page_size=5 HTTP/1.1" 200
+2025-06-16 17:23:34,151 - uvicorn.access - INFO - 127.0.0.1:64277 - "GET /api/v1/resources?page=1&page_size=5 HTTP/1.1" 307
+2025-06-16 17:23:34,269 - uvicorn.access - INFO - 127.0.0.1:64277 - "GET /api/v1/resources/?page=1&page_size=5 HTTP/1.1" 200
+2025-06-16 17:26:00,000 - uvicorn.access - INFO - 127.0.0.1:64647 - "GET /api/v1/users?page=1&page_size=5 HTTP/1.1" 307
+2025-06-16 17:26:00,282 - uvicorn.access - INFO - 127.0.0.1:64647 - "GET /api/v1/users/?page=1&page_size=5 HTTP/1.1" 200
+2025-06-16 17:27:00,433 - uvicorn.access - INFO - 127.0.0.1:64795 - "GET /api/v1/tasks?page=1&page_size=5 HTTP/1.1" 307
+2025-06-16 17:27:00,435 - uvicorn.access - INFO - 127.0.0.1:64795 - "GET /api/v1/tasks/?page=1&page_size=5 HTTP/1.1" 422
+2025-06-16 17:39:37,762 - uvicorn.access - INFO - 127.0.0.1:50657 - "GET /api/v1/projects?page=1&page_size=1 HTTP/1.1" 307
+2025-06-16 17:39:38,289 - uvicorn.access - INFO - 127.0.0.1:50657 - "GET /api/v1/projects/?page=1&page_size=1 HTTP/1.1" 200
+2025-06-16 17:45:52,395 - uvicorn.access - INFO - 127.0.0.1:51650 - "GET /api/v1/tasks?page=1&page_size=5&project_id=39c8b90e5f3d4344bae6d1b5ded584fe HTTP/1.1" 307
+2025-06-16 17:45:52,680 - uvicorn.access - INFO - 127.0.0.1:51650 - "GET /api/v1/tasks/?page=1&page_size=5&project_id=39c8b90e5f3d4344bae6d1b5ded584fe HTTP/1.1" 200
+2025-06-16 18:11:08,801 - uvicorn.access - INFO - 127.0.0.1:55292 - "GET /doc HTTP/1.1" 404
+2025-06-16 18:11:12,740 - uvicorn.access - INFO - 127.0.0.1:55292 - "GET /docs HTTP/1.1" 200
+2025-06-16 18:11:12,858 - uvicorn.access - INFO - 127.0.0.1:55292 - "GET /api/v1/openapi.json HTTP/1.1" 200
+2025-06-16 19:40:48,973 - uvicorn.error - INFO - Shutting down
+2025-06-16 19:40:49,082 - uvicorn.error - INFO - Waiting for application shutdown.
+2025-06-16 19:40:49,084 - uvicorn.error - INFO - Application shutdown complete.
+2025-06-16 19:40:49,085 - uvicorn.error - INFO - Finished server process [29268]

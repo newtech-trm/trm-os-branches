@@ -1,3 +1,4 @@
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List, Optional
 
@@ -14,7 +15,7 @@ def create_knowledge_snippet(
     """
     Create a new Knowledge Snippet.
     """
-    return service.create_knowledge_snippet(snippet_create=snippet_in)
+    return service.create_snippet(snippet_create=snippet_in)
 
 @router.get("/{snippet_id}", response_model=KnowledgeSnippet)
 def get_knowledge_snippet(

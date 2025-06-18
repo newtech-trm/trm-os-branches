@@ -92,11 +92,12 @@ class Neo4jDateTimeProperty(Property):
         except Exception as e:
             raise InflateError(f"Failed to inflate {type(value)} to datetime: {str(e)}")
     
-    def deflate(self, value):
+    def deflate(self, value, node=None):
         """
         Convert Python datetime to format suitable for Neo4j
         
         :param value: Python datetime object
+        :param node: The node being deflated (optional)
         :return: Value suitable for Neo4j storage
         """
         if value is None:

@@ -12,7 +12,7 @@ class DirectionEnum(str, Enum):
     INCOMING = "incoming"
     BOTH = "both"
 
-@router.post("/", response_model=Relationship)
+@router.post("/", response_model=Relationship, status_code=status.HTTP_201_CREATED)
 def create_relationship(
     source_id: str,
     source_type: TargetEntityTypeEnum,
