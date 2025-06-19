@@ -1,6 +1,7 @@
 from typing import List, Optional, Dict, Any, Union
 from datetime import datetime
 import uuid
+import asyncio
 
 from trm_api.schemas.recognition import RecognitionCreate, RecognitionUpdate
 from trm_api.graph_models.recognition import Recognition as RecognitionGraphModel
@@ -19,7 +20,7 @@ class RecognitionService:
     Refactored to use Neomodel OGM and follow Ontology V3.2.
     """
     
-    def create_recognition(self, recognition_data: RecognitionCreate) -> Optional[RecognitionGraphModel]:
+    async def create_recognition(self, recognition_data: RecognitionCreate) -> Optional[RecognitionGraphModel]:
         """
         Create a new Recognition and establish relationships according to Ontology V3.2.
         
@@ -194,7 +195,7 @@ class RecognitionService:
             print(f"Error creating Recognition: {e}")
             return None
     
-    def get_recognition_by_id(self, recognition_id: str) -> Optional[RecognitionGraphModel]:
+    async def get_recognition_by_id(self, recognition_id: str) -> Optional[RecognitionGraphModel]:
         """
         Get a Recognition by its ID.
         
@@ -212,9 +213,9 @@ class RecognitionService:
             print(f"Error retrieving Recognition {recognition_id}: {e}")
             return None
     
-    def update_recognition(self, recognition_id: str, recognition_data: RecognitionUpdate) -> Optional[RecognitionGraphModel]:
+    async def update_recognition(self, recognition_id: str, recognition_data: RecognitionUpdate) -> Optional[RecognitionGraphModel]:
         """
-        Update a Recognition by its ID.
+        Update a Recognition by its ID theo Ontology V3.2.
         
         Args:
             recognition_id: ID of the Recognition to update
@@ -247,6 +248,22 @@ class RecognitionService:
             
             # Save changes
             recognition.save()
+            
+            # Update relationships nếu có sự thay đổi
+            if recognition_data.received_by_agent_ids is not None:
+                # Xóa các relationship cũ nếu cần cập nhật danh sách nhận recognition
+                current_recipients = list(recognition.received_by.all())
+                current_recipient_ids = [agent.uid for agent in current_recipients]
+                
+                # Thêm mới những agent chưa có trong danh sách
+                for agent_id in recognition_data.received_by_agent_ids:
+                    if agent_id not in current_recipient_ids:
+                        try:
+                            agent = AgentGraphModel.nodes.get(uid=agent_id)
+                            recognition.received_by.connect(agent)
+                        except AgentGraphModel.DoesNotExist:
+                            print(f"Agent with ID {agent_id} not found for RECEIVED_BY relationship")
+            
             return recognition
             
         except RecognitionGraphModel.DoesNotExist:
@@ -255,9 +272,9 @@ class RecognitionService:
             print(f"Error updating Recognition {recognition_id}: {e}")
             return None
     
-    def delete_recognition(self, recognition_id: str) -> bool:
+    async def delete_recognition(self, recognition_id: str) -> bool:
         """
-        Delete a Recognition by its ID.
+        Delete a Recognition by its ID theo Ontology V3.2.
         
         Args:
             recognition_id: ID of the Recognition to delete
@@ -267,6 +284,38 @@ class RecognitionService:
         """
         try:
             recognition = RecognitionGraphModel.nodes.get(uid=recognition_id)
+            
+            # Xóa các relationship trước khi xóa node
+            # RECEIVED_BY relationships
+            for agent in recognition.received_by.all():
+                recognition.received_by.disconnect(agent)
+                
+            # GIVEN_BY relationships
+            for agent in recognition.given_by.all():
+                recognition.given_by.disconnect(agent)
+            
+            # RECOGNIZES_WIN relationships
+            for win in recognition.recognizes_win.all():
+                recognition.recognizes_win.disconnect(win)
+            
+            # RECOGNIZES_CONTRIBUTION_TO relationships
+            # Project
+            for project in recognition.recognizes_contribution_to_project.all():
+                recognition.recognizes_contribution_to_project.disconnect(project)
+                
+            # Task
+            for task in recognition.recognizes_contribution_to_task.all():
+                recognition.recognizes_contribution_to_task.disconnect(task)
+                
+            # Resource
+            for resource in recognition.recognizes_contribution_to_resource.all():
+                recognition.recognizes_contribution_to_resource.disconnect(resource)
+            
+            # GENERATES_EVENT relationships
+            for event in recognition.generates_event.all():
+                recognition.generates_event.disconnect(event)
+            
+            # Xóa node
             recognition.delete()
             return True
         except RecognitionGraphModel.DoesNotExist:
@@ -275,7 +324,7 @@ class RecognitionService:
             print(f"Error deleting Recognition {recognition_id}: {e}")
             return False
     
-    def list_recognitions(self, skip: int = 0, limit: int = 100) -> List[RecognitionGraphModel]:
+    async def list_recognitions(self, skip: int = 0, limit: int = 100) -> List[RecognitionGraphModel]:
         """
         List all Recognitions with pagination.
         
@@ -295,7 +344,7 @@ class RecognitionService:
             print(f"Error listing Recognitions: {e}")
             return []
     
-    def get_recognition_with_relationships(self, recognition_id: str) -> Optional[Dict[str, Any]]:
+    async def get_recognition_with_relationships(self, recognition_id: str) -> Optional[Dict[str, Any]]:
         """
         Get a Recognition by ID with all its relationships.
         

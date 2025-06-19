@@ -14,15 +14,17 @@ class AgentService:
     def _get_db(self) -> Driver:
         return get_driver()
 
-    def create_agent(self, agent_create: AgentCreate) -> Optional[Agent]:
-        """Creates a new Agent node."""
+    async def create_agent(self, agent_create: AgentCreate) -> Optional[Agent]:
+        """Creates a new Agent node asynchronously."""
         agent_db_for_params = AgentInDB(**agent_create.model_dump(exclude_unset=True))
         params = agent_db_for_params.model_dump(by_alias=True)
 
         print(f"DEBUG: Params sent to _create_agent_tx: {params}") # For debugging
 
-        with self._get_db().session() as session:
-            result_data = session.write_transaction(self._create_agent_tx, params)
+        # Sử dụng async session
+        async with self._get_db().driver.session() as session:
+            result_data = await session.execute_write(self._create_agent_tx, params)
+            
         if not result_data:
             raise HTTPException(status_code=404, detail="Agent could not be created in DB")
         
@@ -88,10 +90,10 @@ class AgentService:
             return dict(record)
         return None
 
-    def get_agent_by_id(self, agent_id: str) -> Optional[Agent]:
-        """Retrieves a single agent by its unique ID."""
-        with self._get_db().session() as session:
-            result_data = session.read_transaction(self._get_agent_by_id_tx, agent_id)
+    async def get_agent_by_id(self, agent_id: str) -> Optional[Agent]:
+        """Retrieves a single agent by its unique ID asynchronously."""
+        async with self._get_db().driver.session() as session:
+            result_data = await session.execute_read(self._get_agent_by_id_tx, agent_id)
        
         if not result_data:
             return None
@@ -130,10 +132,10 @@ class AgentService:
         record = result.single()
         return dict(record) if record else None
 
-    def list_agents(self, skip: int = 0, limit: int = 100) -> List[Agent]:
-        """Retrieves a list of agents with pagination."""
-        with self._get_db().session() as session:
-            raw_results = session.read_transaction(self._list_agents_tx, skip, limit)
+    async def list_agents(self, skip: int = 0, limit: int = 100) -> List[Agent]:
+        """Retrieves a list of agents with pagination asynchronously."""
+        async with self._get_db().driver.session() as session:
+            raw_results = await session.execute_read(self._list_agents_tx, skip, limit)
        
         processed_agents = []
         for agent_data in raw_results:
@@ -172,8 +174,8 @@ class AgentService:
         result = tx.run(query, skip=skip, limit=limit)
         return [dict(record) for record in result]
 
-    def update_agent(self, agent_id: str, agent_update: AgentUpdate) -> Optional[Agent]:
-        """Updates an existing agent."""
+    async def update_agent(self, agent_id: str, agent_update: AgentUpdate) -> Optional[Agent]:
+        """Updates an existing agent asynchronously."""
         update_data_from_request = agent_update.model_dump(exclude_unset=True, by_alias=True)
 
         if not update_data_from_request:
@@ -182,8 +184,8 @@ class AgentService:
         final_update_data = update_data_from_request.copy()
         final_update_data['updatedAt'] = datetime.utcnow()
 
-        with self._get_db().session() as session:
-            result_data = session.write_transaction(self._update_agent_tx, agent_id, final_update_data)
+        async with self._get_db().driver.session() as session:
+            result_data = await session.execute_write(self._update_agent_tx, agent_id, final_update_data)
     
         if not result_data:
             return None
@@ -237,10 +239,10 @@ class AgentService:
         record = result.single()
         return dict(record) if record else None
 
-    def delete_agent(self, agent_id: str) -> bool:
-        """Deletes an agent by its ID."""
-        with self._get_db().session() as session:
-            result = session.write_transaction(self._delete_agent_tx, agent_id)
+    async def delete_agent(self, agent_id: str) -> bool:
+        """Deletes an agent by its ID asynchronously."""
+        async with self._get_db().driver.session() as session:
+            result = await session.execute_write(self._delete_agent_tx, agent_id)
             return result
 
     @staticmethod

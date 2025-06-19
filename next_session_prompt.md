@@ -1,13 +1,48 @@
-# Mega Prompt cho AI Phiên Tiếp Theo - TRM OS Ontology V3.2
+# Kế hoạch cho phiên tiếp theo - 20/06/2025
 
-> Lưu ý: Đây là prompt dành cho AI trong phiên tiếp theo, không phải tài liệu cho người dùng.
+## Mục tiêu
 
-## Chiến lược Phát triển
-Dự án đang theo đuổi chiến lược **"Ontology-First"** hoặc **"Xây từng Lớp Ngang"**:
-- **Tư duy**: "Hãy đổ toàn bộ móng của cả tòa nhà một cách vững chắc trước khi xây lên tầng một."
-- **Tiến trình**: Hoàn thiện toàn bộ lớp Database và Ontology trước tiên. Sau đó xây tiếp toàn bộ lớp Service, rồi đến toàn bộ lớp API.
-- **Ưu điểm**: Cực kỳ vững chắc và rõ ràng. Tạo ra một "nguồn chân lý" hữu hình ngay từ đầu. Giúp giảm thiểu sai sót logic và mang lại cảm giác kiểm soát tốt hơn.
-- **Nhược điểm**: Có thể mất nhiều thời gian hơn để thấy được một tính năng hoàn chỉnh từ đầu đến cuối.
+Hoàn thiện quá trình áp dụng nghiêm ngặt nguyên tắc ontology-first và chuẩn hóa async trong toàn bộ API endpoints và services của TRM-OS. Đảm bảo tất cả các test đều pass và CI/CD pipeline hoạt động chính xác.
+
+## Tiến độ đạt được
+
+- ✅ **Hoàn thành chuyển đổi RecognitionService**: Đã chuyển đổi toàn bộ các phương thức sang async/await pattern
+- ✅ **Hoàn thành chuyển đổi WinService**: Đã chuyển đổi các phương thức chính sang async
+- ✅ **API Endpoints async**: Đã cập nhật các endpoint trong router win.py, recognition.py và relationship.py
+- ✅ **Bật `response_model`**: Đã bật lại validation cho các endpoint relationship chính
+
+## Công việc chính cần tiếp tục
+
+1. **Hoàn thiện cập nhật các test integration còn lại**
+   - Đã hoàn thành việc cập nhật `test_received_by_api.py` và `test_given_by_api.py` sang async pattern
+   - Cần tiếp tục cập nhật các file test còn lại: 
+     - `test_win_api.py`
+     - `test_generates_knowledge_api.py`
+     - `test_leads_to_win_api.py`
+     - `test_recognition_api.py`
+   - Đảm bảo sử dụng AsyncMock thay vì MagicMock cho các test async
+   - Sử dụng nhất quán `httpx.AsyncClient` thay vì `TestClient`
+
+2. **Củng cố các adapter để đảm bảo tuân thủ nghiêm ngặt ontology**
+   - Kiểm tra lại các adapter đã triển khai (`datetime_adapter.py`, `enum_adapter.py`)
+   - Đảm bảo rằng các API endpoints đều đã áp dụng decorator chuẩn hóa phù hợp
+   - Phát hiện và sửa bất kỳ vấn đề normalization nào còn tồn tại
+   - Kiểm tra xem có trường hợp nào chưa áp dụng ontology-first nghiêm ngặt
+
+3. **Kiểm tra toàn diện CI/CD pipeline**
+   - Chạy lại toàn bộ bộ test unit và integration
+   - Đảm bảo `.github/workflows/neo4j-tests.yml` hỗ trợ các test async
+   - Cập nhật configuration nếu cần thiết
+   - Tối ưu hóa thời gian chạy của pipeline
+
+4. **Đánh giá hiệu suất của API async**
+   - So sánh hiệu suất của API trước và sau khi chuyển sang async
+   - Đo lường thời gian phản hồi của các endpoint chính
+   - Đề xuất tối ưu hóa nếu cần
+
+5. **Tài liệu hóa quá trình**
+   - Cập nhật `ontology_first_checkpoint.md` với các bài học kinh nghiệm
+   - Hoàn thiện hướng dẫn phát triển API cho team
 
 ## Tổng quan Dự Án
 Dự án TRM OS là một hệ thống AI Agent cộng tác, vận hành dựa trên Ontology, tự động nhận diện và giải quyết Tension, tích hợp công cụ doanh nghiệp, hướng tới vận hành thông minh và cải tiến liên tục tổ chức.

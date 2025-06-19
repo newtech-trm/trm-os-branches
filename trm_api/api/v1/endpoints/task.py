@@ -2,17 +2,20 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from typing import Any, List, Dict, Optional
 
 from trm_api.models.pagination import PaginatedResponse
+from trm_api.adapters.decorators import adapt_datetime_response
 
 from trm_api.models.task import Task, TaskCreate, TaskUpdate
 from trm_api.services.task_service import TaskService
 
 router = APIRouter()
 
-def get_task_service() -> TaskService:
+async def get_task_service() -> TaskService:
+    """Async factory để tạo TaskService"""
     return TaskService()
 
 @router.get("/", response_model=PaginatedResponse[Task])
-def list_tasks_for_project(
+@adapt_datetime_response
+async def list_tasks_for_project(
     *, 
     project_id: str,
     page: int = Query(1, ge=1, description="Page number, 1-indexed"),
@@ -23,14 +26,15 @@ def list_tasks_for_project(
     Retrieve paginated tasks for a specific project.
     """
     # Use TaskService to handle pagination logic
-    return service.get_paginated_tasks_for_project(
+    return await service.get_paginated_tasks_for_project(
         project_id=project_id, 
         page=page, 
         page_size=page_size
     )
 
 @router.post("/", response_model=Task, status_code=status.HTTP_201_CREATED)
-def create_task(
+@adapt_datetime_response
+async def create_task(
     *, 
     task_in: TaskCreate, 
     service: TaskService = Depends(get_task_service)
@@ -39,7 +43,7 @@ def create_task(
     Create a new task for a project according to Ontology V3.2.
     """
     # The service handles validation, finding the project and linking it
-    created_task = service.create_task(task_data=task_in)
+    created_task = await service.create_task(task_data=task_in)
     if not created_task:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -48,7 +52,8 @@ def create_task(
     return created_task
 
 @router.get("/{task_id}", response_model=Task)
-def get_task(
+@adapt_datetime_response
+async def get_task(
     *, 
     task_id: str, 
     service: TaskService = Depends(get_task_service)
@@ -56,7 +61,7 @@ def get_task(
     """
     Get task by ID.
     """
-    task = service.get_task_by_id(task_id=task_id)
+    task = await service.get_task_by_id(task_id=task_id)
     if not task:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -65,7 +70,8 @@ def get_task(
     return task
 
 @router.put("/{task_id}", response_model=Task)
-def update_task(
+@adapt_datetime_response
+async def update_task(
     *, 
     task_id: str,
     task_in: TaskUpdate,
@@ -74,7 +80,7 @@ def update_task(
     """
     Update a task according to Ontology V3.2.
     """
-    updated_task = service.update_task(task_id=task_id, task_data=task_in)
+    updated_task = await service.update_task(task_id=task_id, task_data=task_in)
     if not updated_task:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -83,7 +89,7 @@ def update_task(
     return updated_task
 
 @router.delete("/{task_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_task(
+async def delete_task(
     *, 
     task_id: str,
     service: TaskService = Depends(get_task_service)
@@ -91,7 +97,7 @@ def delete_task(
     """
     Delete a task.
     """
-    deleted = service.delete_task(task_id=task_id)
+    deleted = await service.delete_task(task_id=task_id)
     if not deleted:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -102,7 +108,8 @@ def delete_task(
 # --- Task Assignment Endpoints ---
 
 @router.post("/{task_id}/assign/user/{user_id}", status_code=status.HTTP_200_OK)
-def assign_task_to_user(
+@adapt_datetime_response
+async def assign_task_to_user(
     *,
     task_id: str,
     user_id: str,
@@ -118,7 +125,7 @@ def assign_task_to_user(
     
     This follows the TRM Ontology V3.2 specification for ASSIGNS_TASK relationship.
     """
-    result = service.assign_task_to_user(
+    result = await service.assign_task_to_user(
         task_id=task_id, 
         user_id=user_id,
         assignment_type=assignment_type,
@@ -144,7 +151,8 @@ def assign_task_to_user(
     }
 
 @router.post("/{task_id}/assign/agent/{agent_id}", status_code=status.HTTP_200_OK)
-def assign_task_to_agent(
+@adapt_datetime_response
+async def assign_task_to_agent(
     *,
     task_id: str,
     agent_id: str,
@@ -160,7 +168,7 @@ def assign_task_to_agent(
     
     This follows the TRM Ontology V3.2 specification for ASSIGNS_TASK relationship.
     """
-    result = service.assign_task_to_agent(
+    result = await service.assign_task_to_agent(
         task_id=task_id, 
         agent_id=agent_id,
         assignment_type=assignment_type,
@@ -186,7 +194,8 @@ def assign_task_to_agent(
     }
 
 @router.get("/{task_id}/assignees", status_code=status.HTTP_200_OK)
-def get_task_assignees(
+@adapt_datetime_response
+async def get_task_assignees(
     *,
     task_id: str,
     include_relationship_details: bool = Query(False, description="Include detailed relationship properties"),
@@ -199,7 +208,7 @@ def get_task_assignees(
     according to TRM Ontology V3.2.
     """
     # Check if task exists
-    task = service.get_task_by_id(task_id=task_id)
+    task = await service.get_task_by_id(task_id=task_id)
     if not task:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -207,12 +216,13 @@ def get_task_assignees(
         )
     
     # Get assignees with relationship details
-    assignees = service.get_task_assignees(task_id=task_id, include_relationship_details=include_relationship_details)
+    assignees = await service.get_task_assignees(task_id=task_id, include_relationship_details=include_relationship_details)
     
     return assignees
 
 @router.post("/{task_id}/accept", status_code=status.HTTP_200_OK)
-def accept_task_assignment(
+@adapt_datetime_response
+async def accept_task_assignment(
     *,
     task_id: str,
     assignee_id: str = Query(..., description="ID of the user or agent accepting the task"),
@@ -224,7 +234,7 @@ def accept_task_assignment(
     
     Updates the ASSIGNS_TASK relationship with acceptance information.
     """
-    success = service.accept_task_assignment(
+    success = await service.accept_task_assignment(
         task_id=task_id,
         assignee_id=assignee_id,
         acceptance_notes=acceptance_notes

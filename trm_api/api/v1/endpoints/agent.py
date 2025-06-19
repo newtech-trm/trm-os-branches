@@ -7,30 +7,30 @@ from trm_api.services.agent_service import agent_service, AgentService
 router = APIRouter()
 
 @router.post("/", response_model=Agent, status_code=status.HTTP_201_CREATED)
-def create_agent(
+async def create_agent(
     agent_in: AgentCreate,
     service: AgentService = Depends(lambda: agent_service)
 ):
     """
     Create a new Agent.
     """
-    return service.create_agent(agent_create=agent_in)
+    return await service.create_agent(agent_create=agent_in)
 
 @router.get("/{agent_id}", response_model=Agent)
-def get_agent(
+async def get_agent(
     agent_id: str,
     service: AgentService = Depends(lambda: agent_service)
 ):
     """
     Get a specific Agent by its ID.
     """
-    db_agent = service.get_agent_by_id(agent_id=agent_id)
+    db_agent = await service.get_agent_by_id(agent_id=agent_id)
     if db_agent is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Agent not found")
     return db_agent
 
 @router.get("/", response_model=List[Agent])
-def list_agents(
+async def list_agents(
     skip: int = 0,
     limit: int = 100,
     service: AgentService = Depends(lambda: agent_service)
@@ -38,10 +38,10 @@ def list_agents(
     """
     Retrieve a list of Agents.
     """
-    return service.list_agents(skip=skip, limit=limit)
+    return await service.list_agents(skip=skip, limit=limit)
 
 @router.put("/{agent_id}", response_model=Agent)
-def update_agent(
+async def update_agent(
     agent_id: str,
     agent_in: AgentUpdate,
     service: AgentService = Depends(lambda: agent_service)
@@ -49,20 +49,20 @@ def update_agent(
     """
     Update an existing Agent.
     """
-    updated_agent = service.update_agent(agent_id=agent_id, agent_update=agent_in)
+    updated_agent = await service.update_agent(agent_id=agent_id, agent_update=agent_in)
     if updated_agent is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Agent not found")
     return updated_agent
 
 @router.delete("/{agent_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_agent(
+async def delete_agent(
     agent_id: str,
     service: AgentService = Depends(lambda: agent_service)
 ):
     """
     Delete an Agent.
     """
-    deleted = service.delete_agent(agent_id=agent_id)
+    deleted = await service.delete_agent(agent_id=agent_id)
     if not deleted:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Agent not found")
     return

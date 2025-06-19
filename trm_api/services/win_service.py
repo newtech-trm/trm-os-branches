@@ -4,6 +4,7 @@ from datetime import datetime
 import logging
 import traceback
 import uuid
+import asyncio
 
 from trm_api.db.session import get_driver
 from trm_api.models.win import Win, WinCreate, WinUpdate, WinInDB
@@ -13,7 +14,7 @@ class WinService:
     Service layer for handling business logic related to WINs.
     """
 
-    def _get_db(self) -> Driver:
+    async def _get_db(self) -> Driver:
         return get_driver()
 
     def _convert_neo4j_types(self, data: Any) -> Any:
@@ -48,21 +49,23 @@ class WinService:
         # No conversion needed
         return data
 
-    def create_win(self, win_create: WinCreate) -> Win:
+    async def create_win(self, win_data: Dict[str, Any]) -> Dict[str, Any]:
         try:
-            logging.debug(f"Creating WIN with data: {win_create}")
+            logging.debug(f"Creating WIN with data: {win_data}")
             
-            # Convert Pydantic model to a regular dictionary
-            win_dict = win_create.model_dump()
-            logging.debug(f"WIN dict after conversion: {win_dict}")
+            # Convert Pydantic model to a regular dictionary if needed
+            if hasattr(win_data, 'model_dump'):
+                win_dict = win_data.model_dump()
+                logging.debug(f"WIN dict after conversion: {win_dict}")
+            else:
+                win_dict = win_data
+                
+            logging.debug(f"Creating WIN with params: {win_dict}")
             
-            params = win_dict
-            
-            logging.debug(f"Creating WIN with params: {params}")
-
-            with self._get_db().session() as session:
+            db = await self._get_db()
+            with db.session() as session:
                 try:
-                    # Execute the transaction
+                    # Execute the transaction - Neo4j không hỗ trợ async/await trực tiếp
                     raw_result = session.write_transaction(self._create_win_tx, win_dict)
                     logging.debug(f"Raw result from Neo4j: {raw_result}")
                     logging.debug(f"Result types: {[(k, type(v)) for k, v in raw_result.items()]}")
@@ -89,7 +92,8 @@ class WinService:
             logging.error(f"Error creating WIN: {e}")
             raise
 
-    def _create_win_tx(self, tx, win_data: dict) -> dict:
+    @staticmethod
+    def _create_win_tx(tx, win_data: dict) -> dict:
         """Create a WIN node transaction."""
         create_query = (
             "CREATE (w:WIN {uid: $uid, summary: $summary, description: $description, win_type: $win_type}) "
@@ -117,12 +121,13 @@ class WinService:
         logging.debug(f"WIN data from Neo4j: {win_data}")
         return win_data
 
-    def get_win(self, uid: str) -> Optional[Win]:
-        """Get a WIN node by UID."""
+    async def get_win(self, win_id: str) -> Optional[Dict[str, Any]]:
+        """Get WIN by ID."""
         try:
-            with self._get_db().session() as session:
+            db = await self._get_db()
+            with db.session() as session:
                 # Execute the query
-                raw_result = session.read_transaction(self._get_win_by_uid_tx, uid)
+                raw_result = session.read_transaction(self._get_win_by_uid_tx, win_id)
                 if not raw_result:
                     return None
                 
@@ -143,11 +148,12 @@ class WinService:
         record = result.single()
         return dict(record['w']) if record and record['w'] else None
 
-    def list_wins(self, skip: int = 0, limit: int = 25) -> List[Win]:
-        """Retrieves a list of WINs with pagination."""
+    async def list_wins(self, skip: int = 0, limit: int = 25) -> List[Win]:
+        """Retrieves a list of WINs with pagination theo Ontology V3.2."""
         logging.debug(f"WinService.list_wins: Bắt đầu lấy danh sách WINs. Skip: {skip}, Limit: {limit}")
         try:
-            with self._get_db().session() as session:
+            db = await self._get_db()
+            with db.session() as session:
                 raw_results = session.read_transaction(self._list_wins_tx, skip, limit)
                 logging.debug(f"WinService.list_wins: Đã nhận {len(raw_results)} kết quả thô từ Neo4j.")
                 
@@ -191,47 +197,112 @@ class WinService:
             logging.error(f"Traceback: {traceback.format_exc()}")
             return []
 
-    def update_win(self, win_id: str, win_update: WinUpdate) -> Optional[Win]:
-        """Updates an existing WIN."""
-        update_data = win_update.model_dump(exclude_unset=True, by_alias=True)
+    async def update_win(self, win_id: str, win_update: WinUpdate) -> Optional[Win]:
+        """Updates an existing WIN theo Ontology V3.2."""
+        logging.debug(f"WinService.update_win: Cập nhật WIN với ID {win_id}")
+        
+        # Chuyển đổi từ Pydantic model sang dict, chỉ lấy các trường được đặt giá trị
+        update_data = win_update.model_dump(exclude_unset=True)
         if not update_data:
-            return self.get_win_by_id(win_id)
+            return await self.get_win(win_id)
 
-        update_data['updatedAt'] = datetime.utcnow()
+        # Cập nhật thời gian chỉnh sửa
+        update_data['updated_at'] = datetime.utcnow()
+        
+        # Chuẩn hóa các giá trị enum theo Ontology V3.2
+        if 'win_type' in update_data:
+            update_data['win_type'] = update_data['win_type'].value if hasattr(update_data['win_type'], 'value') else update_data['win_type']
+            
+        if 'status' in update_data:
+            update_data['status'] = update_data['status'].value if hasattr(update_data['status'], 'value') else update_data['status']
 
-        with self._get_db().session() as session:
-            result = session.write_transaction(self._update_win_tx, win_id, update_data)
-            return Win(**result) if result else None
+        try:
+            db = await self._get_db()
+            with db.session() as session:
+                result = session.write_transaction(self._update_win_tx, win_id, update_data)
+                if not result:
+                    logging.error(f"WinService.update_win: Không tìm thấy WIN với ID {win_id}")
+                    return None
+                    
+                # Chuyển đổi dữ liệu từ Neo4j sang Python types
+                converted_result = self._convert_neo4j_types(result)
+                
+                return Win(**converted_result)
+        except Exception as e:
+            logging.error(f"WinService.update_win: Lỗi khi cập nhật WIN {win_id}: {str(e)}")
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return None
 
     @staticmethod
     def _update_win_tx(tx, win_id: str, update_data: dict) -> Optional[dict]:
-        set_clauses = [f"w.{key} = ${key}" for key in update_data.keys()]
-        if 'updatedAt' in update_data:
-            set_clauses.remove('w.updatedAt = $updatedAt')
-            set_clauses.append('w.updatedAt = datetime($updatedAt)')
+        """Transaction để cập nhật WIN theo Ontology V3.2."""
+        # Xây dựng các mệnh đề SET để cập nhật các trường
+        set_clauses = []
+        for key, value in update_data.items():
+            # Xử lý đặc biệt cho datetime
+            if key in ['updated_at', 'created_at', 'start_date', 'end_date', 'target_date'] and value is not None:
+                set_clauses.append(f"w.{key} = datetime($update_data.{key})")
+            else:
+                set_clauses.append(f"w.{key} = $update_data.{key}")
 
         query = (
-            f"MATCH (w:WIN {{winId: $winId}}) "
+            f"MATCH (w:WIN {{uid: $win_id}}) "
             f"SET {', '.join(set_clauses)} "
             "RETURN w"
         )
-        params = {'winId': win_id, **update_data}
-        result = tx.run(query, params)
+        
+        logging.debug(f"WinService._update_win_tx: Thực thi truy vấn UPDATE: {query}")
+        logging.debug(f"WinService._update_win_tx: Với tham số: win_id={win_id}, update_data={update_data}")
+        
+        result = tx.run(query, win_id=win_id, update_data=update_data)
         record = result.single()
-        return dict(record['w']) if record and record['w'] else None
+        
+        if not record:
+            logging.error(f"WinService._update_win_tx: Không tìm thấy WIN với ID {win_id}")
+            return None
+            
+        # Chuyển đổi node Neo4j thành dictionary
+        win_data = dict(record['w'].items())
+        logging.debug(f"WinService._update_win_tx: Kết quả cập nhật: {win_data}")
+        return win_data
 
-    def delete_win(self, win_id: str) -> bool:
-        """Deletes a WIN by its ID."""
-        with self._get_db().session() as session:
-            result = session.write_transaction(self._delete_win_tx, win_id)
-            return result
+    async def delete_win(self, win_id: str) -> bool:
+        """Deletes a WIN by its ID theo Ontology V3.2."""
+        logging.debug(f"WinService.delete_win: Xóa WIN với ID {win_id}")
+        try:
+            db = await self._get_db()
+            with db.session() as session:
+                # Đầu tiên hãy kiểm tra xem WIN có tồn tại không
+                win = session.read_transaction(self._get_win_by_uid_tx, win_id)
+                if not win:
+                    logging.warning(f"WinService.delete_win: Không tìm thấy WIN với ID {win_id}")
+                    return False
+                    
+                # Xóa WIN và tất cả các mối quan hệ liên quan
+                result = session.write_transaction(self._delete_win_tx, win_id)
+                return result
+        except Exception as e:
+            logging.error(f"WinService.delete_win: Lỗi khi xóa WIN {win_id}: {str(e)}")
+            logging.error(f"Traceback: {traceback.format_exc()}")
+            return False
 
     @staticmethod
     def _delete_win_tx(tx, win_id: str) -> bool:
-        query = "MATCH (w:WIN {winId: $winId}) DETACH DELETE w"
-        result = tx.run(query, winId=win_id)
+        """Transaction để xóa WIN và các mối quan hệ liên quan theo Ontology V3.2."""
+        logging.debug(f"WinService._delete_win_tx: Xóa WIN với ID {win_id} và các mối quan hệ liên quan")
+        
+        # Trước hết, ngắt kết nối các mối quan hệ quan trọng để giữ tính toàn vẹn dữ liệu
+        # DETACH DELETE sẽ xóa tất cả các mối quan hệ, nhưng chúng ta có thể kiểm tra trước
+        
+        # Xóa WIN và tất cả các mối quan hệ liên quan
+        query = "MATCH (w:WIN {uid: $win_id}) DETACH DELETE w"
+        result = tx.run(query, win_id=win_id)
         summary = result.consume()
-        return summary.counters.nodes_deleted > 0
+        
+        deleted_count = summary.counters.nodes_deleted
+        logging.debug(f"WinService._delete_win_tx: Đã xóa {deleted_count} node WIN")
+        
+        return deleted_count > 0
 
 # Singleton instance of the service
 win_service = WinService()

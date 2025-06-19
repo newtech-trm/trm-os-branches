@@ -11,9 +11,9 @@ from trm_api.graph_models.knowledge_asset import KnowledgeAsset as GraphKnowledg
 from trm_api.models.project import ProjectCreate, ProjectUpdate, ProjectDetail # This is the Pydantic model for API data
 
 class ProjectRepository:
-    def create_project(self, project_data: ProjectCreate) -> GraphProject:
+    async def create_project(self, project_data: ProjectCreate) -> GraphProject:
         """
-        Creates a new project with extended properties.
+        Creates a new project with extended properties asynchronously.
         """
         # Extract core and extended properties from project_data
         # Use getattr to safely get optional properties
@@ -37,18 +37,18 @@ class ProjectRepository:
         
         # If this is a subproject, create relationship to parent project
         if hasattr(project_data, 'parent_project_id') and project_data.parent_project_id:
-            parent_project = self.get_project_by_uid(project_data.parent_project_id)
+            parent_project = await self.get_project_by_id(project_data.parent_project_id)
             if parent_project:
                 project.parent_project.connect(parent_project)
         
         return project
 
-    def get_project_by_uid(self, uid: str) -> Optional[GraphProject]:
+    async def get_project_by_id(self, project_id: str) -> Optional[GraphProject]:
         """
-        Retrieves a project by its unique ID.
+        Retrieves a project by its unique ID asynchronously.
         """
         try:
-            return GraphProject.nodes.get(uid=uid)
+            return GraphProject.nodes.get(uid=project_id)
         except GraphProject.DoesNotExist:
             return None
 
@@ -58,77 +58,54 @@ class ProjectRepository:
         """
         return GraphProject.nodes.all()[skip:skip + limit]
         
-    def get_paginated_projects(self, page: int = 1, page_size: int = 10) -> Tuple[List[GraphProject], int, int]:
+    async def get_paginated_projects(self, page: int = 1, page_size: int = 10) -> Tuple[List[GraphProject], int, int]:
         """
-        Retrieves a paginated list of all projects.
-        
-        Args:
-            page: The page number (1-indexed)
-            page_size: Number of items per page
-            
-        Returns:
-            Tuple of (projects, total_count, page_count)
+        Retrieves a paginated list of projects asynchronously.
+        Returns a tuple of (projects, total_count, page_count)
         """
-        from trm_api.repositories.pagination_helper import PaginationHelper
-        
-        return PaginationHelper.paginate_query(GraphProject.nodes, page, page_size)
+        total_count = len(GraphProject.nodes.all())
+        page_count = (total_count + page_size - 1) // page_size if page_size > 0 else 0
+        projects = GraphProject.nodes.all().order_by('title')[((page - 1) * page_size):(page * page_size)]
+        return list(projects), total_count, page_count
 
-    def update_project(self, uid: str, project_data: ProjectUpdate) -> Optional[GraphProject]:
+    async def update_project(self, project_id: str, project_data: ProjectUpdate) -> Optional[GraphProject]:
         """
-        Updates an existing project including extended properties.
+        Updates an existing project asynchronously.
         """
-        project = self.get_project_by_uid(uid)
-        if not project:
+        try:
+            project = GraphProject.nodes.get(uid=project_id)
+            # Update only the fields that are provided in the update data
+            update_dict = project_data.model_dump(exclude_unset=True)
+            for field, value in update_dict.items():
+                setattr(project, field, value)
+            project.save()
+            return project
+        except GraphProject.DoesNotExist:
             return None
 
-        update_data = project_data.model_dump(exclude_unset=True)
-        
-        # Handle parent project relationship separately
-        parent_project_id = update_data.pop('parent_project_id', None)
-        
-        # Update regular attributes
-        for key, value in update_data.items():
-            setattr(project, key, value)
-        
-        # Handle parent project relationship if it exists and changed
-        if parent_project_id is not None:
-            # First disconnect from current parent if exists
-            current_parents = list(project.parent_project.all())
-            for parent in current_parents:
-                project.parent_project.disconnect(parent)
-                
-            # Then connect to new parent if specified
-            if parent_project_id:
-                parent = self.get_project_by_uid(parent_project_id)
-                if parent:
-                    project.parent_project.connect(parent)
-        
-        project.save()
-        return project
-
-    def delete_project(self, uid: str) -> bool:
+    async def delete_project(self, project_id: str) -> bool:
         """
-        Deletes a project by its unique ID.
-        Returns True if deletion was successful, False otherwise.
+        Deletes a project by ID asynchronously.
         """
-        project = self.get_project_by_uid(uid)
-        if not project:
+        try:
+            project = GraphProject.nodes.get(uid=project_id)
+            # Delete all relationships first
+            db.cypher_query(f"MATCH (p:Project {{uid: '{project_id}'}}) DETACH DELETE p")
+            return True
+        except GraphProject.DoesNotExist:
             return False
         
-        project.delete()
-        return True
-        
     @db.transaction
-    def add_tension_to_resolve(self, project_uid: str, tension_uid: str, 
-                        resolution_status: str = 'Proposed',
-                        resolution_approach: str = None,
-                        expected_outcome: str = None,
-                        alignment_score: float = None,
-                        priority: str = 'Medium',
-                        start_date = None,
-                        target_resolution_date = None,
-                        actual_resolution_date = None,
-                        notes: str = None) -> Optional[Tuple[GraphProject, GraphTension]]:
+    async def add_tension_to_resolve(self, project_uid: str, tension_uid: str, 
+                           resolution_status: str = "Proposed", 
+                           resolution_approach: Optional[str] = None,
+                           expected_outcome: Optional[str] = None,
+                           alignment_score: Optional[float] = None,
+                           priority: Optional[str] = None,
+                           start_date: Optional[datetime] = None,
+                           target_resolution_date: Optional[datetime] = None,
+                           actual_resolution_date: Optional[datetime] = None,
+                           notes: Optional[str] = None) -> Optional[Tuple[GraphProject, GraphTension]]:
         """
         Establishes a RESOLVES_TENSION relationship from a Project to a Tension
         with all required properties according to the TRM Ontology V3.2.
@@ -153,7 +130,7 @@ class ProjectRepository:
         from datetime import datetime
         
         # 1. Get both the project and tension nodes
-        project = self.get_project_by_uid(project_uid)
+        project = await self.get_project_by_id(project_uid)
         if not project:
             return None
             
@@ -193,18 +170,18 @@ class ProjectRepository:
         
         return (project, tension)
         
-    def get_tensions_resolved_by_project(self, project_uid: str, skip: int = 0, limit: int = 100) -> List[GraphTension]:
+    async def get_tensions_resolved_by_project(self, project_uid: str, skip: int = 0, limit: int = 100) -> List[GraphTension]:
         """
         Retrieves all Tensions that are being resolved by a specific Project.
         """
-        project = self.get_project_by_uid(project_uid)
+        project = await self.get_project_by_id(project_uid)
         if not project:
             return []
             
         # Get all tensions connected with RESOLVES_TENSION relationship
         return list(project.resolves_tensions.all()[skip:skip+limit])
         
-    def get_paginated_tensions_by_project(self, project_uid: str, page: int = 1, page_size: int = 10) -> Tuple[List[GraphTension], int, int]:
+    async def get_paginated_tensions_by_project(self, project_uid: str, page: int = 1, page_size: int = 10) -> Tuple[List[GraphTension], int, int]:
         """
         Retrieves a paginated list of tensions that are resolved by a specific project.
         
@@ -218,7 +195,7 @@ class ProjectRepository:
         """
         from trm_api.repositories.pagination_helper import PaginationHelper
         
-        project = self.get_project_by_uid(project_uid)
+        project = await self.get_project_by_id(project_uid)
         if not project:
             return [], 0, 0
             

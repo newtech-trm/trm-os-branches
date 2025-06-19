@@ -6,9 +6,12 @@ tuân theo nguyên tắc ontology-first, không mock/fake kết nối.
 """
 
 import pytest
+import pytest_asyncio
+import httpx
 from datetime import datetime
 import neomodel
 from enum import Enum
+pytestmark = pytest.mark.asyncio
 
 from trm_api.main import app
 from trm_api.db.session import connect_to_db, get_driver
@@ -57,18 +60,34 @@ def setup_neo4j_connection():
 
 
 @pytest.fixture
-def test_client():
+async def test_client():
     """
     Fixture tạo client để test các API endpoints.
     Sử dụng kết nối Neo4j thật từ fixture setup_neo4j_connection.
     """
-    # Import trong fixture để tránh vấn đề circular import
-    from fastapi.testclient import TestClient
-    
-    # Tạo client mới cho mỗi test
-    client = TestClient(app)
-    
-    return client
+    # Tạo client async mới cho mỗi test sử dụng ASGITransport cho FastAPI
+    from httpx import AsyncClient, ASGITransport
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        yield client
+
+@pytest_asyncio.fixture
+async def async_test_client():
+    """
+    Fixture tạo client async để test các API endpoints, sử dụng với pytest-asyncio.
+    Sử dụng kết nối Neo4j thật từ fixture setup_neo4j_connection.
+    """
+    # Tạo client async mới cho mỗi test sử dụng ASGITransport cho FastAPI
+    from httpx import AsyncClient, ASGITransport
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client:
+        yield client
+
+async def get_test_client():
+    """
+    Hàm hỗ trợ cho các test cases để tạo async client
+    Sử dụng cho các test không sử dụng fixture test_client
+    """
+    from httpx import AsyncClient, ASGITransport
+    return AsyncClient(transport=ASGITransport(app=app), base_url="http://test")
 
 
 @pytest.fixture

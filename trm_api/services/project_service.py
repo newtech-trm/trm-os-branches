@@ -22,111 +22,113 @@ class ProjectService:
     def __init__(self):
         self.project_repository = ProjectRepository()
     
-    def create_project(self, project_data: ProjectCreate) -> Dict[str, Any]:
+    async def create_project(self, project_data: ProjectCreate) -> Dict[str, Any]:
         """
-        Creates a new project with extended properties.
+        Creates a new project with extended properties asynchronously.
         """
-        project = self.project_repository.create_project(project_data)
+        project = await self.project_repository.create_project(project_data)
         return project.model_dump() if project else None
     
-    def get_project_by_id(self, project_id: str) -> Optional[Dict[str, Any]]:
+    async def get_project_by_id(self, project_id: str) -> Optional[Dict[str, Any]]:
         """
-        Retrieves a project by its ID.
+        Retrieves a project by its ID asynchronously.
         """
-        project = self.project_repository.get_project_by_uid(project_id)
+        project = await self.project_repository.get_project_by_id(project_id)
         return project.model_dump() if project else None
     
-    def get_all_projects(self) -> List[Dict[str, Any]]:
+    async def get_all_projects(self) -> List[Dict[str, Any]]:
         """
-        Retrieves all projects.
+        Retrieves all projects asynchronously.
         """
-        projects = self.project_repository.get_all_projects()
+        projects = await self.project_repository.get_all_projects()
         return [project.model_dump() for project in projects]
     
-    def get_paginated_projects(self, page: int = 1, page_size: int = 10) -> Tuple[List[Dict[str, Any]], PaginationMetadata]:
+    async def get_paginated_projects(self, page: int = 1, page_size: int = 10) -> Tuple[List[Dict[str, Any]], PaginationMetadata]:
         """
-        Retrieves a paginated list of projects.
+        Retrieves a paginated list of projects asynchronously.
         
         Returns a tuple of (projects_list, pagination_metadata)
         """
-        projects, total_count, page_count = self.project_repository.get_paginated_projects(page, page_size)
+        projects, total_count, page_count = await self.project_repository.get_paginated_projects(page=page, page_size=page_size)
         
-        # Convert projects to dicts
-        projects_list = [project.model_dump() for project in projects]
+        # Convert graph models to API models
+        api_projects = [project.model_dump() for project in projects]
         
         # Create pagination metadata
-        pagination = PaginationMetadata(
+        pagination_meta = PaginationMetadata(
+            total=total_count,
             page=page,
             page_size=page_size,
-            total_count=total_count,
-            page_count=page_count,
-            has_next=page < page_count,
-            has_previous=page > 1
+            pages=page_count
         )
         
-        return projects_list, pagination
+        return api_projects, pagination_meta
     
-    def update_project(self, project_id: str, project_data: ProjectUpdate) -> Optional[Dict[str, Any]]:
+    async def update_project(self, project_id: str, project_data: ProjectUpdate) -> Optional[Dict[str, Any]]:
         """
-        Updates a project by its ID, including extended properties.
+        Updates an existing project asynchronously.
         """
-        project = self.project_repository.update_project(project_id, project_data)
+        project = await self.project_repository.update_project(project_id=project_id, project_data=project_data)
         return project.model_dump() if project else None
     
-    def delete_project(self, project_id: str) -> bool:
+    async def delete_project(self, project_id: str) -> bool:
         """
-        Deletes a project by its ID.
+        Deletes a project asynchronously.
         """
-        return self.project_repository.delete_project(project_id)
+        return await self.project_repository.delete_project(project_id=project_id)
     
-    def get_project_tasks(self, project_id: str) -> List[Dict[str, Any]]:
+    async def get_project_tasks(self, project_id: str) -> List[Dict[str, Any]]:
         """
-        Retrieves tasks associated with a project.
+        Retrieves tasks associated with a project asynchronously.
         """
-        tasks = self.project_repository.get_project_tasks(project_id)
+        tasks = await self.project_repository.get_project_tasks(project_id)
         if not tasks:
             return []
         
         return [task.model_dump() for task in tasks]
     
-    def add_task_to_project(self, project_id: str, task_id: str) -> bool:
+    async def add_task_to_project(self, project_id: str, task_id: str) -> bool:
         """
-        Associates a task with a project.
+        Associates a task with a project asynchronously.
         """
-        return self.project_repository.add_task_to_project(project_id, task_id)
+        return await self.project_repository.add_task_to_project(project_id, task_id)
     
-    def remove_task_from_project(self, project_id: str, task_id: str) -> bool:
+    async def remove_task_from_project(self, project_id: str, task_id: str) -> bool:
         """
-        Removes the association of a task with a project.
+        Removes the association of a task with a project asynchronously.
         """
-        return self.project_repository.remove_task_from_project(project_id, task_id)
+        return await self.project_repository.remove_task_from_project(project_id, task_id)
     
     # --- Resource Management Methods ---
     
-    def assign_resource_to_project(self, project_id: str, resource_id: str,
-                                allocation_percentage: int = 100,
-                                assignment_type: str = 'full',
-                                expected_end_date = None,
-                                assignment_status: str = 'active',
-                                notes: str = None,
-                                assigned_by: str = None) -> Optional[Dict[str, Any]]:
+    async def assign_resource_to_project(self, project_id: str, resource_id: str,
+                                  allocation_percentage: int = 100,
+                                  assignment_type: str = "full",
+                                  expected_end_date: Optional[str] = None,
+                                  assignment_status: str = "active",
+                                  notes: Optional[str] = None,
+                                  assigned_by: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """
-        Establishes an ASSIGNED_TO_PROJECT relationship from a Resource to a Project
-        with all required properties according to the TRM Ontology V3.2.
+        Assigns a Resource to a Project with relationship properties asynchronously.
         """
-        result = self.project_repository.assign_resource_to_project(
-            project_id, resource_id, allocation_percentage, 
-            assignment_type, expected_end_date,
-            assignment_status, notes, assigned_by
+        result = await self.project_repository.assign_resource_to_project(
+            project_uid=project_id,
+            resource_uid=resource_id,
+            allocation_percentage=allocation_percentage,
+            assignment_type=assignment_type,
+            expected_end_date=expected_end_date,
+            assignment_status=assignment_status,
+            notes=notes,
+            assigned_by=assigned_by
         )
         
         if not result:
             return None
-        
+            
         project, resource = result
         return {
-            "project": project.model_dump() if project else None,
-            "resource": resource.model_dump() if resource else None,
+            "project": project.model_dump(),
+            "resource": resource.model_dump(),
             "relationship": {
                 "allocation_percentage": allocation_percentage,
                 "assignment_type": assignment_type,
@@ -138,35 +140,11 @@ class ProjectService:
             }
         }
     
-    def get_project_resources(self, project_id: str, skip: int = 0, limit: int = 100) -> List[Dict[str, Any]]:
+    async def get_project_resources(self, project_id: str, page: int = 1, page_size: int = 10) -> Tuple[List[Dict[str, Any]], PaginationMetadata]:
         """
-        Retrieves all Resources that are assigned to a specific Project.
+        Retrieves paginated list of resources assigned to a specific project asynchronously.
         """
-        resources = self.project_repository.get_project_resources(project_id, skip, limit)
-        if not resources:
-            return []
-        
-        return [resource.model_dump() for resource in resources]
-    
-    def get_paginated_resources_by_project(self, project_id: str, 
-                                           page: int = 1, page_size: int = 10) -> Tuple[List[Dict[str, Any]], PaginationMetadata]:
-        """
-        Retrieves a paginated list of resources that are assigned to a specific project.
-        
-        Returns a tuple of (resources_list, pagination_metadata)
-        """
-        resources, total_count, page_count = self.project_repository.get_paginated_resources_by_project(
-            project_id, page, page_size)
-        
-        if not resources:
-            return [], PaginationMetadata(
-                page=page,
-                page_size=page_size,
-                total_count=0,
-                page_count=0,
-                has_next=False,
-                has_previous=False
-            )
+        resources, total_count, page_count = await self.project_repository.get_paginated_resources_by_project(project_id, page, page_size)
         
         # Convert resources to dicts
         resources_list = [resource.model_dump() for resource in resources]
@@ -175,55 +153,59 @@ class ProjectService:
         pagination = PaginationMetadata(
             page=page,
             page_size=page_size,
-            total_count=total_count,
-            page_count=page_count,
-            has_next=page < page_count,
-            has_previous=page > 1
+            total=total_count,
+            pages=page_count
         )
         
         return resources_list, pagination
     
-    def get_project_resources_with_relationships(self, project_id: str) -> List[Dict[str, Any]]:
+    async def get_project_resources_with_relationships(self, project_id: str) -> List[Dict[str, Any]]:
         """
-        Retrieves all Resources that are assigned to a specific Project,
-        including the relationship properties according to the ontology V3.2.
+        Retrieves resources assigned to a project including the relationship properties asynchronously.
         """
-        return self.project_repository.get_project_resources_with_relationships(project_id)
+        results = await self.project_repository.get_resources_with_relationship_properties(project_id)
+        
+        if not results:
+            return []
+            
+        return [{
+            "resource": resource.model_dump(),
+            "relationship": relationship_props
+        } for resource, relationship_props in results]
     
-    def update_resource_project_relationship(self, project_id: str, resource_id: str,
-                                           allocation_percentage: int = None,
-                                           expected_end_date = None,
-                                           actual_end_date = None,
-                                           assignment_type: str = None,
-                                           assignment_status: str = None,
-                                           notes: str = None) -> bool:
+    async def update_resource_project_relationship(self, project_id: str, resource_id: str, **relationship_props) -> Optional[Dict[str, Any]]:
         """
-        Updates the relationship properties between a Resource and a Project
-        according to the TRM Ontology V3.2.
+        Updates the properties of the ASSIGNED_TO_PROJECT relationship between a Resource and a Project asynchronously.
         """
-        return self.project_repository.update_resource_project_relationship(
-            project_id, resource_id, allocation_percentage, expected_end_date,
-            actual_end_date, assignment_type, assignment_status, notes
-        )
+        result = await self.project_repository.update_resource_project_relationship(project_id, resource_id, **relationship_props)
+        
+        if not result:
+            return None
+            
+        resource, updated_props = result
+        return {
+            "resource": resource.model_dump(),
+            "relationship": updated_props
+        }
     
-    def unassign_resource_from_project(self, project_id: str, resource_id: str) -> bool:
+    async def unassign_resource_from_project(self, project_id: str, resource_id: str) -> bool:
         """
-        Removes the ASSIGNED_TO_PROJECT relationship between a Resource and a Project.
+        Removes the ASSIGNED_TO_PROJECT relationship between a Resource and a Project asynchronously.
         """
-        return self.project_repository.unassign_resource_from_project(project_id, resource_id)
+        return await self.project_repository.unassign_resource_from_project(project_id, resource_id)
     
     # --- Project Manager and Agent Methods ---
     
-    def assign_manager_to_project(self, project_id: str, agent_id: str,
+    async def assign_manager_to_project(self, project_id: str, agent_id: str,
                                 role: str = 'project_manager',
                                 responsibility_level: str = 'primary',
                                 appointed_at = None,
                                 notes: str = None) -> Optional[Dict[str, Any]]:
         """
         Establishes a MANAGES_PROJECT relationship from an Agent to a Project
-        according to the TRM Ontology V3.2.
+        according to the TRM Ontology V3.2 asynchronously.
         """
-        result = self.project_repository.assign_manager_to_project(
+        result = await self.project_repository.assign_manager_to_project(
             project_id, agent_id, role, responsibility_level, appointed_at, notes
         )
         
@@ -242,49 +224,82 @@ class ProjectService:
             }
         }
     
-    def get_project_managers(self, project_id: str) -> List[Dict[str, Any]]:
+    async def get_project_managers(self, project_id: str) -> List[Dict[str, Any]]:
         """
-        Retrieves all Agents that manage a specific Project.
+        Retrieves all Agents that manage a specific Project asynchronously.
         """
-        managers = self.project_repository.get_project_managers(project_id)
+        managers = await self.project_repository.get_project_managers(project_id)
         if not managers:
             return []
         
         return [manager.model_dump() for manager in managers]
     
-    def get_project_managers_with_relationships(self, project_id: str) -> List[Dict[str, Any]]:
+    async def get_project_managers_with_relationships(self, project_id: str) -> List[Dict[str, Any]]:
         """
         Retrieves all Agents that manage a specific Project,
-        including the relationship properties according to the ontology V3.2.
+        including the relationship properties according to the ontology V3.2 asynchronously.
         """
-        return self.project_repository.get_project_managers_with_relationships(project_id)
+        results = await self.project_repository.get_agents_with_relationship_properties(project_id)
+        
+        if not results:
+            return []
+            
+        return [{
+            "agent": agent.model_dump(),
+            "relationship": relationship_props
+        } for agent, relationship_props in results]
     
-    def update_manager_project_relationship(self, project_id: str, agent_id: str,
-                                          role: str = None,
-                                          responsibility_level: str = None,
-                                          notes: str = None) -> bool:
+    async def update_manager_project_relationship(self, project_id: str, agent_id: str,
+                                          role: Optional[str] = None,
+                                          responsibility_level: Optional[str] = None,
+                                          notes: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """
         Updates the relationship properties between an Agent and a Project
-        according to the TRM Ontology V3.2.
+        according to the TRM Ontology V3.2 asynchronously.
         """
-        return self.project_repository.update_manager_project_relationship(
+        result = await self.project_repository.update_manager_project_relationship(
             project_id, agent_id, role, responsibility_level, notes
         )
+        
+        if not result:
+            return None
+            
+        agent, updated_props = result
+        return {
+            "agent": agent.model_dump(),
+            "relationship": updated_props
+        }
     
-    def remove_manager_from_project(self, project_id: str, agent_id: str) -> bool:
+    async def remove_manager_from_project(self, project_id: str, agent_id: str) -> bool:
         """
-        Removes the MANAGES_PROJECT relationship between an Agent and a Project.
+        Removes the MANAGES_PROJECT relationship between an Agent and a Project asynchronously.
         """
-        return self.project_repository.remove_manager_from_project(project_id, agent_id)
+        return await self.project_repository.remove_manager_from_project(project_id, agent_id)
     
     # --- Subproject Methods ---
     
-    def get_project_subprojects(self, project_id: str) -> List[Dict[str, Any]]:
+    async def get_parent_project(self, project_id: str) -> Optional[Dict[str, Any]]:
         """
-        Retrieves all subprojects of a specific Project.
+        Retrieves the parent project of a given project asynchronously, if any.
         """
         # Get the project
-        project = self.project_repository.get_project_by_uid(project_id)
+        project = await self.project_repository.get_project_by_id(project_id)
+        if not project:
+            return None
+        
+        # Get the parent project if exists
+        parent_projects = list(project.parent_project.all())
+        if not parent_projects:
+            return None
+            
+        return parent_projects[0].model_dump()
+    
+    async def get_subprojects(self, project_id: str) -> List[Dict[str, Any]]:
+        """
+        Retrieves all subprojects of a given project asynchronously.
+        """
+        # Get the project
+        project = await self.project_repository.get_project_by_id(project_id)
         if not project:
             return []
         
@@ -294,19 +309,45 @@ class ProjectService:
         # Return the subprojects as dicts
         return [subproject.model_dump() for subproject in subprojects]
     
-    def get_project_parent(self, project_id: str) -> Optional[Dict[str, Any]]:
+    async def add_subproject(self, parent_id: str, child_id: str) -> bool:
         """
-        Retrieves the parent project of a specific Project, if any.
+        Adds a subproject to a project asynchronously.
+        """
+        return await self.project_repository.add_subproject(parent_id, child_id)
+    
+    async def remove_parent_child_relationship(self, parent_id: str, child_id: str) -> bool:
+        """
+        Removes a parent-child relationship between two projects asynchronously.
+        """
+        return await self.project_repository.remove_parent_child_relationship(parent_id, child_id)
+    
+    async def get_project_subprojects(self, project_id: str) -> List[Dict[str, Any]]:
+        """
+        Retrieves all subprojects of a specific Project asynchronously.
         """
         # Get the project
-        project = self.project_repository.get_project_by_uid(project_id)
+        project = await self.project_repository.get_project_by_id(project_id)
+        if not project:
+            return []
+        
+        # Get the project's child projects (if any)
+        subprojects = list(project.child_projects.all())
+        
+        # Return the subprojects as dicts
+        return [subproject.model_dump() for subproject in subprojects]
+    
+    async def get_project_parent(self, project_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Retrieves the parent project of a specific Project asynchronously, if any.
+        """
+        # Get the project
+        project = await self.project_repository.get_project_by_id(project_id)
         if not project:
             return None
         
-        # Get the project's parent projects (should be 0 or 1)
-        parents = list(project.parent_project.all())
-        if not parents:
+        # Get the parent project if exists
+        parent_projects = list(project.parent_project.all())
+        if not parent_projects:
             return None
-        
-        # Return the parent project as a dict
-        return parents[0].model_dump()
+            
+        return parent_projects[0].model_dump()

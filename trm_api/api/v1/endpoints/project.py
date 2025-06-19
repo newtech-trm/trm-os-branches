@@ -20,7 +20,7 @@ def get_project_service() -> ProjectService:
     return ProjectService()
 
 @router.get("/", response_model=PaginatedResponse[Project])
-def list_projects(
+async def list_projects(
     page: int = Query(1, ge=1, description="Page number, 1-indexed"),
     page_size: int = Query(10, ge=1, le=100, description="Number of items per page"),
     repo: ProjectRepository = Depends(get_project_repo)
@@ -28,11 +28,11 @@ def list_projects(
     """
     Retrieve a paginated list of projects.
     """
-    projects, total_count, page_count = repo.get_paginated_projects(page=page, page_size=page_size)
+    projects, total_count, page_count = await repo.get_paginated_projects(page=page, page_size=page_size)
     return PaginatedResponse.create(items=projects, total_count=total_count, page=page, page_size=page_size)
 
 @router.post("/", response_model=Project, status_code=status.HTTP_201_CREATED)
-def create_project(
+async def create_project(
     *, 
     project_in: ProjectCreate, 
     repo: ProjectRepository = Depends(get_project_repo)
@@ -41,7 +41,7 @@ def create_project(
     Create a new project.
     """
     try:
-        graph_project = repo.create_project(project_data=project_in)
+        graph_project = await repo.create_project(project_data=project_in)
         return graph_project
     except Exception as e:
         print(f"AN ERROR OCCURRED: {e}")
@@ -53,7 +53,7 @@ def create_project(
         )
 
 @router.get("/{project_id}", response_model=Project)
-def get_project(
+async def get_project(
     *, 
     project_id: str, 
     repo: ProjectRepository = Depends(get_project_repo)
@@ -61,16 +61,16 @@ def get_project(
     """
     Get a specific project by its ID.
     """
-    graph_project = repo.get_project_by_uid(uid=project_id)
-    if not graph_project:
+    project = await repo.get_project_by_id(project_id=project_id)
+    if not project:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Project not found",
+            detail=f"Project with ID {project_id} not found"
         )
-    return graph_project
+    return project
 
 @router.put("/{project_id}", response_model=Project)
-def update_project(
+async def update_project(
     *,
     project_id: str,
     project_in: ProjectUpdate,
@@ -79,16 +79,17 @@ def update_project(
     """
     Update a project.
     """
-    updated_project = repo.update_project(uid=project_id, project_data=project_in)
-    if not updated_project:
+    project = await repo.get_project_by_id(project_id=project_id)
+    if not project:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Project not found",
+            detail=f"Project with ID {project_id} not found"
         )
+    updated_project = await repo.update_project(project_id=project_id, project_data=project_in)
     return updated_project
 
 @router.delete("/{project_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_project(
+async def delete_project(
     *,
     project_id: str,
     repo: ProjectRepository = Depends(get_project_repo)

@@ -1,0 +1,118 @@
+name: TRM-OS Neo4j Tests
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      neo4j:
+        image: neo4j:5.11.0-enterprise
+        env:
+          NEO4J_AUTH: neo4j/testpassword
+          NEO4J_ACCEPT_LICENSE_AGREEMENT: yes
+          NEO4J_dbms_memory_pagecache_size: 512M
+          NEO4J_dbms_memory_heap_initial__size: 1G
+          NEO4J_dbms_memory_heap_max__size: 1G
+        ports:
+          - 7474:7474
+          - 7687:7687
+        options: >-
+          --health-cmd "cypher-shell -u neo4j -p testpassword 'RETURN 1;'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Configure Neo4j connection
+        run: |
+          echo "NEO4J_URI=bolt://localhost:7687" >> $GITHUB_ENV
+          echo "NEO4J_USERNAME=neo4j" >> $GITHUB_ENV
+          echo "NEO4J_PASSWORD=testpassword" >> $GITHUB_ENV
+
+      - name: Setup test database
+        run: |
+          python -c "
+          from neo4j import GraphDatabase
+          import time
+
+          # Đảm bảo Neo4j đã sẵn sàng
+          for i in range(10):
+              try:
+                  driver = GraphDatabase.driver('bolt://localhost:7687', auth=('neo4j', 'testpassword'))
+                  with driver.session() as session:
+                      session.run('RETURN 1')
+                  driver.close()
+                  print('Neo4j đã sẵn sàng!')
+                  break
+              except Exception as e:
+                  print(f'Đang chờ Neo4j khởi động... {i}')
+                  time.sleep(5)
+          
+          # Tạo constraints và indexes cho test database
+          driver = GraphDatabase.driver('bolt://localhost:7687', auth=('neo4j', 'testpassword'))
+          with driver.session() as session:
+              # Xóa tất cả dữ liệu hiện có
+              session.run('MATCH (n) DETACH DELETE n')
+              
+              # Tạo constraints
+              session.run('CREATE CONSTRAINT Agent_uid IF NOT EXISTS FOR (a:Agent) REQUIRE a.uid IS UNIQUE')
+              session.run('CREATE CONSTRAINT Recognition_uid IF NOT EXISTS FOR (r:Recognition) REQUIRE r.uid IS UNIQUE')
+              session.run('CREATE CONSTRAINT WIN_uid IF NOT EXISTS FOR (w:WIN) REQUIRE w.uid IS UNIQUE')
+              session.run('CREATE CONSTRAINT Project_uid IF NOT EXISTS FOR (p:Project) REQUIRE p.uid IS UNIQUE')
+              session.run('CREATE CONSTRAINT Task_uid IF NOT EXISTS FOR (t:Task) REQUIRE t.uid IS UNIQUE')
+              session.run('CREATE CONSTRAINT Resource_uid IF NOT EXISTS FOR (r:Resource) REQUIRE r.uid IS UNIQUE')
+              session.run('CREATE CONSTRAINT KnowledgeSnippet_uid IF NOT EXISTS FOR (ks:KnowledgeSnippet) REQUIRE ks.uid IS UNIQUE')
+              
+              # Tạo fixtures cần thiết cho tests
+              print('Đã tạo constraints và indexes cho test database!')
+          driver.close()
+          "
+
+      - name: Run tests
+        run: |
+          pytest tests/unit/ -v
+          pytest tests/integration/ -v
+
+      - name: Generate test coverage report
+        run: |
+          pytest --cov=./ --cov-report=xml
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
+          verbose: true
+
+      - name: Cleanup Neo4j database
+        if: always()
+        run: |
+          python -c "
+          from neo4j import GraphDatabase
+          
+          driver = GraphDatabase.driver('bolt://localhost:7687', auth=('neo4j', 'testpassword'))
+          with driver.session() as session:
+              session.run('MATCH (n) DETACH DELETE n')
+              print('Đã dọn dẹp dữ liệu test!')
+          driver.close()
+          "

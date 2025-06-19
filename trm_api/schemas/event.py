@@ -14,9 +14,9 @@ class EventCreate(EventBase):
     context_node_label: Optional[str] = Field(None, description="Node label of the primary context entity (e.g., 'Project', 'Task'). Required if context_uid is provided.")
 
     class Config:
-        orm_mode = True
+        from_attributes = True
         # For OpenAPI example
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "name": "TASK_COMPLETED",
                 "description": "User John Doe completed task 'Implement Feature X'.",
@@ -38,8 +38,8 @@ class Event(EventBase): # For response model, inherits from EventBase
     # primary_context_entity: Optional[Any] # Simplified for now
 
     class Config:
-        orm_mode = True
-        schema_extra = {
+        from_attributes = True
+        json_schema_extra = {
             "example": {
                 "uid": "event_unique_id",
                 "name": "TASK_COMPLETED",

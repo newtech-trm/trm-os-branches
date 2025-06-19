@@ -8,8 +8,9 @@ from trm_api.schemas.recognition import (
     RecognitionWithRelationships, RecognitionType, RecognitionStatus
 )
 from trm_api.services.recognition_service import recognition_service
-from trm_api.utils.datetime_adapter import adapt_model_to_schema, adapt_model_list_to_schema
-from trm_api.utils.enum_adapter import normalize_enum_value, normalize_object_enums
+from trm_api.adapters.decorators import adapt_recognition_response
+# Vẫn cần các hàm này để xử lý khi không sử dụng decorator
+from trm_api.utils.datetime_adapter import adapt_model_list_to_schema
 
 router = APIRouter()
 
@@ -18,40 +19,43 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 @router.post("/", response_model=Recognition, status_code=status.HTTP_201_CREATED)
-def create_recognition(
+@adapt_recognition_response()
+async def create_recognition(
     recognition_data: RecognitionCreate
 ):
     """
     Create a new Recognition.
     """
-    recognition = recognition_service.create_recognition(recognition_data)
+    recognition = await recognition_service.create_recognition(recognition_data)
     if recognition is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, 
             detail="Không thể tạo Recognition"
         )
     
-    # Áp dụng datetime_adapter để chuyển từ đối tượng Neo4j sang schema
-    return adapt_model_to_schema(recognition, id_field_name="uid", target_id_name="id")
+    # Không cần áp dụng trực tiếp adapter vì decorator adapt_recognition_response sẽ tự động xử lý
+    return recognition
 
 @router.get("/{recognition_id}", response_model=Recognition)
-def get_recognition(recognition_id: str):
+@adapt_recognition_response()
+async def get_recognition(recognition_id: str):
     """
     Get a specific Recognition by its ID.
     """
-    recognition = recognition_service.get_recognition_by_id(recognition_id)
+    recognition = await recognition_service.get_recognition_by_id(recognition_id)
     if recognition is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
             detail="Recognition không tồn tại"
         )
     
-    # Áp dụng datetime_adapter để chuyển từ đối tượng Neo4j sang schema
-    return adapt_model_to_schema(recognition, id_field_name="uid", target_id_name="id")
+    # Không cần áp dụng trực tiếp adapter vì decorator adapt_recognition_response sẽ tự động xử lý
+    return recognition
 
 # Bỏ response_model để tránh lỗi validation với dữ liệu cũ không đồng nhất
 @router.get("/")
-def list_recognitions(
+@adapt_recognition_response()
+async def list_recognitions(
     skip: int = 0,
     limit: int = 100
 ):
@@ -67,12 +71,12 @@ def list_recognitions(
         logger.debug(f"Bắt đầu lấy danh sách recognition với skip={skip}, limit={limit}")
 
         # Lấy danh sách Recognition từ service
-        recognitions = recognition_service.list_recognitions(skip=skip, limit=limit)
+        recognitions = await recognition_service.list_recognitions(skip=skip, limit=limit)
         logger.debug(f"Đã lấy được {len(recognitions) if recognitions else 0} recognition từ service")
         
-        # Áp dụng datetime_adapter cho danh sách
-        items = adapt_model_list_to_schema(recognitions, id_field_name="uid", target_id_name="id")
-        logger.debug(f"Đã chuyển đổi dữ liệu với datetime_adapter: {len(items)} items")
+        # Không cần áp dụng trực tiếp adapter vì decorator sẽ tự động xử lý
+        items = recognitions
+        logger.debug(f"Đã chuyển đổi dữ liệu: {len(items) if items else 0} items")
         
         # Xử lý đặc biệt cho từng item để đảm bảo tương thích với schema
         sanitized_items = []
@@ -178,32 +182,49 @@ def list_recognitions(
         raise HTTPException(status_code=500, detail=f"Lỗi khi lấy danh sách Recognition: {str(e)}")
 
 @router.put("/{recognition_id}", response_model=Recognition)
-def update_recognition(
+@adapt_recognition_response()
+async def update_recognition(
     recognition_id: str,
     recognition_data: RecognitionUpdate
 ):
     """
-    Update an existing Recognition.
+    Update an existing Recognition theo Ontology V3.2.
     """
-    updated_recognition = recognition_service.update_recognition(recognition_id, recognition_data)
-    if updated_recognition is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, 
-            detail="Recognition không tồn tại hoặc không thể cập nhật"
-        )
-    
-    # Áp dụng datetime_adapter
-    return adapt_model_to_schema(updated_recognition, id_field_name="uid", target_id_name="id")
+    try:
+        logger.debug(f"Đang cập nhật recognition {recognition_id}")
+        updated_recognition = await recognition_service.update_recognition(recognition_id, recognition_data)
+        if updated_recognition is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail="Recognition không tồn tại hoặc không thể cập nhật"
+            )
+        
+        logger.debug(f"Đã cập nhật thành công recognition {recognition_id}")
+        # Không cần áp dụng trực tiếp adapter vì decorator adapt_recognition_response sẽ tự động xử lý
+        return updated_recognition
+    except Exception as e:
+        logger.error(f"Lỗi khi cập nhật recognition {recognition_id}: {str(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
+        raise HTTPException(status_code=500, detail=f"Lỗi khi cập nhật Recognition: {str(e)}")
 
 @router.delete("/{recognition_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_recognition(recognition_id: str):
+async def delete_recognition(recognition_id: str):
     """
-    Delete a Recognition.
+    Delete a Recognition theo Ontology V3.2.
     """
-    deleted = recognition_service.delete_recognition(recognition_id)
-    if not deleted:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, 
-            detail="Recognition không tồn tại hoặc không thể xóa"
-        )
-    return
+    try:
+        logger.debug(f"Đang xóa recognition {recognition_id}")
+        deleted = await recognition_service.delete_recognition(recognition_id)
+        if not deleted:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, 
+                detail="Recognition không tồn tại hoặc không thể xóa"
+            )
+        logger.debug(f"Đã xóa thành công recognition {recognition_id}")
+        return
+    except Exception as e:
+        logger.error(f"Lỗi khi xóa recognition {recognition_id}: {str(e)}")
+        import traceback
+        logger.error(traceback.format_exc())
+        raise HTTPException(status_code=500, detail=f"Lỗi khi xóa Recognition: {str(e)}")

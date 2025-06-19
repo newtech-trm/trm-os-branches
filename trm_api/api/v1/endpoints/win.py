@@ -2,8 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException, status, Body, Query
 from typing import List, Optional, Dict, Any
 import logging
 
-from fastapi import APIRouter, Depends, HTTPException, status, Query
-
 # Schema imports
 from trm_api.schemas.win import WIN, WINCreate, WINUpdate, WINList
 
@@ -14,6 +12,7 @@ from trm_api.services.user_service import get_current_active_user
 # Adapter imports
 from trm_api.adapters.enum_adapter import normalize_win_status, normalize_win_type
 from trm_api.adapters.datetime_adapter import normalize_datetime, normalize_dict_datetimes
+from trm_api.adapters.decorators import adapt_win_response
 
 # Repository imports
 from trm_api.repositories.win_repository import WINRepository
@@ -21,7 +20,8 @@ from trm_api.repositories.win_repository import WINRepository
 router = APIRouter()
 
 @router.post("/", response_model=WIN, status_code=status.HTTP_201_CREATED)
-def create_win(
+@adapt_win_response()
+async def create_win(
     win_in: WINCreate,
     service: WinService = Depends(lambda: win_service)
 ):
@@ -37,7 +37,7 @@ def create_win(
         win_data["winType"] = normalize_win_type(win_data.get("winType"))
         
         # Tạo WIN
-        result = service.create_win(win_data=win_data)
+        result = await service.create_win(win_data=win_data)
         
         if not result:
             raise HTTPException(
@@ -45,10 +45,9 @@ def create_win(
                 detail="Không thể tạo WIN. Vui lòng kiểm tra logs."
             )
             
-        # Chuẩn hóa datetime và trả về kết quả
-        normalized_result = normalize_dict_datetimes(result)
-        logging.debug(f"Đã tạo WIN thành công: {normalized_result}")
-        return normalized_result
+        # Không cần chuẩn hóa datetime ở đây vì decorator adapt_win_response sẽ làm việc đó
+        logging.debug(f"Đã tạo WIN thành công: {result}")
+        return result
         
     except Exception as e:
         logging.error(f"Lỗi khi tạo WIN: {str(e)}")

@@ -71,7 +71,7 @@ class Recognition(RecognitionBase):
     updated_at: Optional[str] = Field(None, description="Last update timestamp (ISO format)")
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class RecognitionUpdate(BaseModel):

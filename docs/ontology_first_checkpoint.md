@@ -37,10 +37,25 @@ TRM-OS là một hệ thống quản lý tri thức và workflow dựa trên ont
 - ✅ **Entity Agent**: Đã triển khai đầy đủ, API endpoint hoạt động ổn định
 - ✅ **Entity Event**: Đã triển khai thành công, fix hết các lỗi và seed dữ liệu thành công
 - ✅ **Entity Recognition**: Đã triển khai thành công, sửa các lỗi validation và enum không đồng nhất
+- ✅ **Entity Win**: Đã triển khai đầy đủ, chuyển đổi sang async hoàn chỉnh cho tất cả phương thức
+- ✅ **Entity KnowledgeSnippet**: Đã triển khai đầy đủ theo ontology-first
 - ✅ **Relationships**: Đã triển khai thành công các relationship chính:
   - ACTOR_TRIGGERED_EVENT (Agent -> Event)
   - EVENT_CONTEXT (Event -> [Agent, Project, Task, Resource])
   - GIVEN_BY và RECEIVED_BY (Recognition <-> Agent)
+  - RECOGNIZES_WIN (Recognition -> WIN)
+  - RECOGNIZES_CONTRIBUTION_TO (Recognition -> [Project, Task, Resource])
+  - GENERATES_KNOWLEDGE (WIN -> KnowledgeSnippet)
+  - LEADS_TO_WIN (Project/Event -> WIN)
+
+### Chuyển đổi Async hoàn chỉnh
+
+- ✅ **Project Service**: Đã chuyển đổi toàn bộ phương thức sang async
+- ✅ **Task Service**: Đã chuyển đổi toàn bộ phương thức sang async
+- ✅ **Recognition Service**: Đã chuyển đổi toàn bộ phương thức sang async bao gồm update_recognition, delete_recognition, get_recognition_with_relationships
+- ✅ **Win Service**: Đã chuyển đổi các phương thức list_wins, update_win, delete_win sang async
+- ✅ **API Layer**: Đã chuyển đổi các endpoint trong Project, Task, Recognition, Win sang async
+- ✅ **Testing**: Đã cập nhật một số test sang async-compatible với pytest-asyncio và AsyncMock
 
 ### Fix lỗi đã thực hiện
 
@@ -48,9 +63,11 @@ TRM-OS là một hệ thống quản lý tri thức và workflow dựa trên ont
 2. **Refactor relationship context**: Chuyển từ relationship trừ u tượng sang concrete relationship cho từng entity type
 3. **Serialize DateTime**: Thêm adapter để chuyển đổi datetime object thành string ISO format khi trả về response
 4. **Import Class**: Bổ sung đúng các import cho Resource, Project trong agent.py
-5. **Capabilities Array**: Refactor từ JSONProperty sang ArrayProperty(StringProperty()) để tương thích với dữ liệu
-6. **Enum Adapter**: Tạo module `enum_adapter.py` để chuẩn hóa giá trị enum không đồng nhất trong Neo4j
-7. **Response Model Flexibility**: Sử dụng cách tiếp cận linh hoạt với FastAPI response_model để xử lý dữ liệu legacy
+5. **Async Migration**: Chuyển đổi đúng cách các phương thức từ sync sang async
+6. **Transaction Management**: Đảm bảo các phương thức async xử lý transaction Neo4j đúng cách
+7. **Capabilities Array**: Refactor từ JSONProperty sang ArrayProperty(StringProperty()) để tương thích với dữ liệu
+8. **Enum Adapter**: Tạo module `enum_adapter.py` để chuẩn hóa giá trị enum không đồng nhất trong Neo4j
+9. **Response Model Flexibility**: Sử dụng cách tiếp cận linh hoạt với FastAPI response_model để xử lý dữ liệu legacy
 
 ### Chi tiết cụ thể việc fix lỗi
 

@@ -3,10 +3,12 @@ from typing import List, Optional, Dict, Any
 from datetime import datetime
 import uuid
 import traceback
+import asyncio
 
 from trm_api.db.session import get_driver
 from trm_api.models.relationships import Relationship, RelationshipType, TargetEntityTypeEnum
 from trm_api.services.utils import process_relationship_record
+from trm_api.services.constants import EntityTypeKindMapping
 
 
 class RelationshipService:
@@ -15,16 +17,18 @@ class RelationshipService:
     This service handles creation, querying, and management of all relationship types.
     """
 
-    def _get_db(self) -> Driver:
+    async def _get_db(self) -> Driver:
         return get_driver()
 
-    def create_relationship(
+    async def create_relationship(
         self,
         source_id: str,
         source_type: TargetEntityTypeEnum,
         target_id: str,
         target_type: TargetEntityTypeEnum,
         relationship_type: RelationshipType,
+        relationship_property: Optional[Dict[str, Any]] = None,
+        relationship_properties: Optional[Dict[str, Any]] = None,
     ) -> Optional[Relationship]:
         """
         Creates a relationship between two entities.
@@ -35,18 +39,29 @@ class RelationshipService:
             target_id: The ID of the target entity
             target_type: The type of the target entity
             relationship_type: The type of relationship to create
+            relationship_property: Optional properties to set on the relationship
+            relationship_properties: Alias for relationship_property (cho tương thích ngược)
             
         Returns:
             The created relationship or None if creation failed
         """
-        with self._get_db().session() as session:
+        # Gộp properties từ cả hai tham số (nếu có) để đảm bảo tương thích ngược
+        properties = {}
+        if relationship_property is not None:
+            properties.update(relationship_property)
+        if relationship_properties is not None:
+            properties.update(relationship_properties)
+            
+        db = await self._get_db()
+        with db.session() as session:
             result = session.execute_write(
                 self._create_relationship_tx,
                 source_id,
                 source_type,
                 target_id,
                 target_type,
-                relationship_type
+                relationship_type,
+                properties or None
             )
             return result
 
@@ -58,6 +73,7 @@ class RelationshipService:
         target_id: str,
         target_type: TargetEntityTypeEnum,
         relationship_type: RelationshipType,
+        relationship_property: Optional[Dict[str, Any]] = None,
     ) -> Optional[Relationship]:
         """
         Transaction function for creating a relationship.
@@ -137,13 +153,13 @@ class RelationshipService:
             )
         return None
 
-    def get_relationships(
+    async def get_relationships(
         self,
-        entity_id: Optional[str] = None,
-        entity_type: Optional[str] = None,
+        entity_id: str,
+        entity_type: str,
         direction: str = "outgoing",
         relationship_type: Optional[RelationshipType] = None,
-        related_entity_type: Optional[TargetEntityTypeEnum] = None
+        related_entity_type: Optional[TargetEntityTypeEnum] = None,
     ) -> List[Relationship]:
         """Lấy các mối quan hệ của một thực thể. Được thiết kế để xử lý linh hoạt mọi đầu vào."""
         """
@@ -191,7 +207,8 @@ class RelationshipService:
             entity_type_mapped = str(entity_type) if entity_type else "Unknown"
         
         try:  
-            with self._get_db().session() as session:
+            db = await self._get_db()
+            with db.session() as session:
                 print(f"Thực thi truy vấn Neo4j cho entity_id={entity_id}, entity_type={entity_type_mapped}")
                 result = session.read_transaction(
                     self._get_relationships_tx, 
@@ -308,7 +325,7 @@ class RelationshipService:
         
         return relationships
 
-    def delete_relationship(
+    async def delete_relationship(
         self,
         source_id: str,
         source_type: TargetEntityTypeEnum,
@@ -329,7 +346,8 @@ class RelationshipService:
         Returns:
             True if the relationship was deleted, False otherwise
         """
-        with self._get_db().session() as session:
+        db = await self._get_db()
+        with db.session() as session:
             result = session.execute_write(
                 self._delete_relationship_tx,
                 source_id,

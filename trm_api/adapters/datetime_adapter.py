@@ -65,8 +65,8 @@ def normalize_dict_datetimes(data: Dict[str, Any]) -> Dict[str, Any]:
         
     result = {}
     for key, value in data.items():
-        # Xử lý các trường thường là datetime
-        if key in ['created_at', 'updated_at', 'start_date', 'end_date', 'due_date', 'target_end_date']:
+        # Xử lý các trường thường là datetime (cả snake_case và camelCase)
+        if key.lower() in ['created_at', 'createdat', 'updated_at', 'updatedat', 'start_date', 'startdate', 'end_date', 'enddate', 'due_date', 'duedate', 'target_end_date'] or key in ['createdAt', 'updatedAt', 'startDate', 'endDate', 'dueDate', 'targetEndDate']:
             result[key] = normalize_datetime(value)
         # Xử lý các giá trị là dict
         elif isinstance(value, dict):
